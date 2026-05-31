@@ -339,7 +339,7 @@ export default function About() {
           <div className="about-images">
             <img
               className="img-main"
-              src="/aboutImg.jpg"
+              src="/aboutImg.webp"
               alt="therapist working with child"
               width={1024}
               height={768}

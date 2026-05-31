@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Heart, Award, ArrowRight, ChevronDown, Sparkles } from 'lucide-react';
 
 const SLIDES = [
-  { src: '/bg1.jpg', alt: 'ბავშვი თერაპიის დროს' },
-  { src: '/bg2.jpg', alt: 'თერაპევტი ბავშვთან' },
-  { src: '/bg3.jpg', alt: 'სარეაბილიტაციო სავარჯიშო' },
-  { src: '/bg4.jpg', alt: 'ბავშვი და სპეციალისტი' },
+  { src: '/bg1.webp', alt: 'ბავშვი თერაპიის დროს' },
+  { src: '/bg2.webp', alt: 'თერაპევტი ბავშვთან' },
+  { src: '/bg3.webp', alt: 'სარეაბილიტაციო სავარჯიშო' },
+  { src: '/bg4.webp', alt: 'ბავშვი და სპეციალისტი' },
 ];
 
 const INTERVAL = 5000;

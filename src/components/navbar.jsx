@@ -181,7 +181,7 @@ export default function Navbar() {
 
           {/* branding inside drawer */}
           <div className="nb-mobile-brand">
-            <img src="/logo.png" alt="ლოგო" className="nb-mobile-logo" loading="eager" />
+            <img src="/logo.webp" alt="ლოგო" className="nb-mobile-logo" loading="eager" />
             <div>
               <div className="nb-mobile-brand-name">ირმა ხვიჩიას</div>
               <div className="nb-mobile-brand-sub">რეაბილიტაციის ცენტრი</div>
