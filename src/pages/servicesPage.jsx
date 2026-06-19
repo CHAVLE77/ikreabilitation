@@ -1,143 +1,147 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 const SERVICES = [
   {
     id: 1,
-    tag: "ლოგოპედი",
-    title: "მეტყველების თერაპია",
-    short: "გამოთქმა, კომუნიკაცია, ენობრივი განვითარება",
+    tag: "ნევროლოგია",
+    title: "ნეიროსონოგრაფია",
+    short: "თავის ტვინის ულტრასონოგრაფიული კვლევა",
     description:
-      "მეტყველების, გამოთქმისა და კომუნიკაციის დარღვევების დიაგნოსტიკა და კომპლექსური კორექცია. ინდივიდუალური მიდგომა და თამაშზე დაფუძნებული თერაპია სრული ჩართულობისთვის.",
-    forWhom:
-      "ბავშვები მეტყველების შეფერხებით, ბგერათა გამოთქმის პრობლემებით, ჭექა-ქუხილით ან აფაზიით.",
-    steps: ["შეფასება", "გეგმა", "თერაპია", "კონტროლი"],
-    accent: "#FBBF24",
-    glow: "rgba(251,191,36,0.18)",
-    image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=560&fit=crop&auto=format",
-    category: "therapy",
+      "თავის ტვინის სტრუქტურებისა და განვითარების შეფასება ულტრასონოგრაფიული მეთოდით.",
+    forWhom: "ჩვილები და ბავშვები, რომელთაც ესაჭიროებათ ნევროლოგიური შეფასება.",
+    steps: ["კონსულტაცია", "კვლევა", "შეფასება", "რეკომენდაცია"],
+    accent: "#60A5FA",
+    glow: "rgba(96,165,250,0.18)",
+    image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=800",
+    category: "medical",
   },
   {
     id: 2,
-    tag: "ფსიქოლოგი",
-    title: "ფსიქოლოგიური კონსულტაცია",
-    short: "ემოციები, ქცევა, ოჯახური მხარდაჭერა",
+    tag: "ნევროლოგია",
+    title: "ვიდეო ელექტროენცეფალოგრაფია (EEG) მონიტორინგი",
+    short: "ტვინის ელექტრული აქტივობის კვლევა",
     description:
-      "ემოციური და ქცევითი სირთულეების კომპლექსური მართვა, თვითშეფასების ამაღლება, შფოთვისა და სტრესის გადალახვა. ბავშვი, მოზარდი, ოჯახი — ყველა დონეზე.",
-    forWhom:
-      "ბავშვები, მოზარდები და ოჯახები, რომლებსაც სჭირდებათ ფსიქოლოგიური მხარდაჭერა.",
-    steps: ["შეფასება", "მიზნები", "სეანსები", "შედეგი"],
-    accent: "#60A5FA",
-    glow: "rgba(96,165,250,0.18)",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&h=560&fit=crop&auto=format",
-    category: "support",
+      "ვიდეო EEG მონიტორინგი ტვინის ელექტრული აქტივობის შესაფასებლად და ნევროლოგიური დარღვევების გამოსავლენად.",
+    forWhom: "პაციენტები ეპილეფსიის, კრუნჩხვებისა და სხვა ნევროლოგიური პრობლემების დროს.",
+    steps: ["მომზადება", "მონიტორინგი", "ანალიზი", "დასკვნა"],
+    accent: "#818CF8",
+    glow: "rgba(129,140,248,0.18)",
+    image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800",
+    category: "medical",
   },
   {
     id: 3,
-    tag: "სპეც. პედაგოგი",
-    title: "სპეციალური პედაგოგიკა",
-    short: "სწავლება, მხარდაჭერა, ინდივიდუალური გეგმა",
+    tag: "დიაგნოსტიკა",
+    title: "ცერებრული დამბლის დიაგნოსტიკა",
+    short: "ცერებრული დამბლის ადრეული გამოვლენა",
     description:
-      "სწავლის სპეციფიკური მოთხოვნილებების მქონე ბავშვებისთვის მორგებული სასწავლო გეგმები. დისლექსია, დისგრაფია, ყურადღების დეფიციტი — გამოვლენა და კორექცია.",
-    forWhom:
-      "ბავშვები სწავლის სირთულეებით, ყურადღების დეფიციტით, დისლექსიით ან დისგრაფიით.",
-    steps: ["დიაგნოსტიკა", "IEP", "მუშაობა", "პროგრესი"],
-    accent: "#34D399",
-    glow: "rgba(52,211,153,0.18)",
-    image: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=800&h=560&fit=crop&auto=format",
-    category: "support",
+      "ბავშვის მოტორული განვითარების შეფასება და ცერებრული დამბლის ნიშნების გამოვლენა.",
+    forWhom: "ბავშვები მოძრაობის, კოორდინაციისა და განვითარების შეფერხებებით.",
+    steps: ["შეფასება", "დიაგნოსტიკა", "გეგმა", "მონიტორინგი"],
+    accent: "#F87171",
+    glow: "rgba(248,113,113,0.18)",
+    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=800",
+    category: "diagnostic",
   },
   {
     id: 4,
-    tag: "ფიზიოთერაპია",
-    title: "ფიზიკური თერაპია / რეაბილიტაცია",
-    short: "მოძრაობა, კოორდინაცია, სხეულის კონტროლი",
+    tag: "გენეტიკა",
+    title: "გენეტიკური მეტაბოლური სკრინინგი",
+    short: "კვლევა, შეფასება და შემდგომი მართვა",
     description:
-      "ფიზიკური განვითარების სტიმულაცია, კოორდინაციისა და ბალანსის გამომუშავება. სპეციალიზებული სარეაბილიტაციო პროგრამები ყოველი ასაკისთვის — ძალის, გამძლეობისა და მოქნილობის განვითარებით.",
-    forWhom:
-      "ბავშვები საავტომობილო განვითარების შეფერხებით, ცერებრული დამბლით ან სხვა ფიზიკური შეზღუდვით.",
-    steps: ["შეფასება", "პროგრამა", "ვარჯიში", "ადაპტაცია"],
-    accent: "#F87171",
-    glow: "rgba(248,113,113,0.18)",
-    image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&h=560&fit=crop&auto=format",
-    category: "therapy",
+      "გენეტიკური და მეტაბოლური დარღვევების გამოვლენა სპეციალური კვლევების საშუალებით.",
+    forWhom: "ბავშვები განვითარების შეფერხებით ან გენეტიკური რისკების არსებობისას.",
+    steps: ["კვლევა", "ანალიზი", "შეფასება", "მართვა"],
+    accent: "#34D399",
+    glow: "rgba(52,211,153,0.18)",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800",
+    category: "medical",
   },
   {
     id: 5,
-    tag: "ოკუპაციური თერაპია",
-    title: "ოკუპაციური თერაპია",
-    short: "თვითმოვლა, სენსორი, ყოველდღიური უნარები",
+    tag: "განვითარება",
+    title: "განვითარების შეფასება და მართვა",
+    short: "ბავშვის განვითარების კომპლექსური შეფასება",
     description:
-      "ყოველდღიური ცხოვრების უნარების განვითარება, სენსორული ინტეგრაცია, სკოლისა და სახლის გარემოსთვის ადაპტაცია. ბავშვი სწავლობს დამოუკიდებლობას — ნაბიჯ-ნაბიჯ.",
-    forWhom:
-      "ბავშვები სენსორული დამუშავების სირთულეებით, ავტიზმის სპექტრით, ან ადაპტაციის გამოწვევებით.",
-    steps: ["სენსორული შეფასება", "სტრატეგიები", "პრაქტიკა", "განვრცობა"],
-    accent: "#A78BFA",
-    glow: "rgba(167,139,250,0.18)",
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&h=560&fit=crop&auto=format",
-    category: "therapy",
-  },
-  {
-    id: 6,
-    tag: "ქცევითი თერაპია",
-    title: "ქცევითი თერაპია (ABA)",
-    short: "ქცევა, უნარები, სტრუქტურირებული სწავლება",
-    description:
-      "გამოყენებითი ქცევის ანალიზზე (ABA) დაფუძნებული თერაპია სასურველი ქცევების განვითარებისა და პრობლემური ქცევების შემცირებისთვის. მეცნიერულად დამტკიცებული მეთოდი.",
-    forWhom:
-      "ბავშვები ავტიზმის სპექტრით, ყურადღების დეფიციტ-ჰიპერაქტიურობის აშლილობით ან ქცევითი სირთულეებით.",
-    steps: ["ქცევითი შეფასება", "მიზნების დასახვა", "ინტენსიური მუშაობა", "განზოგადება"],
-    accent: "#FB923C",
-    glow: "rgba(251,146,60,0.18)",
-    image: "https://images.unsplash.com/photo-1509909756405-be0199881695?w=800&h=560&fit=crop&auto=format",
-    category: "therapy",
-  },
-  {
-    id: 7,
-    tag: "ადრეული ჩარევა",
-    title: "ადრეული განვითარება",
-    short: "0–6 წელი, ადრეული ჩარევა, განვითარების სტიმულაცია",
-    description:
-      "0–6 წლის ბავშვებისთვის კომპლექსური ადრეული ჩარევის პროგრამა. ნეიროპლასტიურობის გამოყენება ოპტიმალური შედეგებისთვის — რაც უფრო ადრე, მით უფრო ეფექტური.",
-    forWhom:
-      "ჩვილები და პატარა ბავშვები განვითარების შეფერხების ნიშნებით, მშობლები, რომლებსაც სჭირდებათ მიმართულება.",
-    steps: ["სრული შეფასება", "ოჯახის ჩართვა", "მულტიდისციპლინური გეგმა", "პროგრესის ზედამხედველობა"],
-    accent: "#2DD4BF",
-    glow: "rgba(45,212,191,0.18)",
-    image: "https://images.unsplash.com/photo-1566004100631-35d015d6a491?w=800&h=560&fit=crop&auto=format",
+      "ბავშვის კოგნიტური, მოტორული, სოციალური და კომუნიკაციური განვითარების შეფასება.",
+    forWhom: "ბავშვები განვითარების სხვადასხვა სირთულით.",
+    steps: ["შეფასება", "გეგმა", "თერაპია", "კონტროლი"],
+    accent: "#FBBF24",
+    glow: "rgba(251,191,36,0.18)",
+    image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800",
     category: "development",
   },
   {
-    id: 8,
-    tag: "აუტიზმი",
-    title: "აუტიზმის სპექტრის მხარდაჭერა",
-    short: "სპექტრი, სოციალური უნარები, ყოვლისმომცველი მიდგომა",
+    id: 6,
+    tag: "ნევროლოგია",
+    title: "ეპილეფსიის დიაგნოსტიკა და მკურნალობა",
+    short: "ეპილეფსიური მდგომარეობების მართვა",
     description:
-      "სპეციალიზებული, ყოვლისმომცველი მხარდაჭერა ASD დიაგნოზის მქონე ბავშვებისთვის. სოციალური კომუნიკაცია, სენსორული რეგულაცია, ყოველდღიური ადაპტაცია — ერთ სახურავქვეშ.",
-    forWhom:
-      "ბავშვები ავტიზმის სპექტრის აშლილობით და მათი ოჯახები — დიაგნოზიდან სასკოლო ინტეგრაციამდე.",
-    steps: ["დიაგნოსტიკური შეფასება", "ინდივიდუალური გეგმა", "სპეციალისტთა გუნდი", "ოჯახის სწავლება"],
-    accent: "#818CF8",
-    glow: "rgba(129,140,248,0.18)",
-    image: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&h=560&fit=crop&auto=format",
-    category: "support",
+      "ეპილეფსიის დიაგნოსტიკა, მკურნალობის დაგეგმვა და პაციენტის მდგომარეობის მონიტორინგი.",
+    forWhom: "ბავშვები და მოზარდები ეპილეფსიური შეტევებით.",
+    steps: ["დიაგნოსტიკა", "მკურნალობა", "დაკვირვება", "კონტროლი"],
+    accent: "#A78BFA",
+    glow: "rgba(167,139,250,0.18)",
+    image: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=800",
+    category: "medical",
+  },
+  {
+    id: 7,
+    tag: "ძილი",
+    title: "პოლისომნოგრაფია",
+    short: "ძილის ხარისხის და დარღვევების კვლევა",
+    description:
+      "ძილის პროცესის სრულყოფილი კვლევა და ძილის დარღვევების დიაგნოსტიკა.",
+    forWhom: "პაციენტები ძილის პრობლემებითა და ღამის დარღვევებით.",
+    steps: ["მომზადება", "კვლევა", "ანალიზი", "რეკომენდაცია"],
+    accent: "#2DD4BF",
+    glow: "rgba(45,212,191,0.18)",
+    image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800",
+    category: "medical",
+  },
+  {
+    id: 8,
+    tag: "ნევროლოგია",
+    title: "სხვადასხვა ნევროლოგიური დაავადებების კვლევა და მართვა",
+    short: "ნევროლოგიური პრობლემების დიაგნოსტიკა",
+    description:
+      "ნევროლოგიური დაავადებების სრული შეფასება, მართვა და შემდგომი მეთვალყურეობა.",
+    forWhom: "ბავშვები და მოზარდები ნევროლოგიური ჩივილებით.",
+    steps: ["კონსულტაცია", "კვლევა", "მკურნალობა", "მონიტორინგი"],
+    accent: "#FB923C",
+    glow: "rgba(251,146,60,0.18)",
+    image: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800",
+    category: "medical",
   },
   {
     id: 9,
-    tag: "მშობლის კონსულტაცია",
-    title: "მშობლის კონსულტაცია",
-    short: "სახელმძღვანელო, სტრატეგიები, ოჯახური ჰარმონია",
+    tag: "აუტიზმი",
+    title: "აუტიზმის სადიაგნოსტიკო ტესტი (ADOS)",
+    short: "აუტიზმის სპექტრის შეფასება",
     description:
-      "მშობლებისთვის პრაქტიკული ინსტრუმენტები სახლში განვითარების გასაგრძელებლად. კომუნიკაციის სტრატეგიები, საზღვრების დასმა, ბავშვის პოტენციალის მაქსიმალური გახსნა.",
-    forWhom:
-      "მშობლები, მეურვეები და ოჯახები, რომლებიც ეძებენ ეფექტურ მიდგომებს სახლის გარემოში.",
-    steps: ["მოლოდინების შეფასება", "მორგებული სტრატეგიები", "პრაქტიკული ვარჯიში", "მუდმივი მხარდაჭერა"],
+      "ADOS ტესტის საშუალებით აუტიზმის სპექტრის მდგომარეობის შეფასება და დიაგნოსტიკური მხარდაჭერა.",
+    forWhom: "ბავშვები აუტიზმის ნიშნებით ან განვითარების თავისებურებებით.",
+    steps: ["ტესტირება", "შეფასება", "დასკვნა", "რეკომენდაცია"],
+    accent: "#6366F1",
+    glow: "rgba(99,102,241,0.18)",
+    image: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800",
+    category: "diagnostic",
+  },
+  {
+    id: 10,
+    tag: "ფიზიოთერაპია",
+    title: "ფიზიოთერაპია",
+    short: "მოძრაობითი უნარების განვითარება",
+    description:
+      "ფიზიკური შესაძლებლობების გაუმჯობესება, მოძრაობის განვითარება და რეაბილიტაცია.",
+    forWhom: "ბავშვები მოტორული სირთულეებით და ფიზიკური განვითარების შეფერხებით.",
+    steps: ["შეფასება", "პროგრამა", "ვარჯიში", "შედეგი"],
     accent: "#F472B6",
     glow: "rgba(244,114,182,0.18)",
-    image: "https://images.unsplash.com/photo-1536640712-4d4c36ff0e4e?w=800&h=560&fit=crop&auto=format",
-    category: "support",
+    image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800",
+    category: "therapy",
   },
 ];
 
@@ -148,12 +152,70 @@ const STATS = [
   { value: "98%", label: "კმაყოფილება" },
 ];
 
+// ── State Funding Programs Data ──────────────────────────────────────────
+const FUNDING_PROGRAMS = [
+  {
+    id: "fp1",
+    title: "ფსიქოსომატური აბილიტაცია და რეაბილიტაციის პროგრამა",
+    description:
+      "ფსიქოსომატური ჯანმრთელობის აღდგენისა და რეაბილიტაციის კომპლექსური მიდგომა.",
+    accent: "#60A5FA",
+  },
+  {
+    id: "fp2",
+    title: "ძვალსახსროვანი სისტემის დეფორმაციის მქონე ბავშვთა რეაბილიტაცია",
+    description:
+      "ძვალსახსროვანი სისტემის დარღვევების მქონე ბავშვების მრავალპროფილური რეაბილიტაცია.",
+    accent: "#34D399",
+  },
+  {
+    id: "fp3",
+    title: "აუტიზმის სპექტრის დარღვევების მქონე ბავშვთა რეაბილიტაცია",
+    description:
+      "აუტიზმის სპექტრის მქონე ბავშვთა ინტეგრირებული რეაბილიტაცია და მხარდაჭერა.",
+    accent: "#A78BFA",
+  },
+  {
+    id: "fp4",
+    title: "ადრეული განვითარების პროგრამა",
+    description:
+      "ბავშვის ადრეული განვითარების სტიმულაცია და მხარდაჭერა მიზნობრივი ინტერვენციებით.",
+    accent: "#FBBF24",
+  },
+  {
+    id: "fp5",
+    title: "მოზრდილთა მოსახლეობის რეაბილიტაცია",
+    description:
+      "მოზრდილთა ფუნქციური შესაძლებლობების აღდგენა და ცხოვრების ხარისხის გაუმჯობესება.",
+    accent: "#F87171",
+  },
+];
+
+// 6th program – Individual Program (special, separate)
+const INDIVIDUAL_PROGRAM = {
+  id: "fp6",
+  title: "ინდივიდუალური პროგრამა",
+  description: "რომელიც მოიცავს ღრმა დიაგნოსტიკურ კვლევებს:",
+  accent: "#F472B6",
+  tests: [
+    "ფრაგილური X სინდრომის ტესტირება",
+    "ეგზომის სექცენტრება",
+    "ფიდეო EEG მონიტორინგი",
+    "სხვა საჭირო გენეტიკური ტესტები",
+  ],
+};
+
 // ── Helpers ─────────────────────────────────────────────────────────────────
 function useInView(ref, threshold = 0.15) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
       { threshold }
     );
     if (ref.current) obs.observe(ref.current);
@@ -165,19 +227,35 @@ function useInView(ref, threshold = 0.15) {
 // ── Modal ────────────────────────────────────────────────────────────────────
 function Modal({ service, onClose }) {
   useEffect(() => {
-    const handler = (e) => { if (e.key === "Escape") onClose(); };
+    const handler = (e) => {
+      if (e.key === "Escape") onClose();
+    };
     document.addEventListener("keydown", handler);
     document.body.style.overflow = "hidden";
-    return () => { document.removeEventListener("keydown", handler); document.body.style.overflow = ""; };
+    return () => {
+      document.removeEventListener("keydown", handler);
+      document.body.style.overflow = "";
+    };
   }, [onClose]);
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-box" onClick={(e) => e.stopPropagation()} style={{ "--acc": service.accent, "--glow": service.glow }}>
-        <button className="modal-close" onClick={onClose} aria-label="დახურვა">✕</button>
+      <div
+        className="modal-box"
+        onClick={(e) => e.stopPropagation()}
+        style={{ "--acc": service.accent, "--glow": service.glow }}
+      >
+        <button className="modal-close" onClick={onClose} aria-label="დახურვა">
+          ✕
+        </button>
 
         <div className="modal-img-wrap">
-          <img src={service.image} alt={service.title} className="modal-img" loading="lazy" />
+          <img
+            src={service.image}
+            alt={service.title}
+            className="modal-img"
+            loading="lazy"
+          />
           <div className="modal-img-overlay" />
           <div className="modal-tag">{service.tag}</div>
         </div>
@@ -188,12 +266,12 @@ function Modal({ service, onClose }) {
           <p className="modal-desc">{service.description}</p>
 
           <div className="modal-section">
-            <span className="modal-label">👥 ვისთვის</span>
+            <span className="modal-label"> ვისთვის</span>
             <p className="modal-for">{service.forWhom}</p>
           </div>
 
           <div className="modal-section">
-            <span className="modal-label">📋 პროცესი</span>
+            <span className="modal-label"> პროცესი</span>
             <div className="modal-steps">
               {service.steps.map((s, i) => (
                 <div key={i} className="modal-step">
@@ -208,7 +286,13 @@ function Modal({ service, onClose }) {
           <a href="#contact" className="modal-cta" onClick={onClose}>
             დეტალურად
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path
+                d="M5 12H19M19 12L12 5M19 12L12 19"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
         </div>
@@ -216,89 +300,219 @@ function Modal({ service, onClose }) {
 
       <style jsx>{`
         .modal-backdrop {
-          position: fixed; inset: 0; z-index: 9000;
-          background: rgba(2,10,30,0.82);
+          position: fixed;
+          inset: 0;
+          z-index: 9000;
+          background: rgba(2, 10, 30, 0.82);
           backdrop-filter: blur(10px);
-          display: flex; align-items: center; justify-content: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           padding: 20px;
           animation: fadeIn 0.25s ease;
         }
         .modal-box {
-          background: #0D1B3E;
+          background: #0d1b3e;
           border-radius: 24px;
-          max-width: 640px; width: 100%;
+          max-width: 640px;
+          width: 100%;
           max-height: 92vh;
           overflow-y: auto;
-          border: 1px solid rgba(251,191,36,0.2);
-          box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px var(--acc, #FBBF24) inset;
+          border: 1px solid rgba(251, 191, 36, 0.2);
+          box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--acc, #fbbf24) inset;
           position: relative;
-          animation: slideUp 0.35s cubic-bezier(0.16,1,0.3,1);
+          animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .modal-close {
-          position: absolute; top: 16px; right: 16px; z-index: 10;
-          width: 36px; height: 36px; border-radius: 50%;
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.15);
-          color: #fff; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 14px; transition: all 0.2s;
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 10;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          color: #fff;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          transition: all 0.2s;
         }
-        .modal-close:hover { background: rgba(255,255,255,0.18); transform: scale(1.1); }
-        .modal-img-wrap { position: relative; height: 240px; overflow: hidden; border-radius: 24px 24px 0 0; }
-        .modal-img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-close:hover {
+          background: rgba(255, 255, 255, 0.18);
+          transform: scale(1.1);
+        }
+        .modal-img-wrap {
+          position: relative;
+          height: 240px;
+          overflow: hidden;
+          border-radius: 24px 24px 0 0;
+        }
+        .modal-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
         .modal-img-overlay {
-          position: absolute; inset: 0;
-          background: linear-gradient(180deg, transparent 20%, rgba(13,27,62,0.9) 100%);
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 20%, rgba(13, 27, 62, 0.9) 100%);
         }
         .modal-tag {
-          position: absolute; top: 18px; left: 18px;
-          background: var(--acc, #FBBF24); color: #0D1B3E;
-          font-size: 0.65rem; font-weight: 800;
-          letter-spacing: 0.1em; text-transform: uppercase;
-          padding: 4px 12px; border-radius: 20px;
+          position: absolute;
+          top: 18px;
+          left: 18px;
+          background: var(--acc, #fbbf24);
+          color: #0d1b3e;
+          font-size: 0.65rem;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          padding: 4px 12px;
+          border-radius: 20px;
         }
-        .modal-body { padding: 1.5rem 1.75rem 1.75rem; display: flex; flex-direction: column; gap: 0.9rem; }
+        .modal-body {
+          padding: 1.5rem 1.75rem 1.75rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.9rem;
+        }
         .modal-title {
-          font-size: 1.5rem; font-weight: 900;
-          color: #fff; margin: 0;
-          background: linear-gradient(135deg, #fff 50%, var(--acc, #FBBF24));
-          -webkit-background-clip: text; background-clip: text; color: transparent;
+          font-size: 1.5rem;
+          font-weight: 900;
+          color: #fff;
+          margin: 0;
+          background: linear-gradient(135deg, #fff 50%, var(--acc, #fbbf24));
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
         }
-        .modal-short { font-size: 0.8rem; color: var(--acc, #FBBF24); font-weight: 600; margin: -4px 0 0; text-transform: uppercase; letter-spacing: 0.06em; }
-        .modal-desc { font-size: 0.9rem; color: rgba(255,255,255,0.82); line-height: 1.7; margin: 0; }
-        .modal-section { background: rgba(255,255,255,0.04); border-radius: 14px; padding: 0.9rem 1rem; border: 1px solid rgba(255,255,255,0.07); }
-        .modal-label { display: block; font-size: 0.67rem; font-weight: 700; color: var(--acc, #FBBF24); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
-        .modal-for { font-size: 0.85rem; color: rgba(255,255,255,0.78); line-height: 1.6; margin: 0; }
-        .modal-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
-        .modal-step { display: flex; align-items: center; gap: 6px; }
+        .modal-short {
+          font-size: 0.8rem;
+          color: var(--acc, #fbbf24);
+          font-weight: 600;
+          margin: -4px 0 0;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+        .modal-desc {
+          font-size: 0.9rem;
+          color: rgba(255, 255, 255, 0.82);
+          line-height: 1.7;
+          margin: 0;
+        }
+        .modal-section {
+          background: rgba(255, 255, 255, 0.04);
+          border-radius: 14px;
+          padding: 0.9rem 1rem;
+          border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .modal-label {
+          display: block;
+          font-size: 0.67rem;
+          font-weight: 700;
+          color: var(--acc, #fbbf24);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-bottom: 0.5rem;
+        }
+        .modal-for {
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.78);
+          line-height: 1.6;
+          margin: 0;
+        }
+        .modal-steps {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .modal-step {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
         .step-num {
-          width: 26px; height: 26px; border-radius: 50%;
-          background: var(--acc, #FBBF24); color: #0D1B3E;
-          font-size: 0.7rem; font-weight: 800;
-          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: var(--acc, #fbbf24);
+          color: #0d1b3e;
+          font-size: 0.7rem;
+          font-weight: 800;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
         }
-        .modal-step span { font-size: 0.78rem; color: rgba(255,255,255,0.85); font-weight: 600; }
-        .step-arrow { color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+        .modal-step span {
+          font-size: 0.78rem;
+          color: rgba(255, 255, 255, 0.85);
+          font-weight: 600;
+        }
+        .step-arrow {
+          color: rgba(255, 255, 255, 0.3);
+          font-size: 0.9rem;
+        }
         .modal-cta {
-          display: inline-flex; align-items: center; gap: 8px;
-          background: linear-gradient(105deg, #0066CC, #004C99);
-          color: #fff; text-decoration: none;
-          padding: 0.9rem 1.8rem; border-radius: 50px;
-          font-size: 0.875rem; font-weight: 700;
-          box-shadow: 0 8px 24px rgba(0,76,153,0.4);
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: linear-gradient(105deg, #0066cc, #004c99);
+          color: #fff;
+          text-decoration: none;
+          padding: 0.9rem 1.8rem;
+          border-radius: 50px;
+          font-size: 0.875rem;
+          font-weight: 700;
+          box-shadow: 0 8px 24px rgba(0, 76, 153, 0.4);
           transition: all 0.25s ease;
           align-self: flex-start;
           margin-top: 0.25rem;
         }
-        .modal-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,76,153,0.55); }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(40px) scale(0.96); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+        .modal-cta:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 32px rgba(0, 76, 153, 0.55);
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes slideUp {
+          from {
+            transform: translateY(40px) scale(0.96);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+        }
         @media (max-width: 520px) {
-          .modal-box { border-radius: 20px; }
-          .modal-img-wrap { height: 180px; }
-          .modal-body { padding: 1.1rem 1.2rem 1.4rem; }
-          .modal-title { font-size: 1.2rem; }
-          .modal-cta { align-self: stretch; justify-content: center; }
+          .modal-box {
+            border-radius: 20px;
+          }
+          .modal-img-wrap {
+            height: 180px;
+          }
+          .modal-body {
+            padding: 1.1rem 1.2rem 1.4rem;
+          }
+          .modal-title {
+            font-size: 1.2rem;
+          }
+          .modal-cta {
+            align-self: stretch;
+            justify-content: center;
+          }
         }
       `}</style>
     </div>
@@ -306,31 +520,33 @@ function Modal({ service, onClose }) {
 }
 
 // ── Card ─────────────────────────────────────────────────────────────────────
-function ServiceCard({ service, idx, onOpen }) {
+function ServiceCard({ service, idx, onOpen, onClick }) {
   const ref = useRef(null);
   const visible = useInView(ref, 0.1);
   const [hovered, setHovered] = useState(false);
 
-  const handleEnlarge = (e) => {
-    e.stopPropagation();
-    onOpen(service);
-  };
-
-  const handleDetails = (e) => {
-    e.stopPropagation();
-    // Just a visual element - no function
+  // If an external onClick is provided, use it; otherwise fall back to onOpen
+  const handleCardClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    } else {
+      onOpen(service);
+    }
   };
 
   return (
     <article
       ref={ref}
       className={`svc-card ${visible ? "card-in" : ""}`}
-      style={{ "--acc": service.accent, "--glow": service.glow, transitionDelay: `${(idx % 3) * 0.1}s` }}
+      style={{
+        "--acc": service.accent,
+        "--glow": service.glow,
+        transitionDelay: `${(idx % 3) * 0.1}s`,
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={() => onOpen(service)}
+      onClick={handleCardClick}
     >
-      {/* Image */}
       <div className="card-img-wrap">
         <img src={service.image} alt={service.title} loading="lazy" className="card-img" />
         <div className="card-overlay" />
@@ -338,7 +554,6 @@ function ServiceCard({ service, idx, onOpen }) {
         <span className="card-tag">{service.tag}</span>
       </div>
 
-      {/* Body */}
       <div className="card-body">
         <h3 className="card-title">{service.title}</h3>
         <p className="card-short">{service.short}</p>
@@ -353,171 +568,242 @@ function ServiceCard({ service, idx, onOpen }) {
           ))}
         </div>
 
-        <div className="card-footer">
-          <span className="card-cta" onClick={handleEnlarge}>
-            გადიდება
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </span>
-
-          <span className="card-cta" onClick={handleDetails}>
-            დეტალურად
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </span>
-
-          <div className="card-glow-dot" />
-        </div>
+        {/* "გადიდება" is now purely visual – click bubbles to the article */}
+        <span className="card-cta">
+          გადიდება
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M5 12H19M19 12L12 5M19 12L12 19"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        <div className="card-glow-dot" />
       </div>
 
-      {/* Accent line */}
       <div className="card-line" />
 
       <style jsx>{`
         .svc-card {
-          --acc: #FBBF24;
-          --glow: rgba(251,191,36,0.18);
-          background: rgba(13,27,62,0.75);
+          --acc: #fbbf24;
+          --glow: rgba(251, 191, 36, 0.18);
+          background: rgba(13, 27, 62, 0.75);
           backdrop-filter: blur(16px);
-          border: 1px solid rgba(255,255,255,0.08);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 22px;
           overflow: hidden;
           cursor: pointer;
           opacity: 0;
           transform: translateY(44px) scale(0.96);
           transition:
-            opacity 0.65s cubic-bezier(0.22,1,0.36,1),
-            transform 0.65s cubic-bezier(0.22,1,0.36,1),
+            opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
             box-shadow 0.35s ease,
             border-color 0.35s ease;
           position: relative;
           will-change: transform, opacity;
         }
-        .svc-card.card-in { opacity: 1; transform: translateY(0) scale(1); }
+        .svc-card.card-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
         .svc-card:hover {
           transform: translateY(-10px) scale(1.018) !important;
-          border-color: rgba(251,191,36,0.35);
+          border-color: rgba(251, 191, 36, 0.35);
           box-shadow:
-            0 30px 60px rgba(0,0,0,0.5),
-            0 0 40px var(--glow, rgba(251,191,36,0.18));
+            0 30px 60px rgba(0, 0, 0, 0.5),
+            0 0 40px var(--glow, rgba(251, 191, 36, 0.18));
         }
         .svc-card::before {
-          content: '';
-          position: absolute; inset: 0;
+          content: "";
+          position: absolute;
+          inset: 0;
           background: radial-gradient(ellipse at 50% 0%, var(--glow), transparent 70%);
           opacity: 0;
           transition: opacity 0.4s ease;
-          pointer-events: none; z-index: 0;
+          pointer-events: none;
+          z-index: 0;
         }
-        .svc-card:hover::before { opacity: 1; }
+        .svc-card:hover::before {
+          opacity: 1;
+        }
 
-        .card-img-wrap { position: relative; height: 200px; overflow: hidden; }
-        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s cubic-bezier(0.22,1,0.36,1); }
-        .svc-card:hover .card-img { transform: scale(1.1); }
+        .card-img-wrap {
+          position: relative;
+          height: 200px;
+          overflow: hidden;
+        }
+        .card-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .svc-card:hover .card-img {
+          transform: scale(1.1);
+        }
         .card-overlay {
-          position: absolute; inset: 0;
-          background: linear-gradient(180deg, rgba(2,10,30,0.25) 0%, rgba(2,10,30,0.7) 100%);
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(2, 10, 30, 0.25) 0%, rgba(2, 10, 30, 0.7) 100%);
           z-index: 1;
         }
         .card-wash {
-          position: absolute; inset: 0;
-          background: var(--acc, #FBBF24);
-          opacity: 0; mix-blend-mode: multiply;
-          transition: opacity 0.4s ease; z-index: 1;
+          position: absolute;
+          inset: 0;
+          background: var(--acc, #fbbf24);
+          opacity: 0;
+          mix-blend-mode: multiply;
+          transition: opacity 0.4s ease;
+          z-index: 1;
         }
-        .svc-card:hover .card-wash { opacity: 0.12; }
+        .svc-card:hover .card-wash {
+          opacity: 0.12;
+        }
         .card-tag {
-          position: absolute; top: 14px; left: 14px; z-index: 2;
-          background: var(--acc, #FBBF24); color: #020A1E;
-          font-size: 0.6rem; font-weight: 800;
-          text-transform: uppercase; letter-spacing: 0.1em;
-          padding: 4px 10px; border-radius: 20px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          position: absolute;
+          top: 14px;
+          left: 14px;
+          z-index: 2;
+          background: var(--acc, #fbbf24);
+          color: #020a1e;
+          font-size: 0.6rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          padding: 4px 10px;
+          border-radius: 20px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .card-body {
           padding: 1.25rem 1.3rem 1.1rem;
-          display: flex; flex-direction: column; gap: 0.5rem;
-          position: relative; z-index: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          position: relative;
+          z-index: 1;
         }
         .card-title {
-          font-size: 1.05rem; font-weight: 900;
-          color: #fff; margin: 0; letter-spacing: -0.01em;
+          font-size: 1.05rem;
+          font-weight: 900;
+          color: #fff;
+          margin: 0;
+          letter-spacing: -0.01em;
           transition: color 0.25s ease;
         }
-        .svc-card:hover .card-title { color: var(--acc, #FBBF24); }
+        .svc-card:hover .card-title {
+          color: var(--acc, #fbbf24);
+        }
         .card-short {
-          font-size: 0.7rem; font-weight: 600;
-          color: var(--acc, #FBBF24); opacity: 0.85;
-          text-transform: uppercase; letter-spacing: 0.06em;
+          font-size: 0.7rem;
+          font-weight: 600;
+          color: var(--acc, #fbbf24);
+          opacity: 0.85;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
           margin: 0;
         }
         .card-desc {
-          font-size: 0.81rem; line-height: 1.65;
-          color: rgba(255,255,255,0.68); margin: 0;
+          font-size: 0.81rem;
+          line-height: 1.65;
+          color: rgba(255, 255, 255, 0.68);
+          margin: 0;
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
-        .card-steps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+        .card-steps {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 2px;
+        }
         .card-step {
-          display: flex; align-items: center; gap: 5px;
-          font-size: 0.67rem; font-weight: 600;
-          color: rgba(255,255,255,0.55);
-          background: rgba(255,255,255,0.05);
-          padding: 3px 9px; border-radius: 20px;
-          border: 1px solid rgba(255,255,255,0.07);
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 0.67rem;
+          font-weight: 600;
+          color: rgba(255, 255, 255, 0.55);
+          background: rgba(255, 255, 255, 0.05);
+          padding: 3px 9px;
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.07);
           transition: all 0.25s ease;
         }
         .svc-card:hover .card-step {
-          color: rgba(255,255,255,0.82);
-          background: rgba(255,255,255,0.08);
-          border-color: rgba(255,255,255,0.12);
+          color: rgba(255, 255, 255, 0.82);
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(255, 255, 255, 0.12);
         }
-        .step-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--acc, #FBBF24); flex-shrink: 0; }
+        .step-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--acc, #fbbf24);
+          flex-shrink: 0;
+        }
 
-        .card-footer {
-          display: flex; align-items: center; justify-content: space-evenly;
-          margin-top: 0.25rem;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
         .card-cta {
-          display: flex; align-items: center; gap: 6px;
-          font-size: 0.78rem; font-weight: 700;
-          color: var(--acc, #FBBF24);
-          opacity: 0; transform: translateX(-8px);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--acc, #fbbf24);
+          opacity: 0;
+          transform: translateX(-8px);
           transition: opacity 0.3s ease, transform 0.3s ease;
-          cursor: pointer;
+          cursor: default; /* no longer clickable */
+          pointer-events: none;
         }
-        .svc-card:hover .card-cta { opacity: 1; transform: translateX(0); }
-        .card-cta:hover {
-          opacity: 0.8 !important;
-          transform: translateX(2px) !important;
+        .svc-card:hover .card-cta {
+          opacity: 1;
+          transform: translateX(0);
         }
+
         .card-glow-dot {
-          width: 8px; height: 8px; border-radius: 50%;
-          background: var(--acc, #FBBF24);
-          box-shadow: 0 0 10px var(--acc, #FBBF24);
-          opacity: 0; transition: opacity 0.3s ease;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--acc, #fbbf24);
+          box-shadow: 0 0 10px var(--acc, #fbbf24);
+          opacity: 0;
+          transition: opacity 0.3s ease;
           animation: pulse-glow 2s infinite;
         }
-        .svc-card:hover .card-glow-dot { opacity: 1; }
+        .svc-card:hover .card-glow-dot {
+          opacity: 1;
+        }
 
         .card-line {
-          position: absolute; bottom: 0; left: 0;
-          height: 3px; width: 0%;
-          background: linear-gradient(90deg, var(--acc, #FBBF24), rgba(251,191,36,0.3));
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 3px;
+          width: 0%;
+          background: linear-gradient(90deg, var(--acc, #fbbf24), rgba(251, 191, 36, 0.3));
           border-radius: 0 2px 2px 0;
-          transition: width 0.45s cubic-bezier(0.22,1,0.36,1);
+          transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .svc-card:hover .card-line { width: 100%; }
+        .svc-card:hover .card-line {
+          width: 100%;
+        }
 
         @keyframes pulse-glow {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.4); }
+          0%,
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.4);
+          }
         }
       `}</style>
     </article>
@@ -529,14 +815,319 @@ function StatCounter({ value, label, delay }) {
   const ref = useRef(null);
   const visible = useInView(ref, 0.3);
   return (
-    <div ref={ref} className={`stat-item ${visible ? "stat-in" : ""}`} style={{ transitionDelay: `${delay}s` }}>
+    <div
+      ref={ref}
+      className={`stat-item ${visible ? "stat-in" : ""}`}
+      style={{ transitionDelay: `${delay}s` }}
+    >
       <div className="stat-value">{value}</div>
       <div className="stat-label">{label}</div>
       <style jsx>{`
-        .stat-item { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; text-align: center; }
-        .stat-item.stat-in { opacity: 1; transform: translateY(0); }
-        .stat-value { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; color: #FBBF24; letter-spacing: -0.03em; line-height: 1; }
-        .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+        .stat-item {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease, transform 0.6s ease;
+          text-align: center;
+        }
+        .stat-item.stat-in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .stat-value {
+          font-size: clamp(2rem, 4vw, 2.8rem);
+          font-weight: 900;
+          color: #fbbf24;
+          letter-spacing: -0.03em;
+          line-height: 1;
+        }
+        .stat-label {
+          font-size: 0.78rem;
+          color: rgba(255, 255, 255, 0.6);
+          font-weight: 600;
+          margin-top: 6px;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ── Funding Program Card ──────────────────────────────────────────────────
+function FundingCard({ program, idx }) {
+  const ref = useRef(null);
+  const visible = useInView(ref, 0.1);
+
+  return (
+    <div
+      ref={ref}
+      className={`funding-card ${visible ? "funding-in" : ""}`}
+      style={{
+        "--acc": program.accent,
+        transitionDelay: `${(idx % 3) * 0.08}s`,
+      }}
+    >
+      <div className="funding-accent" style={{ background: program.accent }} />
+      <div className="funding-body">
+        <h4 className="funding-title">{program.title}</h4>
+        <p className="funding-desc">{program.description}</p>
+      </div>
+      <div className="funding-arrow">→</div>
+
+      <style jsx>{`
+        .funding-card {
+          display: flex;
+          align-items: stretch;
+          background: rgba(13, 27, 62, 0.55);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          border-radius: 18px;
+          overflow: hidden;
+          opacity: 0;
+          transform: translateY(30px) scale(0.97);
+          transition:
+            opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.35s ease,
+            border-color 0.35s ease;
+          cursor: default;
+          position: relative;
+        }
+        .funding-card.funding-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        .funding-card:hover {
+          border-color: rgba(251, 191, 36, 0.2);
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(251, 191, 36, 0.05) inset;
+          transform: translateY(-4px) scale(1.005) !important;
+        }
+
+        .funding-accent {
+          width: 5px;
+          flex-shrink: 0;
+          border-radius: 18px 0 0 18px;
+          transition: width 0.3s ease;
+        }
+        .funding-card:hover .funding-accent {
+          width: 7px;
+        }
+
+        .funding-body {
+          padding: 1.25rem 1.25rem 1.25rem 1.1rem;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .funding-title {
+          font-size: 0.92rem;
+          font-weight: 800;
+          color: #fff;
+          line-height: 1.35;
+          letter-spacing: -0.01em;
+          margin: 0;
+          transition: color 0.25s ease;
+        }
+        .funding-card:hover .funding-title {
+          color: var(--acc, #fbbf24);
+        }
+        .funding-desc {
+          font-size: 0.78rem;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.6;
+          margin: 0;
+        }
+        .funding-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-right: 1.2rem;
+          font-size: 1.1rem;
+          color: rgba(255, 255, 255, 0.15);
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+        }
+        .funding-card:hover .funding-arrow {
+          color: var(--acc, #fbbf24);
+          transform: translateX(4px);
+        }
+
+        @media (max-width: 640px) {
+          .funding-body {
+            padding: 1rem 1rem 1rem 0.9rem;
+          }
+          .funding-title {
+            font-size: 0.82rem;
+          }
+          .funding-desc {
+            font-size: 0.72rem;
+          }
+          .funding-arrow {
+            padding-right: 0.8rem;
+            font-size: 0.9rem;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ── Individual Program Component ─────────────────────────────────────────
+function IndividualProgram({ program }) {
+  const ref = useRef(null);
+  const visible = useInView(ref, 0.1);
+
+  return (
+    <div
+      ref={ref}
+      className={`individual-program ${visible ? "individual-in" : ""}`}
+      style={{ "--acc": program.accent }}
+    >
+      <div className="individual-accent" style={{ background: program.accent }} />
+      <div className="individual-content">
+        <div className="individual-header">
+          <h4 className="individual-title">{program.title}</h4>
+          <p className="individual-desc">{program.description}</p>
+        </div>
+        <ul className="individual-tests">
+          {program.tests.map((test, i) => (
+            <li key={i} className="individual-test-item">
+              <span className="test-dot" />
+              {test}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="individual-arrow">→</div>
+
+      <style jsx>{`
+        .individual-program {
+          display: flex;
+          align-items: stretch;
+          background: rgba(13, 27, 62, 0.65);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(251, 191, 36, 0.15);
+          border-radius: 18px;
+          overflow: hidden;
+          opacity: 0;
+          transform: translateY(30px) scale(0.97);
+          transition:
+            opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.35s ease,
+            border-color 0.35s ease;
+          position: relative;
+          margin-top: 1.5rem;
+        }
+        .individual-program.individual-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        .individual-program:hover {
+          border-color: rgba(251, 191, 36, 0.4);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(251, 191, 36, 0.08) inset;
+          transform: translateY(-4px) scale(1.005) !important;
+        }
+
+        .individual-accent {
+          width: 6px;
+          flex-shrink: 0;
+          border-radius: 18px 0 0 18px;
+          transition: width 0.3s ease;
+        }
+        .individual-program:hover .individual-accent {
+          width: 9px;
+        }
+
+        .individual-content {
+          padding: 1.4rem 1.6rem 1.4rem 1.4rem;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+        }
+        .individual-header {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .individual-title {
+          font-size: 1.05rem;
+          font-weight: 900;
+          color: #fff;
+          line-height: 1.3;
+          margin: 0;
+          letter-spacing: -0.01em;
+          transition: color 0.25s ease;
+        }
+        .individual-program:hover .individual-title {
+          color: var(--acc, #f472b6);
+        }
+        .individual-desc {
+          font-size: 0.82rem;
+          color: rgba(255, 255, 255, 0.65);
+          line-height: 1.6;
+          margin: 0;
+        }
+        .individual-tests {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+        .individual-test-item {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          font-size: 0.82rem;
+          color: rgba(255, 255, 255, 0.8);
+          line-height: 1.4;
+          padding: 4px 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .individual-test-item:last-child {
+          border-bottom: none;
+        }
+        .test-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--acc, #f472b6);
+          flex-shrink: 0;
+          box-shadow: 0 0 8px var(--acc, #f472b6);
+        }
+        .individual-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-right: 1.4rem;
+          font-size: 1.2rem;
+          color: rgba(255, 255, 255, 0.15);
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+        }
+        .individual-program:hover .individual-arrow {
+          color: var(--acc, #f472b6);
+          transform: translateX(4px);
+        }
+
+        @media (max-width: 640px) {
+          .individual-content {
+            padding: 1rem 1.2rem 1rem 1rem;
+          }
+          .individual-title {
+            font-size: 0.92rem;
+          }
+          .individual-test-item {
+            font-size: 0.76rem;
+          }
+          .individual-arrow {
+            padding-right: 1rem;
+          }
+        }
       `}</style>
     </div>
   );
@@ -544,10 +1135,13 @@ function StatCounter({ value, label, delay }) {
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function ServicesPage() {
+  const navigate = useNavigate();
   const [activeModal, setActiveModal] = useState(null);
   const [filter, setFilter] = useState("all");
   const headerRef = useRef(null);
   const headerVisible = useInView(headerRef, 0.15);
+  const fundingRef = useRef(null);
+  const fundingVisible = useInView(fundingRef, 0.1);
 
   const FILTERS = [
     { id: "all", label: "ყველა" },
@@ -558,7 +1152,16 @@ export default function ServicesPage() {
 
   const filtered = filter === "all"
     ? SERVICES
-    : SERVICES.filter(s => s.category === filter);
+    : SERVICES.filter((s) => s.category === filter);
+
+  // Handler for card clicks – navigate for id 10, else open modal
+  const handleCardClick = (service) => {
+    if (service.id === 10) {
+      navigate("/fizio");
+    } else {
+      setActiveModal(service);
+    }
+  };
 
   return (
     <div className="page-root">
@@ -585,7 +1188,6 @@ export default function ServicesPage() {
             სადაც ბავშვი და ოჯახი იღებს ყველა საჭირო დახმარებას.
           </p>
 
-          {/* Stats Row */}
           <div className={`stats-row ${headerVisible ? "stats-in" : ""}`}>
             {STATS.map((s, i) => (
               <StatCounter key={i} value={s.value} label={s.label} delay={0.5 + i * 0.1} />
@@ -593,12 +1195,17 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        {/* Scroll hint */}
         <div className="scroll-hint">
           <span className="scroll-label">სერვისები</span>
           <div className="scroll-pill">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-              <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path
+                d="M12 5v14M5 12l7 7 7-7"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </div>
         </div>
@@ -607,10 +1214,9 @@ export default function ServicesPage() {
       {/* ── Services Grid ── */}
       <section className="services-section">
         <div className="section-container">
-
           {/* Filter Pills */}
           <div className="filter-row">
-            {FILTERS.map(f => (
+            {FILTERS.map((f) => (
               <button
                 key={f.id}
                 className={`filter-btn ${filter === f.id ? "active" : ""}`}
@@ -625,8 +1231,53 @@ export default function ServicesPage() {
           {/* Grid */}
           <div className="svc-grid">
             {filtered.map((s, idx) => (
-              <ServiceCard key={s.id} service={s} idx={idx} onOpen={setActiveModal} />
+              <ServiceCard
+                key={s.id}
+                service={s}
+                idx={idx}
+                onOpen={setActiveModal}
+                onClick={() => handleCardClick(s)}
+              />
             ))}
+          </div>
+
+          {/* ── STATE FUNDING PROGRAMS ── */}
+          <div className="funding-section" ref={fundingRef}>
+            {/* Header */}
+            <div className={`funding-header ${fundingVisible ? "funding-header-in" : ""}`}>
+              <div className="funding-header-left">
+                <span className="funding-badge">
+                  <span className="funding-badge-dot" />
+                  სახელმწიფო პროგრამები
+                </span>
+                <h2 className="funding-title-main">
+                  სახელმწიფო დაფინანსების
+                  <br />
+                  <span className="funding-title-gold">პროგრამები</span>
+                </h2>
+                <p className="funding-sub">
+                  ჩვენი მიზანია, თითოეულ ბენეფიციარს შევთავაზოთ
+                  მაღალი ხარისხის მომსახურება. ამისთვის ჩვენ
+                  ვმუშაობთ რამდენიმე სახელმწიფო დაფინანსების
+                  პროგრამის ფარგლებში.
+                </p>
+              </div>
+              <div className="funding-header-ornament">
+                <div className="ornament-ring" />
+                <div className="ornament-ring" />
+                <div className="ornament-ring" />
+              </div>
+            </div>
+
+            {/* Grid of first 5 programs */}
+            <div className="funding-grid">
+              {FUNDING_PROGRAMS.map((p, idx) => (
+                <FundingCard key={p.id} program={p} idx={idx} />
+              ))}
+            </div>
+
+            {/* 6th program – Individual Program (separate) */}
+            <IndividualProgram program={INDIVIDUAL_PROGRAM} />
           </div>
 
           {/* CTA Banner */}
@@ -634,12 +1285,21 @@ export default function ServicesPage() {
             <div className="cta-orb" />
             <div className="cta-content">
               <h3 className="cta-title">მზად ხართ პირველი ნაბიჯისთვის?</h3>
-              <p className="cta-sub">ჩვენი გუნდი დაგეხმარებათ სწორი სერვისის არჩევაში —  საწყისი კონსულტაცია.</p>
+              <p className="cta-sub">
+                ჩვენი გუნდი დაგეხმარებათ სწორი სერვისის არჩევაში — საწყისი
+                კონსულტაცია.
+              </p>
             </div>
             <a href="/contact" className="cta-btn">
               ჩაეწერე კონსულტაციაზე
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M5 12H19M19 12L12 5M19 12L12 19"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </a>
           </div>
@@ -649,288 +1309,643 @@ export default function ServicesPage() {
       {/* Modal */}
       {activeModal && <Modal service={activeModal} onClose={() => setActiveModal(null)} />}
 
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap');
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-      `}</style>
+      <style jsx global>
+        {`
+          @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap");
+          *,
+          *::before,
+          *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+          }
+        `}
+      </style>
 
-      <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap');
+      <style jsx>
+        {`
+          /* ── Root ── */
+          .page-root {
+            font-family: "Noto Sans Georgian", system-ui, sans-serif;
+            background: #020a1e;
+            min-height: 100vh;
+            color: #fff;
+          }
 
-        /* ── Root ── */
-        .page-root {
-          font-family: 'Noto Sans Georgian', system-ui, sans-serif;
-          background: #020A1E;
-          min-height: 100vh;
-          color: #fff;
-        }
+          /* ── Hero ── */
+          .page-hero {
+            position: relative;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: clamp(80px, 12vw, 130px) clamp(20px, 6vw, 80px)
+              clamp(60px, 8vw, 100px);
+          }
 
-        /* ── Hero ── */
-        .page-hero {
-          position: relative;
-          min-height: 100svh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          padding: clamp(80px,12vw,130px) clamp(20px,6vw,80px) clamp(60px,8vw,100px);
-        }
+          .hero-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+              linear-gradient(rgba(251, 191, 36, 0.04) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(251, 191, 36, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+          }
 
-        /* Animated grid background */
-        .hero-grid-bg {
-          position: absolute; inset: 0;
-          background-image:
-            linear-gradient(rgba(251,191,36,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(251,191,36,0.04) 1px, transparent 1px);
-          background-size: 60px 60px;
-          mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
-        }
+          .hero-noise {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+          }
 
-        /* Noise texture overlay */
-        .hero-noise {
-          position: absolute; inset: 0; z-index: 1;
-          opacity: 0.025;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-          background-size: 200px 200px;
-          pointer-events: none;
-        }
+          .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(80px);
+          }
+          .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 102, 204, 0.35), transparent 70%);
+            top: -120px;
+            left: -100px;
+            animation: driftOrb 12s ease-in-out infinite;
+          }
+          .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.15), transparent 70%);
+            bottom: -80px;
+            right: -60px;
+            animation: driftOrb 15s ease-in-out infinite reverse;
+          }
+          .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.12), transparent 70%);
+            top: 40%;
+            left: 60%;
+            animation: driftOrb 20s ease-in-out infinite;
+            animation-delay: -7s;
+          }
 
-        /* Glowing orbs */
-        .hero-orb {
-          position: absolute; border-radius: 50%;
-          pointer-events: none; filter: blur(80px);
-        }
-        .orb-1 {
-          width: 500px; height: 500px;
-          background: radial-gradient(circle, rgba(0,102,204,0.35), transparent 70%);
-          top: -120px; left: -100px;
-          animation: driftOrb 12s ease-in-out infinite;
-        }
-        .orb-2 {
-          width: 400px; height: 400px;
-          background: radial-gradient(circle, rgba(251,191,36,0.15), transparent 70%);
-          bottom: -80px; right: -60px;
-          animation: driftOrb 15s ease-in-out infinite reverse;
-        }
-        .orb-3 {
-          width: 300px; height: 300px;
-          background: radial-gradient(circle, rgba(96,165,250,0.12), transparent 70%);
-          top: 40%; left: 60%;
-          animation: driftOrb 20s ease-in-out infinite;
-          animation-delay: -7s;
-        }
+          .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(20px, 3vw, 32px);
+          }
 
-        .hero-inner {
-          position: relative; z-index: 2;
-          max-width: 900px; width: 100%;
-          text-align: center;
-          display: flex; flex-direction: column;
-          align-items: center; gap: clamp(20px,3vw,32px);
-        }
+          .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 22px;
+            border-radius: 100px;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #fbbf24;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+          }
+          .hero-badge.badge-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+          .badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #fbbf24;
+            animation: pulse 2s infinite;
+          }
 
-        /* Badge */
-        .hero-badge {
-          display: inline-flex; align-items: center; gap: 8px;
-          padding: 8px 22px; border-radius: 100px;
-          background: rgba(251,191,36,0.08);
-          border: 1px solid rgba(251,191,36,0.4);
-          font-size: 0.7rem; font-weight: 700;
-          letter-spacing: 0.14em; text-transform: uppercase;
-          color: #FBBF24;
-          opacity: 0; transform: translateY(20px) scale(0.95);
-          transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .hero-badge.badge-in { opacity: 1; transform: translateY(0) scale(1); }
-        .badge-dot {
-          width: 7px; height: 7px; border-radius: 50%;
-          background: #FBBF24;
-          animation: pulse 2s infinite;
-        }
+          .hero-title {
+            font-size: clamp(2.4rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.12;
+            letter-spacing: -0.03em;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease 0.15s,
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+          }
+          .hero-title.title-in {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .title-gold {
+            background: linear-gradient(135deg, #fbbf24 30%, #f59e0b 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+          }
 
-        /* Title */
-        .hero-title {
-          font-size: clamp(2.4rem,6vw,5rem);
-          font-weight: 900;
-          line-height: 1.12; letter-spacing: -0.03em;
-          color: #fff;
-          opacity: 0; transform: translateY(40px);
-          transition: opacity 0.8s ease 0.15s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s;
-        }
-        .hero-title.title-in { opacity: 1; transform: translateY(0); }
-        .title-gold {
-          background: linear-gradient(135deg, #FBBF24 30%, #F59E0B 70%);
-          -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
+          .hero-sub {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.72);
+            line-height: 1.75;
+            max-width: 620px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+          }
+          .hero-sub.sub-in {
+            opacity: 1;
+            transform: translateY(0);
+          }
 
-        /* Sub */
-        .hero-sub {
-          font-size: clamp(0.9rem,2vw,1.1rem);
-          color: rgba(255,255,255,0.72);
-          line-height: 1.75; max-width: 620px;
-          opacity: 0; transform: translateY(30px);
-          transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
-        }
-        .hero-sub.sub-in { opacity: 1; transform: translateY(0); }
+          .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            width: 100%;
+            padding: 2rem 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease 0.45s, transform 0.7s ease 0.45s;
+          }
+          .stats-row.stats-in {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .stats-row > * + * {
+            border-left: 1px solid rgba(255, 255, 255, 0.07);
+            padding-left: 2rem;
+            margin-left: -1rem;
+          }
 
-        /* Stats row */
-        .stats-row {
-          display: grid; grid-template-columns: repeat(4, 1fr);
-          gap: 2rem; width: 100%;
-          padding: 2rem 2.5rem;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.07);
-          border-radius: 20px;
-          backdrop-filter: blur(10px);
-          margin-top: 8px;
-          opacity: 0; transform: translateY(20px);
-          transition: opacity 0.7s ease 0.45s, transform 0.7s ease 0.45s;
-        }
-        .stats-row.stats-in { opacity: 1; transform: translateY(0); }
+          .scroll-hint {
+            position: absolute;
+            bottom: clamp(24px, 4vw, 40px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.45);
+            animation: fadeUp 1s ease 1.5s both;
+          }
+          .scroll-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+          }
+          .scroll-pill {
+            width: 24px;
+            height: 38px;
+            border-radius: 100px;
+            border: 1.5px solid currentColor;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 7px;
+          }
+          .scroll-pill svg {
+            animation: bounce 1.6s ease-in-out infinite;
+          }
 
-        /* Dividers between stats */
-        .stats-row > * + * { border-left: 1px solid rgba(255,255,255,0.07); padding-left: 2rem; margin-left: -1rem; }
+          /* ── Services Section ── */
+          .services-section {
+            padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 64px);
+            background: linear-gradient(180deg, #020a1e 0%, #061a3a 50%, #020a1e 100%);
+            position: relative;
+          }
+          .services-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.4), transparent);
+          }
 
-        /* Scroll hint */
-        .scroll-hint {
-          position: absolute; bottom: clamp(24px,4vw,40px); left: 50%; transform: translateX(-50%);
-          z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
-          color: rgba(255,255,255,0.45);
-          animation: fadeUp 1s ease 1.5s both;
-        }
-        .scroll-label { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
-        .scroll-pill {
-          width: 24px; height: 38px; border-radius: 100px;
-          border: 1.5px solid currentColor;
-          display: flex; align-items: flex-start; justify-content: center; padding-top: 7px;
-        }
-        .scroll-pill svg { animation: bounce 1.6s ease-in-out infinite; }
+          .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+          }
 
-        /* ── Services Section ── */
-        .services-section {
-          padding: clamp(56px,8vw,96px) clamp(20px,5vw,64px);
-          background: linear-gradient(180deg, #020A1E 0%, #061A3A 50%, #020A1E 100%);
-          position: relative;
-        }
-        .services-section::before {
-          content: '';
-          position: absolute; top: 0; left: 0; right: 0; height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(251,191,36,0.4), transparent);
-        }
+          /* Filter */
+          .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+          }
+          .filter-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 22px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.65);
+            font-family: "Noto Sans Georgian", sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.02em;
+          }
+          .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(251, 191, 36, 0.3);
+            color: #fff;
+          }
+          .filter-btn.active {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: rgba(251, 191, 36, 0.55);
+            color: #fbbf24;
+          }
+          .filter-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #fbbf24;
+            animation: pulse 2s infinite;
+          }
 
-        .section-container { max-width: 1280px; margin: 0 auto; }
+          .svc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+          }
 
-        /* Filter */
-        .filter-row {
-          display: flex; align-items: center; gap: 10px;
-          margin-bottom: 2.5rem; flex-wrap: wrap;
-        }
-        .filter-btn {
-          position: relative;
-          display: inline-flex; align-items: center; gap: 8px;
-          padding: 9px 22px; border-radius: 40px;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.1);
-          color: rgba(255,255,255,0.65);
-          font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.8rem; font-weight: 700;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          letter-spacing: 0.02em;
-        }
-        .filter-btn:hover {
-          background: rgba(255,255,255,0.09);
-          border-color: rgba(251,191,36,0.3);
-          color: #fff;
-        }
-        .filter-btn.active {
-          background: rgba(251,191,36,0.1);
-          border-color: rgba(251,191,36,0.55);
-          color: #FBBF24;
-        }
-        .filter-dot {
-          width: 6px; height: 6px; border-radius: 50%;
-          background: #FBBF24;
-          animation: pulse 2s infinite;
-        }
+          /* ── STATE FUNDING PROGRAMS ── */
+          .funding-section {
+            margin: 2.5rem 0 3.5rem;
+            padding: 2.8rem 2.5rem;
+            background: radial-gradient(ellipse at 30% 0%, rgba(251, 191, 36, 0.04), transparent 60%),
+              rgba(13, 27, 62, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            position: relative;
+            overflow: hidden;
+          }
+          .funding-section::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 102, 204, 0.06), transparent 70%);
+            pointer-events: none;
+          }
+          .funding-section::after {
+            content: "";
+            position: absolute;
+            bottom: -40%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.04), transparent 70%);
+            pointer-events: none;
+          }
 
-        /* Grid */
-        .svc-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.5rem;
-          margin-bottom: 3.5rem;
-        }
+          .funding-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2.2rem;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            position: relative;
+            z-index: 1;
+          }
+          .funding-header.funding-header-in {
+            opacity: 1;
+            transform: translateY(0);
+          }
 
-        /* CTA Banner */
-        .cta-banner {
-          position: relative;
-          display: flex; align-items: center; justify-content: space-between;
-          flex-wrap: wrap; gap: 1.5rem;
-          padding: 2.5rem 2.8rem;
-          background: linear-gradient(135deg, rgba(0,76,153,0.3) 0%, rgba(0,102,204,0.15) 100%);
-          border: 1px solid rgba(0,102,204,0.35);
-          border-radius: 24px;
-          overflow: hidden;
-        }
-        .cta-orb {
-          position: absolute; top: -60px; right: -40px;
-          width: 280px; height: 280px; border-radius: 50%;
-          background: radial-gradient(circle, rgba(251,191,36,0.12), transparent 70%);
-          pointer-events: none;
-        }
-        .cta-content { position: relative; z-index: 1; max-width: 560px; }
-        .cta-title { font-size: clamp(1.2rem,3vw,1.6rem); font-weight: 900; color: #fff; margin-bottom: 8px; }
-        .cta-sub { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
-        .cta-btn {
-          position: relative; z-index: 1;
-          display: inline-flex; align-items: center; gap: 10px;
-          background: linear-gradient(105deg, #FBBF24, #F59E0B);
-          color: #020A1E;
-          padding: clamp(12px,2vw,15px) clamp(20px,3vw,32px);
-          border-radius: 50px;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.88rem; font-weight: 800;
-          text-decoration: none;
-          transition: all 0.28s ease;
-          white-space: nowrap;
-          box-shadow: 0 8px 28px rgba(251,191,36,0.35);
-          flex-shrink: 0;
-        }
-        .cta-btn:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 14px 36px rgba(251,191,36,0.5);
-        }
+          .funding-header-left {
+            flex: 1;
+          }
+          .funding-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 16px;
+            border-radius: 100px;
+            background: rgba(0, 102, 204, 0.12);
+            border: 1px solid rgba(0, 102, 204, 0.3);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #60a5fa;
+            margin-bottom: 12px;
+          }
+          .funding-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #60a5fa;
+            animation: pulse 2s infinite;
+          }
 
-        /* ── Animations ── */
-        @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(1.3); } }
-        @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
-        @keyframes driftOrb { 0%,100% { transform:translate(0,0); } 33% { transform:translate(30px,-20px); } 66% { transform:translate(-20px,25px); } }
-        @keyframes fadeUp { from { opacity:0; transform:translateX(-50%) translateY(15px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+          .funding-title-main {
+            font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: #fff;
+            margin: 0 0 8px;
+            letter-spacing: -0.02em;
+          }
+          .funding-title-gold {
+            background: linear-gradient(135deg, #fbbf24 30%, #f59e0b 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+          }
 
-        /* ── Responsive ── */
-        @media (max-width: 1024px) {
-          .svc-grid { grid-template-columns: repeat(2, 1fr); }
-          .stats-row { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-          .stats-row > * + * { border-left: none; padding-left: 0; margin-left: 0; }
-          .stats-row > *:nth-child(2n) { border-left: 1px solid rgba(255,255,255,0.07); padding-left: 1.5rem; margin-left: -0.75rem; }
-        }
-        @media (max-width: 640px) {
-          .svc-grid { grid-template-columns: 1fr; }
-          .stats-row { grid-template-columns: repeat(2,1fr); padding: 1.4rem; gap: 1.2rem; }
-          .stats-row > *:nth-child(2n) { padding-left: 1rem; margin-left: -0.5rem; }
-          .cta-banner { padding: 1.75rem 1.5rem; }
-          .cta-btn { width: 100%; justify-content: center; }
-          .card-footer { justify-content: flex-start; }
-        }
+          .funding-sub {
+            font-size: clamp(0.82rem, 1.1vw, 0.95rem);
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.75;
+            max-width: 620px;
+            margin: 0;
+          }
 
-        @media (prefers-reduced-motion: reduce) {
-          .hero-badge, .hero-title, .hero-sub, .stats-row,
-          .hero-orb, .scroll-pill svg, .badge-dot,
-          .filter-dot { animation: none !important; transition: none !important; }
-          .hero-badge, .hero-title, .hero-sub, .stats-row { opacity: 1; transform: none; }
-        }
-      `}</style>
+          .funding-header-ornament {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            padding-top: 6px;
+          }
+          .ornament-ring {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(251, 191, 36, 0.25);
+            transition: all 0.4s ease;
+          }
+          .ornament-ring:nth-child(2) {
+            width: 14px;
+            height: 14px;
+            border-color: rgba(251, 191, 36, 0.4);
+          }
+          .ornament-ring:nth-child(3) {
+            width: 18px;
+            height: 18px;
+            border-color: rgba(251, 191, 36, 0.55);
+          }
+          .funding-header:hover .ornament-ring {
+            border-color: rgba(251, 191, 36, 0.7);
+            transform: scale(1.1);
+          }
+
+          .funding-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+          }
+
+          /* CTA Banner */
+          .cta-banner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 2.5rem 2.8rem;
+            background: linear-gradient(135deg, rgba(0, 76, 153, 0.3) 0%, rgba(0, 102, 204, 0.15) 100%);
+            border: 1px solid rgba(0, 102, 204, 0.35);
+            border-radius: 24px;
+            overflow: hidden;
+          }
+          .cta-orb {
+            position: absolute;
+            top: -60px;
+            right: -40px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.12), transparent 70%);
+            pointer-events: none;
+          }
+          .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 560px;
+          }
+          .cta-title {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 8px;
+          }
+          .cta-sub {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+          }
+          .cta-btn {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(105deg, #fbbf24, #f59e0b);
+            color: #020a1e;
+            padding: clamp(12px, 2vw, 15px) clamp(20px, 3vw, 32px);
+            border-radius: 50px;
+            font-family: "Noto Sans Georgian", sans-serif;
+            font-size: 0.88rem;
+            font-weight: 800;
+            text-decoration: none;
+            transition: all 0.28s ease;
+            white-space: nowrap;
+            box-shadow: 0 8px 28px rgba(251, 191, 36, 0.35);
+            flex-shrink: 0;
+          }
+          .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 36px rgba(251, 191, 36, 0.5);
+          }
+
+          /* ── Animations ── */
+          @keyframes pulse {
+            0%,
+            100% {
+              opacity: 1;
+              transform: scale(1);
+            }
+            50% {
+              opacity: 0.4;
+              transform: scale(1.3);
+            }
+          }
+          @keyframes bounce {
+            0%,
+            100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(6px);
+            }
+          }
+          @keyframes driftOrb {
+            0%,
+            100% {
+              transform: translate(0, 0);
+            }
+            33% {
+              transform: translate(30px, -20px);
+            }
+            66% {
+              transform: translate(-20px, 25px);
+            }
+          }
+          @keyframes fadeUp {
+            from {
+              opacity: 0;
+              transform: translateX(-50%) translateY(15px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(-50%) translateY(0);
+            }
+          }
+
+          /* ── Responsive ── */
+          @media (max-width: 1024px) {
+            .svc-grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-row {
+              grid-template-columns: repeat(2, 1fr);
+              gap: 1.5rem;
+            }
+            .stats-row > * + * {
+              border-left: none;
+              padding-left: 0;
+              margin-left: 0;
+            }
+            .stats-row > *:nth-child(2n) {
+              border-left: 1px solid rgba(255, 255, 255, 0.07);
+              padding-left: 1.5rem;
+              margin-left: -0.75rem;
+            }
+            .funding-grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+            .funding-section {
+              padding: 2rem 1.5rem;
+            }
+          }
+
+          @media (max-width: 768px) {
+            .funding-header {
+              flex-direction: column;
+              gap: 1rem;
+            }
+            .funding-header-ornament {
+              align-self: flex-start;
+            }
+            .funding-grid {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          @media (max-width: 640px) {
+            .svc-grid {
+              grid-template-columns: 1fr;
+            }
+            .stats-row {
+              grid-template-columns: repeat(2, 1fr);
+              padding: 1.4rem;
+              gap: 1.2rem;
+            }
+            .stats-row > *:nth-child(2n) {
+              padding-left: 1rem;
+              margin-left: -0.5rem;
+            }
+            .cta-banner {
+              padding: 1.75rem 1.5rem;
+            }
+            .cta-btn {
+              width: 100%;
+              justify-content: center;
+            }
+            .funding-section {
+              padding: 1.5rem 1rem;
+              border-radius: 20px;
+              margin: 1.5rem 0 2.5rem;
+            }
+            .funding-title-main {
+              font-size: 1.4rem;
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .hero-badge,
+            .hero-title,
+            .hero-sub,
+            .stats-row,
+            .hero-orb,
+            .scroll-pill svg,
+            .badge-dot,
+            .filter-dot,
+            .funding-header,
+            .funding-card,
+            .individual-program {
+              animation: none !important;
+              transition: none !important;
+            }
+            .hero-badge,
+            .hero-title,
+            .hero-sub,
+            .stats-row,
+            .funding-header,
+            .funding-card,
+            .individual-program {
+              opacity: 1;
+              transform: none;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../lib/supabase";
+
 /* ─────────────── DATA ─────────────── */
 const HOURS = [
   { day: "ორშაბათი – პარასკევი", time: "09:00 – 19:00", open: true },
@@ -82,9 +83,10 @@ function ContactItem({ item, visible, delay }) {
 /* ─────────────── MAIN COMPONENT ─────────────── */
 export default function Contact() {
   const [visible, setVisible] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "", specialist: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", specialist: "", service: "", message: "" });
   const [sent, setSent] = useState(false);
   const rootRef = useRef(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -93,36 +95,49 @@ export default function Contact() {
     );
     if (rootRef.current) obs.observe(rootRef.current);
 
-    const preselected = sessionStorage.getItem("selectedSpecialist");
-    if (preselected) {
-      setFormData(prev => ({ ...prev, specialist: preselected }));
+    // ── Read pre-selected specialist (from team section etc.) ──
+    const preselectedSpecialist = sessionStorage.getItem("selectedSpecialist");
+    if (preselectedSpecialist) {
+      setFormData(prev => ({ ...prev, specialist: preselectedSpecialist }));
       sessionStorage.removeItem("selectedSpecialist");
+    }
+
+    // ── Read pre-selected service (from Services modal CTA) ──
+    const preselectedService = sessionStorage.getItem("selectedService");
+    if (preselectedService) {
+      setFormData(prev => ({ ...prev, service: preselectedService }));
+      sessionStorage.removeItem("selectedService");
+      // Scroll form into view smoothly after a short delay so page has settled
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 300);
     }
 
     return () => obs.disconnect();
   }, []);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  const { error } = await supabase
-    .from("submissions")
-    .insert([{
-      name:       formData.name,
-      phone:      formData.phone,
-      specialist: formData.specialist,
-      message:    formData.message,
-      status:     "pending",
-    }]);
+    e.preventDefault();
 
-  if (!error) {
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
-    setFormData({ name: "", phone: "", specialist: "", message: "" });
-  } else {
-    console.error("შეცდომა:", error);
-  }
-};
+    const { error } = await supabase
+      .from("submissions")
+      .insert([{
+        name:       formData.name,
+        phone:      formData.phone,
+        specialist: formData.specialist,
+        service:    formData.service,
+        message:    formData.message,
+        status:     "pending",
+      }]);
+
+    if (!error) {
+      setSent(true);
+      setTimeout(() => setSent(false), 4000);
+      setFormData({ name: "", phone: "", specialist: "", service: "", message: "" });
+    } else {
+      console.error("შეცდომა:", error);
+    }
+  };
 
   return (
     <>
@@ -254,7 +269,7 @@ export default function Contact() {
           gap: 16px;
         }
 
-        /* ── Info strip (3 cards side by side) ── */
+        /* ── Info strip ── */
         .ct-info-strip {
           display: flex;
           flex-direction: column;
@@ -275,7 +290,6 @@ export default function Contact() {
           border-radius: 16px;
           text-decoration: none;
           color: inherit;
-          transition: all 0.3s ease;
           opacity: 0;
           transform: translateX(-20px);
           transition: opacity 0.5s ease, transform 0.5s ease, background 0.25s ease, border-color 0.25s ease;
@@ -465,14 +479,14 @@ export default function Contact() {
         }
         .ct-field textarea { resize: none; min-height: 90px; }
 
-        /* specialist field highlight */
-        .ct-field-specialist input {
-          border-color: rgba(245,166,35,0.3);
-          background: rgba(245,166,35,0.06);
+        /* highlighted pre-filled fields */
+        .ct-field-prefilled input {
+          border-color: rgba(245,166,35,0.45);
+          background: rgba(245,166,35,0.07);
           color: var(--gold-light);
           font-weight: 600;
         }
-        .ct-field-specialist label { color: var(--gold); }
+        .ct-field-prefilled label { color: var(--gold); }
 
         .ct-submit {
           display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -661,8 +675,8 @@ export default function Contact() {
             {/* RIGHT */}
             <div className={`ct-right ${visible ? "ct-right--in" : ""}`}>
 
-              {/* Form — TOP */}
-              <div className="ct-form-card">
+              {/* Form */}
+              <div className="ct-form-card" ref={formRef}>
                 <div className="ct-form-head">
                   <h3 className="ct-form-title">გამოგვიგზავნეთ შეტყობინება</h3>
                   <p className="ct-form-sub">დაგვიკავშირდებით მოკლე ხანში</p>
@@ -671,41 +685,82 @@ export default function Contact() {
                   <div className="ct-field-row">
                     <div className="ct-field">
                       <label>სახელი</label>
-                      <input type="text" placeholder="თქვენი სახელი" value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                      <input
+                        type="text"
+                        placeholder="თქვენი სახელი"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        required
+                      />
                     </div>
                     <div className="ct-field">
                       <label>ტელეფონი</label>
-                      <input type="tel" placeholder="+995 5XX XX XX XX" value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
+                      <input
+                        type="tel"
+                        placeholder="+995 5XX XX XX XX"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        required
+                      />
                     </div>
                   </div>
-                  <div className={`ct-field ${formData.specialist ? "ct-field-specialist" : ""}`}>
+
+                  <div className={`ct-field ${formData.specialist ? "ct-field-prefilled" : ""}`}>
                     <label>სპეციალისტი</label>
-                    <input type="text" placeholder="ექიმი რომელთანაც ეწერებით"
+                    <input
+                      type="text"
+                      placeholder="სპეციალისტი რომელთანაც ეწერებით"
                       value={formData.specialist}
-                      onChange={(e) => setFormData({...formData, specialist: e.target.value})} />
+                      onChange={(e) => setFormData({ ...formData, specialist: e.target.value })}
+                    />
                   </div>
+
+                  <div className={`ct-field ${formData.service ? "ct-field-prefilled" : ""}`}>
+                    <label>სერვისი</label>
+                    <input
+                      type="text"
+                      placeholder="სერვისი რომელზეც ეწერებით"
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                    />
+                  </div>
+
                   <div className="ct-field">
                     <label>შეტყობინება</label>
-                    <textarea placeholder="მოგვიყევით თქვენი ბავშვის საჭიროებებზე..."
+                    <textarea
+                      placeholder="მოგვიყევით თქვენი ბავშვის საჭიროებებზე..."
                       value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})} />
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    />
                   </div>
+
                   <button type="submit" className={`ct-submit ${sent ? "ct-submit--sent" : ""}`}>
-                    {sent
-                      ? <>გაგზავნილია <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg></>
-                      : <>გაგზავნა <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></>
-                    }
+                    {sent ? (
+                      <>
+                        გაგზავნილია
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                      </>
+                    ) : (
+                      <>
+                        გაგზავნა
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                      </>
+                    )}
                   </button>
                 </form>
               </div>
 
-              {/* Map — BOTTOM */}
+              {/* Map */}
               <div className="ct-map-card">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000.0!2d41.6282323!3d41.6410399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406787123775ff67%3A0x87dba33f22dd4919!2sIrma%20Khvichia%20Rehabilitation%20Center!5e0!3m2!1sen!2sge!4v1740000000000"
-                  allowFullScreen="" loading="lazy" title="ირმა ხვიჩიას რეაბილიტაციის ცენტრი"
+                  allowFullScreen=""
+                  loading="lazy"
+                  title="ირმა ხვიჩიას რეაბილიტაციის ცენტრი"
                 />
                 <div className="ct-map-overlay">
                   <div className="ct-map-loc">
@@ -714,11 +769,14 @@ export default function Contact() {
                   </div>
                   <a
                     href="https://www.google.com/maps/place/Irma+Khvichia+Rehabilitation+Center"
-                    target="_blank" rel="noopener noreferrer"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="ct-map-link"
                   >
                     გზამკვლევი
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
                   </a>
                 </div>
               </div>
@@ -745,7 +803,10 @@ export default function Contact() {
               </div>
               <p style={{ fontSize:13, color:'rgba(255,255,255,0.45)', maxWidth:250, lineHeight:1.7, marginBottom:24 }}>ჩვენ ვქმნით სივრცეს, სადაც ყოველი ბავშვი პოულობს საკუთარ ბილიკს.</p>
               <div style={{ display:'flex', gap:8 }}>
-                {[{href:"https://www.facebook.com/profile.php?id=100063818393741",icon:<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>},{href:"https://instagram.com",icon:<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>}].map((s,i)=>(
+                {[
+                  { href:"https://www.facebook.com/profile.php?id=100063818393741", icon:<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> },
+                  { href:"https://instagram.com", icon:<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg> },
+                ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" style={{ width:36, height:36, borderRadius:9, background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.08)', display:'flex', alignItems:'center', justifyContent:'center', color:'rgba(255,255,255,0.5)', textDecoration:'none' }}>{s.icon}</a>
                 ))}
               </div>
@@ -783,7 +844,7 @@ export default function Contact() {
                   { icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>, text:"ექვთიმე თაყაიშვილის 58 ბათუმი", href:null },
                   { icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>, text:"+995 032 242 38 64", href:"tel:+995032242386" },
                   { icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>, text:"ikrehabilitation@gmail.com", href:"mailto:ikrehabilitation@gmail.com" },
-                ].map((c,i)=>(
+                ].map((c, i) => (
                   <div key={i} style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
                     <div style={{ width:20, height:20, background:'rgba(245,166,35,0.1)', borderRadius:5, display:'flex', alignItems:'center', justifyContent:'center', color:'#F5A623', flexShrink:0, marginTop:1 }}>{c.icon}</div>
                     {c.href

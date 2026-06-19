@@ -12,7 +12,7 @@ const ArrowLeft = ({ size = 14 }) => (
   </svg>
 );
 const CheckIcon = () => (
-  <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+  <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
     <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
@@ -41,44 +41,56 @@ const teamData = [
     experience: "8 წელი",
     sessions: "1,200+",
     rating: 5.0,
-    specialty: "სენსორული ინტეგრაცია",
-    certs: ["OT სახელმწიფო ლიცენზია", "Sensory Integration", "NDT სერტიფიკატი"],
-    bio: "ანა სენსორული სამყაროს ექსპერტია. ის ბავშვებს ეხმარება, რომ ყოველდღიური გამოწვევები — ტანსაცმლის ჩაცმიდან ფანქრის ჭერამდე — სიამოვნებად იქცეს.",
-    fullBio: "ირმა სენსორული სამყაროს ექსპერტია 8 წლიანი გამოცდილებით. ის ბავშვებს ეხმარება, რომ ყოველდღიური გამოწვევები — ტანსაცმლის ჩაცმიდან ფანქრის ჭერამდე — სიამოვნებად იქცეს. მისი ინდივიდუალური მიდგომა და ბავშვებისადმი სიყვარული მას გამარჯვებებს მოჰყავს.",
+    specialty: "ბავშვთა ნევროლოგია",
+    certs: [
+      "ნევროლოგიის სერტიფიკატი",
+      "ბავშვთა ნევროლოგიის ტრენინგი",
+      "EEG დიაგნოსტიკა"
+    ],
+    bio: "ირმა ხვიჩია არის ბავშვთა ნევროლოგი, რომელიც ეხმარება პაციენტებს ნერვული სისტემის დარღვევების დიაგნოსტიკასა და მართვაში.",
+    fullBio: "8 წლიანი გამოცდილებით, ირმა ხვიჩია მუშაობს ბავშვთა ნევროლოგიური მდგომარეობების შეფასებაზე, დიაგნოსტიკასა და ინდივიდუალური მკურნალობის დაგეგმვაზე.",
     image: "/team1.webp",
     color: "#3A7BD5",
     colorRgb: "58,123,213",
   },
   {
     id: 2,
-    name: "გიორგი ბერიძე",
-    role: "ქცევითი თერაპევტი (ABA)",
+    name: "გია მელიქიშვილი",
+    role: "ეპილეფტოლოგი",
     experience: "10 წელი",
     sessions: "2,000+",
     rating: 4.9,
-    specialty: "ABA თერაპია",
-    certs: ["BCBA სერტიფიკატი", "VB-MAPP", "ESDM ტრენინგი"],
-    bio: "გიორგი ABA-ს ადამიანურ სახეს წარმოადგენს — სტრუქტურა, სიყვარული და დაჟინება ერთ სივრცეში. ნაბიჯ-ნაბიჯ, გამარჯვება გამარჯვებაზე.",
-    fullBio: "გიორგი ABA-ს ადამიანურ სახეს წარმოადგენს — სტრუქტურა, სიყვარული და დაჟინება ერთ სივრცეში. 10 წლიანი გამოცდილებით, ის ბავშვებს ეხმარება ქცევითი გამოწვევების გადალახვაში. VB-MAPP და ESDM ტრენინგი მისი ძირითადი მეთოდოლოგიაა.",
+    specialty: "ეპილეფსიური და კრუნჩხვითი დარღვევების დიაგნოსტიკა და მკურნალობა",
+    certs: [
+      "ნევროლოგიის სერტიფიკატი",
+      "EEG დიაგნოსტიკის ტრენინგი",
+      "ეპილეფტოლოგიის სპეციალიზაცია"
+    ],
+    bio: "გია მელიქიშვილი სპეციალიზდება ეპილეფსიისა და კრუნჩხვითი დარღვევების მართვაში. პაციენტებს ეხმარება ზუსტი დიაგნოსტიკისა და ინდივიდუალური მკურნალობის დაგეგმვაში.",
+    fullBio: "10 წლიანი გამოცდილებით, გია მელიქიშვილი მუშაობს ეპილეფსიის სხვადასხვა ფორმის დიაგნოსტიკასა და მკურნალობაზე. მისი მიმართულებები მოიცავს EEG კვლევების შეფასებას, კრუნჩხვითი ეპიზოდების მართვას და თანამედროვე თერაპიული მიდგომების გამოყენებას.",
     image: "/team2.webp",
     color: "#1B6FD4",
     colorRgb: "27,111,212",
   },
   {
     id: 3,
-    name: "სოფო ლომიძე",
-    role: "ფიზიკური თერაპევტი",
+    name: "ლევან ჩიკვატია",
+    role: "ორთოპედ-ტრავმატოლოგი",
     experience: "6 წელი",
     sessions: "900+",
     rating: 5.0,
-    specialty: "ფიზიკური რეაბილიტაცია",
-    certs: ["PT სახელმწიფო ლიცენზია", "Bobath მეთოდი", "პედიატრიული PT"],
-    bio: "სოფო ყოველ ნაბიჯს ზეიმად აქცევს. მისი პაციენტები ისწავლიან არა მხოლოდ სიარულს — არამედ სიამაყეს, რომ შეძლეს.",
-    fullBio: "სოფო ყოველ ნაბიჯს ზეიმად აქცევს. 6 წლიანი გამოცდილებით, მისი პაციენტები ისწავლიან არა მხოლოდ სიარულს — არამედ სიამაყეს, რომ შეძლეს. Bobath მეთოდი და პედიატრიული PT მისი ძირითადი ინსტრუმენტებია.",
+    specialty: "ძვალ-სახსროვანი სისტემის დიაგნოსტიკა და მკურნალობა",
+    certs: [
+      "ორთოპედია-ტრავმატოლოგიის სერტიფიკატი",
+      "სახსრების ქირურგიის ტრენინგი",
+      "ბავშვთა ორთოპედიის კურსი"
+    ],
+    bio: "ლევან ჩიკვატია არის ორთოპედ-ტრავმატოლოგი, რომელიც ეხმარება პაციენტებს ძვალ-სახსროვანი პრობლემების დიაგნოსტიკასა და მკურნალობაში.",
+    fullBio: "6 წლიანი გამოცდილებით, ლევან ჩიკვატია მუშაობს ტრავმების, ხერხემლისა და სახსრების პრობლემების შეფასებასა და მკურნალობაზე. მისი მიზანია პაციენტებისთვის უსაფრთხო და ეფექტური მკურნალობის გზების შერჩევა.",
     image: "/team3.webp",
     color: "#2B4A8A",
     colorRgb: "43,74,138",
-  },
+  }
 ];
 
 /* ─────────────────── RATING STARS ─────────────────── */
@@ -196,22 +208,23 @@ function ProfileModal({ person, onClose }) {
           <div style={{ fontSize:"0.58rem", fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", color:"rgba(255,255,255,0.28)", marginTop:"0.3rem" }}>
             კვალიფიკაცია
           </div>
+
+          {/* Modal certs — vertical list style */}
           <div style={{ display:"flex", flexDirection:"column", gap:"0.4rem" }}>
             {person.certs.map((c, i) => (
               <div key={i} style={{
-                display:"flex", alignItems:"center", gap:"0.6rem",
-                fontSize:"0.78rem", color:"rgba(255,255,255,0.72)",
+                display:"flex", alignItems:"flex-start", gap:"0.6rem",
                 padding:"0.48rem 0.75rem",
                 background:`rgba(${person.colorRgb},0.08)`,
                 border:`1px solid rgba(${person.colorRgb},0.18)`,
                 borderRadius:10,
               }}>
                 <span style={{
-                  width:18, height:18, borderRadius:6,
+                  width:18, height:18, borderRadius:6, flexShrink:0, marginTop:1,
                   background:`rgba(${person.colorRgb},0.25)`,
-                  color: person.color, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0
+                  color: person.color, display:"flex", alignItems:"center", justifyContent:"center",
                 }}><CheckIcon /></span>
-                {c}
+                <span style={{ fontSize:"0.78rem", fontWeight:500, color:"rgba(255,255,255,0.82)", lineHeight:1.5 }}>{c}</span>
               </div>
             ))}
           </div>
@@ -270,8 +283,8 @@ function ProfileModal({ person, onClose }) {
 /* ─────────────────── TEAM CARD ─────────────────── */
 function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal }) {
   const cardRefs = useRef(null);
-  const isFlipped  = flipped === idx;
-  const isVisible  = visibleCards.has(idx);
+  const isFlipped = flipped === idx;
+  const isVisible = visibleCards.has(idx);
 
   return (
     <div
@@ -300,11 +313,13 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
             <h3 className="person-name">{person.name}</h3>
             <p className="person-bio">{person.bio}</p>
 
-            <div className="cert-chipss">
+            {/* ── REDESIGNED: vertical cert list ── */}
+            <div className="certs-list">
               {person.certs.map((c, i) => (
-                <span key={i} className="chips">
-                  <CheckIcon />{c}
-                </span>
+                <div key={i} className="cert-row">
+                  <span className="cert-icon"><CheckIcon /></span>
+                  <span className="cert-text">{c}</span>
+                </div>
               ))}
             </div>
 
@@ -316,7 +331,6 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
                 <span>გამოცდილება</span>
                 <ArrowRight />
               </button>
-              {/* ── FUNCTIONAL: opens ProfileModal ── */}
               <button
                 className="act-btn act-solid"
                 onClick={() => onOpenModal(person)}
@@ -345,7 +359,6 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
             <h3 className="back-name">{person.name}</h3>
             <span className="back-role-tag">{person.role}</span>
 
-            {/* Rating on back */}
             <div style={{ marginTop:2 }}>
               <RatingStars rating={person.rating} />
             </div>
@@ -362,7 +375,6 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
 
             <p className="back-bio">{person.bio}</p>
 
-            {/* ── FUNCTIONAL: opens ProfileModal from back too ── */}
             <button
               className="back-profile-btn"
               onClick={() => { setFlipped(null); onOpenModal(person); }}
@@ -472,7 +484,7 @@ const Team = ({ preview = false }) => {
       )}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;900&display=swap');
 
         :root {
           --cream: #F5F0E8;
@@ -499,7 +511,7 @@ const Team = ({ preview = false }) => {
           max-width: 1220px; margin: 0 auto; position: relative; z-index: 1;
         }
 
-        /* Header */
+        /* ── Header ── */
         .tm-header {
           text-align: center; margin-bottom: 4rem;
           opacity: 0; transform: translateY(30px);
@@ -542,13 +554,13 @@ const Team = ({ preview = false }) => {
           max-width: 560px; margin: 0 auto; line-height: 1.65;
         }
 
-        /* Grid */
+        /* ── Grid ── */
         .tm-grid {
           display: grid; grid-template-columns: repeat(3, 1fr);
           gap: 2rem; margin-bottom: 3.5rem;
         }
 
-        /* Card */
+        /* ── Card shell ── */
         .tm-card {
           --pc: #2885ef; --pcr: 40,133,239;
           perspective: 1100px; height: 560px;
@@ -570,7 +582,7 @@ const Team = ({ preview = false }) => {
           overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden;
         }
 
-        /* Front */
+        /* ── Front face ── */
         .front {
           display: flex; flex-direction: column; background: #fff;
           border: 1px solid #E8EDF5;
@@ -586,8 +598,8 @@ const Team = ({ preview = false }) => {
           .tm-card:hover:not(.is-flipped) .photo-img { transform: scale(1.05); filter: saturate(1.05) brightness(1.04); }
           .tm-card:hover:not(.is-flipped) .-pill { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(27,42,74,0.14); }
           .tm-card:hover:not(.is-flipped) .person-name::after { width: 52px; opacity: 0.9; }
-          .tm-card:hover:not(.is-flipped) .chips { background: rgba(var(--pcr), 0.07); border-color: rgba(var(--pcr), 0.25); color: var(--pc); }
-          .tm-card:hover:not(.is-flipped) .chips svg { color: var(--pc); }
+          .tm-card:hover:not(.is-flipped) .cert-row { border-color: rgba(var(--pcr), 0.18); }
+          .tm-card:hover:not(.is-flipped) .cert-icon { background: rgba(var(--pcr), 0.15); color: var(--pc); }
         }
         @media (max-width: 1024px) {
           .tm-card:not(.is-flipped) .front {
@@ -605,7 +617,7 @@ const Team = ({ preview = false }) => {
         }
 
         .photo-area {
-          position: relative; height: 245px; flex-shrink: 0; overflow: hidden; background: #dde4ef;
+          position: relative; height: 220px; flex-shrink: 0; overflow: hidden; background: #dde4ef;
         }
         .photo-img {
           width: 100%; height: 100%; object-fit: cover; object-position: center 12%; display: block;
@@ -628,46 +640,90 @@ const Team = ({ preview = false }) => {
         }
         .-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pc); flex-shrink: 0; }
 
+        /* ── Front panel ── */
         .front-panel {
-          padding: 1.1rem 1.4rem 1.3rem 1.6rem;
-          display: flex; flex-direction: column; gap: 0.45rem; flex: 1;
+          padding: 1rem 1.4rem 1.2rem 1.6rem;
+          display: flex; flex-direction: column; gap: 0.42rem; flex: 1;
         }
-        .role-tag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pc); }
-        .person-name { font-size: 1.15rem; font-weight: 800; color: var(--navy); letter-spacing: -0.018em; line-height: 1.25; margin: 0; }
+
+        .role-tag {
+          font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+          text-transform: uppercase; color: var(--pc);
+        }
+
+        .person-name {
+          font-size: 1.15rem; font-weight: 800; color: var(--navy);
+          letter-spacing: -0.018em; line-height: 1.25; margin: 0;
+        }
         .person-name::after {
           content: ''; display: block; width: 32px; height: 2px;
-          background: var(--pc); border-radius: 2px; margin-top: 0.55rem;
+          background: var(--pc); border-radius: 2px; margin-top: 0.5rem;
           opacity: 0.5; transition: width 0.3s ease, opacity 0.3s ease;
         }
+
         .person-bio {
-          font-size: 0.8rem; line-height: 1.65; color: #5A5A72; margin: 0;
+          font-size: 0.78rem; line-height: 1.62; color: #5A5A72; margin: 0; font-weight: 400;
           display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
-        .cert-chipss { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.1rem; }
-        .chips {
-          display: inline-flex; align-items: center; gap: 0.28rem;
-          font-size: 0.6rem; font-weight: 600; color: #3A4A6A;
-          background: #F0F4FA; border: 1px solid #DDE4F0;
-          padding: 0.22rem 0.6rem 0.22rem 0.48rem; border-radius: 6px; white-space: nowrap;
-          transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-        }
-        .chips svg { color: #7A9AC5; flex-shrink: 0; }
 
-        .front-actions { display: flex; gap: 0.55rem; margin-top: auto; padding-top: 0.45rem; }
+        /* ── REDESIGNED CERTS: vertical list ── */
+        .certs-list {
+          display: flex; flex-direction: column;
+          margin-top: 0.15rem;
+          border-top: 1px solid #EEF1F8;
+          padding-top: 0.4rem;
+        }
+        .cert-row {
+          display: flex; align-items: flex-start; gap: 0.52rem;
+          padding: 0.3rem 0;
+          border-bottom: 1px solid #EEF1F8;
+          transition: border-color 0.2s ease;
+        }
+        .cert-row:last-child { border-bottom: none; }
+        .cert-icon {
+          width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0; margin-top: 1px;
+          background: rgba(var(--pcr), 0.1);
+          color: var(--pc);
+          display: flex; align-items: center; justify-content: center;
+          transition: background 0.2s ease;
+        }
+        .cert-text {
+          font-size: 0.73rem; font-weight: 500; color: #3A4A6A;
+          line-height: 1.45; word-break: break-word; hyphens: auto;
+        }
+
+        /* ── REDESIGNED ACTIONS ── */
+        .front-actions {
+          display: flex; gap: 0.5rem;
+          margin-top: auto; padding-top: 0.55rem;
+          border-top: 1px solid #EEF1F8;
+        }
         .act-btn {
           flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.38rem;
-          font-family: 'Noto Sans Georgian', sans-serif; font-size: 0.7rem; font-weight: 700;
-          border-radius: 8px; padding: 0.52rem 0.7rem; cursor: pointer;
+          font-family: 'Noto Sans Georgian', sans-serif; font-size: 0.7rem;
+          border-radius: 10px; padding: 0.55rem 0.65rem; cursor: pointer;
           transition: all 0.2s ease; letter-spacing: 0.01em; white-space: nowrap;
         }
-        .act-ghost { background: #F5F7FB; border: 1px solid #DDE4F0; color: var(--navy); }
-        .act-ghost:hover { background: rgba(var(--pcr), 0.07); border-color: rgba(var(--pcr), 0.3); color: var(--pc); transform: translateY(-1px); }
-        .act-solid { background: var(--pc); border: 1px solid var(--pc); color: #fff; }
-        .act-solid:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(var(--pcr),0.35); }
+        .act-ghost {
+          background: #F5F7FB; border: 1px solid #DDE4F0;
+          color: var(--navy); font-weight: 600;
+        }
+        .act-ghost:hover {
+          background: rgba(var(--pcr), 0.07); border-color: rgba(var(--pcr), 0.28);
+          color: var(--pc); transform: translateY(-1px);
+        }
+        .act-solid {
+          background: var(--pc); border: 1px solid var(--pc);
+          color: #fff; font-weight: 700;
+        }
+        .act-solid:hover {
+          filter: brightness(1.1); transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(var(--pcr),0.35);
+        }
         .act-btn svg { transition: transform 0.18s ease; flex-shrink: 0; opacity: 0.7; }
         .act-btn:hover svg { transform: translateX(3px); opacity: 1; }
 
-        /* Back */
+        /* ── Back face ── */
         .back {
           transform: rotateY(180deg); background: var(--navy);
           display: flex; flex-direction: column; overflow: hidden;
@@ -705,29 +761,29 @@ const Team = ({ preview = false }) => {
           color: rgba(255,255,255,0.35); margin: 0 0 0.5rem;
         }
         .back-cert-item {
-          display: flex; align-items: center; gap: 0.55rem;
-          font-size: 0.75rem; color: rgba(255,255,255,0.82);
-          padding: 0.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+          display: flex; align-items: flex-start; gap: 0.55rem;
+          font-size: 0.73rem; font-weight: 500; color: rgba(255,255,255,0.82);
+          padding: 0.28rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+          line-height: 1.45;
         }
         .back-cert-item:last-child { border-bottom: none; }
         .bci-check {
-          width: 16px; height: 16px; border-radius: 4px;
+          width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; margin-top: 1px;
           background: rgba(var(--pcr), 0.25); color: rgba(var(--pcr), 1);
-          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
         }
         .back-bio {
-          font-size: 0.75rem; line-height: 1.62; color: rgba(255,255,255,0.5);
+          font-size: 0.73rem; font-weight: 400; line-height: 1.62; color: rgba(255,255,255,0.5);
           text-align: center; margin: 0;
           display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
 
-        /* Back full-profile btn */
         .back-profile-btn {
           display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
           font-family: 'Noto Sans Georgian', sans-serif;
           font-size: 0.7rem; font-weight: 700; color: #fff;
           background: var(--pc); border: none;
-          padding: 0.45rem 1.1rem; border-radius: 8px; cursor: pointer;
+          padding: 0.5rem 1.1rem; border-radius: 10px; cursor: pointer;
           transition: all 0.2s ease; width: 100%; margin-top: 0.2rem;
         }
         .back-profile-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
@@ -737,14 +793,14 @@ const Team = ({ preview = false }) => {
         .back-return {
           display: inline-flex; align-items: center; gap: 0.4rem;
           font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.5);
+          font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.5);
           background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
-          padding: 0.38rem 1rem; border-radius: 8px; cursor: pointer;
+          padding: 0.42rem 1rem; border-radius: 10px; cursor: pointer;
           transition: all 0.2s ease;
         }
         .back-return:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
 
-        /* CTA */
+        /* ── CTA ── */
         .tm-cta-wrap {
           text-align: center; opacity: 0; transform: translateY(18px);
           transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
@@ -763,7 +819,7 @@ const Team = ({ preview = false }) => {
         .main-btn-arr { display: flex; align-items: center; transition: transform 0.25s ease; }
         .tm-main-btn:hover .main-btn-arr { transform: translateX(4px); }
 
-        /* Responsive */
+        /* ── Responsive ── */
         @media (max-width: 1024px) {
           .tm-grid { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
           .tm-card { height: 580px; }
@@ -774,7 +830,7 @@ const Team = ({ preview = false }) => {
           .tm-card { height: 540px; }
           .tm-title { font-size: 1.8rem; }
           .tm-title br { display: none; }
-          .photo-area { height: 240px; }
+          .photo-area { height: 200px; }
           .tm-main-btn { width: 100%; justify-content: center; }
         }
         @media (prefers-reduced-motion: reduce) {

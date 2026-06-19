@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Navbar from "./components/navbar";
 import Hero from "./components/hero";
@@ -15,6 +15,18 @@ import AboutPage from "./pages/aboutPage";
 import TeamPage from "./pages/teamPage";
 import GalleryPage from "./pages/galleryPage";
 import AdminRoot from "./admin/AdminRoot";
+import FizioPage from "./pages/fizioPage";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 
 /* ───────────────────────────── */
 /* Home Page */
@@ -50,14 +62,18 @@ function HomePage() {
   );
 }
 
+
 /* ───────────────────────────── */
 /* App */
 /* ───────────────────────────── */
 
 function App() {
-   const isAdmin = location.pathname.startsWith("/admin");
+  const isAdmin = location.pathname.startsWith("/admin");
+
   return (
     <>
+      <ScrollToTop />
+
       {!isAdmin && <Navbar />}
 
       <Routes>
@@ -68,8 +84,9 @@ function App() {
         <Route path="/team" element={<TeamPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/fizio" element={<FizioPage />} />
 
-        {/* ADMIN (Supabase handles auth inside AdminRoot) */}
+        {/* ADMIN */}
         <Route path="/admin" element={<AdminRoot />} />
 
         {/* fallback */}

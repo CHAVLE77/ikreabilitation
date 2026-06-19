@@ -179,7 +179,7 @@ export default function Hero() {
         </div>
       </button>
 
-      <style jsx>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800;900&display=swap');
 
         /* ══════════════════════════════════ ROOT ══════════════════════════════════ */
@@ -223,10 +223,10 @@ export default function Hero() {
           position: absolute; inset: 0; z-index: 10;
           background: linear-gradient(
             125deg,
-            rgba(2, 10, 30, 0.68) 0%,
+            rgba(2, 10, 30, 0.58) 0%,
             rgba(6, 28, 58, 0.45) 30%,
-            rgba(2, 15, 40, 0.55) 70%,
-            rgba(0, 20, 45, 0.85) 100%
+            rgba(2, 15, 40, 0.35) 70%,
+            rgba(0, 20, 45, 0.25) 100%
           );
         }
         .slide-vignette {
@@ -381,7 +381,7 @@ export default function Hero() {
           background-clip: text;
           -webkit-background-clip: text;
           color: transparent;
-          text-shadow: none;
+          text-shadow: none; 
         }
         .underline-svg {
           position: absolute;
@@ -423,7 +423,7 @@ export default function Hero() {
         .btn:active { transform: translateY(1px); }
 
         .btn-primary {
-          background: linear-gradient(105deg, #0066CC 0%, #004C99 35%, #004C99 100%);
+          background: linear-gradient(105deg, #4DA6FF  0%, #3A7BD5 35%, #004C99 100%);
           color: #fff;
           box-shadow: 0 4px 20px #3B82F640;
         }
