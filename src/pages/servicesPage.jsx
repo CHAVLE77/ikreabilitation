@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // ── Data ────────────────────────────────────────────────────────────────────
-const SERVICES = [
+// NOTE: exported so other pages (e.g. Contact.jsx) can reuse the exact same
+// list of services for the booking dropdown, instead of duplicating it.
+export const SERVICES = [
   {
     id: 1,
     tag: "ნევროლოგია",
@@ -226,6 +228,8 @@ function useInView(ref, threshold = 0.15) {
 
 // ── Modal ────────────────────────────────────────────────────────────────────
 function Modal({ service, onClose }) {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handler = (e) => {
       if (e.key === "Escape") onClose();
@@ -237,6 +241,14 @@ function Modal({ service, onClose }) {
       document.body.style.overflow = "";
     };
   }, [onClose]);
+
+  // Stores the chosen service so the Contact page can auto-select it in the
+  // (now dropdown-only) service field, then navigates there.
+  const handleBook = () => {
+    sessionStorage.setItem("selectedService", service.title);
+    onClose();
+    navigate("/contact");
+  };
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -283,8 +295,8 @@ function Modal({ service, onClose }) {
             </div>
           </div>
 
-          <a href="#contact" className="modal-cta" onClick={onClose}>
-            დეტალურად
+          <button type="button" className="modal-cta" onClick={handleBook}>
+            დაჯავშნა
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
               <path
                 d="M5 12H19M19 12L12 5M19 12L12 19"
@@ -294,11 +306,11 @@ function Modal({ service, onClose }) {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
 
-      <style jsx>{`
+      <style >{`
         .modal-backdrop {
           position: fixed;
           inset: 0;
@@ -465,10 +477,13 @@ function Modal({ service, onClose }) {
           background: linear-gradient(105deg, #0066cc, #004c99);
           color: #fff;
           text-decoration: none;
+          border: none;
+          font-family: inherit;
           padding: 0.9rem 1.8rem;
           border-radius: 50px;
           font-size: 0.875rem;
           font-weight: 700;
+          cursor: pointer;
           box-shadow: 0 8px 24px rgba(0, 76, 153, 0.4);
           transition: all 0.25s ease;
           align-self: flex-start;
@@ -586,7 +601,7 @@ function ServiceCard({ service, idx, onOpen, onClick }) {
 
       <div className="card-line" />
 
-      <style jsx>{`
+      <style >{`
         .svc-card {
           --acc: #fbbf24;
           --glow: rgba(251, 191, 36, 0.18);
@@ -822,7 +837,7 @@ function StatCounter({ value, label, delay }) {
     >
       <div className="stat-value">{value}</div>
       <div className="stat-label">{label}</div>
-      <style jsx>{`
+      <style>{`
         .stat-item {
           opacity: 0;
           transform: translateY(20px);
@@ -874,7 +889,7 @@ function FundingCard({ program, idx }) {
       </div>
       <div className="funding-arrow">→</div>
 
-      <style jsx>{`
+      <style>{`
         .funding-card {
           display: flex;
           align-items: stretch;
@@ -1001,7 +1016,7 @@ function IndividualProgram({ program }) {
       </div>
       <div className="individual-arrow">→</div>
 
-      <style jsx>{`
+      <style>{`
         .individual-program {
           display: flex;
           align-items: stretch;
@@ -1309,7 +1324,7 @@ export default function ServicesPage() {
       {/* Modal */}
       {activeModal && <Modal service={activeModal} onClose={() => setActiveModal(null)} />}
 
-      <style jsx global>
+      <style >
         {`
           @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap");
           *,
@@ -1322,7 +1337,7 @@ export default function ServicesPage() {
         `}
       </style>
 
-      <style jsx>
+      <style >
         {`
           /* ── Root ── */
           .page-root {

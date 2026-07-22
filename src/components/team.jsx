@@ -132,7 +132,7 @@ function ProfileModal({ person, onClose }) {
         background:"rgba(1,10,28,0.88)",
         backdropFilter:"blur(18px)",
         display:"flex", alignItems:"center", justifyContent:"center",
-        padding:24,
+        padding:16,
         opacity: mounted ? 1 : 0,
         transition:"opacity 0.35s ease",
       }}
@@ -146,134 +146,666 @@ function ProfileModal({ person, onClose }) {
           borderRadius:24,
           overflow:"hidden",
           display:"flex",
-          maxWidth:820, width:"100%",
-          maxHeight:"90vh",
+          flexDirection: window.innerWidth <= 768 ? "column" : "row",
+          maxWidth:820, 
+          width:"100%",
+          maxHeight:"95vh",
           boxShadow:`0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(${person.colorRgb},0.12)`,
           transform: mounted ? "translateY(0) scale(1)" : "translateY(28px) scale(0.97)",
           transition:"transform 0.4s cubic-bezier(0.16,1,0.3,1)",
         }}
+        className="modal-content"
       >
-        {/* ── Photo column ── */}
-        <div style={{ width:260, flexShrink:0, position:"relative", overflow:"hidden", background:"#030D1A" }}>
+        {/* ── Photo section ── */}
+        <div className="modal-photo-section">
           <img
-            src={person.image} alt={person.name}
-            style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"top", filter:"brightness(0.55) saturate(0.75)" }}
+            src={person.image} 
+            alt={person.name}
+            className="modal-photo-img"
           />
-          <div style={{
-            position:"absolute", inset:0,
-            background:`linear-gradient(to bottom, rgba(${person.colorRgb},0.25) 0%, rgba(3,13,26,0.95) 100%)`
-          }} />
-          <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"1.5rem", zIndex:2 }}>
-            <span style={{
-              display:"inline-block", fontSize:"0.58rem", fontWeight:800, letterSpacing:"0.14em",
-              textTransform:"uppercase", color:"#FBBF24",
-              background:"rgba(251,191,36,0.12)", border:"1px solid rgba(251,191,36,0.3)",
-              padding:"0.28rem 0.75rem", borderRadius:40, marginBottom:"0.9rem"
-            }}>{person.specialty}</span>
-            <div style={{ display:"flex", alignItems:"center", gap:"1.2rem" }}>
-              {[{ n: person.experience, l:"გამოცდ." }, { n: person.sessions, l:"სეანსი" }].map((s, i) => (
-                <div key={i} style={{ display:"flex", flexDirection:"column" }}>
-                  <span style={{ fontSize:"1.15rem", fontWeight:900, color:"#fff", lineHeight:1 }}>{s.n}</span>
-                  <span style={{ fontSize:"0.58rem", fontWeight:700, color:"rgba(255,255,255,0.45)", textTransform:"uppercase", letterSpacing:"0.08em" }}>{s.l}</span>
+          <div className="modal-photo-overlay">
+            <div className="modal-photo-gradient" style={{
+              background:`linear-gradient(to bottom, rgba(${person.colorRgb},0.1) 0%, rgba(${person.colorRgb},0.4) 40%, rgba(3,13,26,0.85) 70%, rgba(3,13,26,0.95) 100%)`
+            }} />
+            <div className="modal-photo-info">
+              <span className="modal-photo-specialty">{person.specialty}</span>
+              <h2 className="modal-photo-name">{person.name}</h2>
+              <div className="modal-photo-stats">
+                <div className="modal-photo-stat">
+                  <span className="stat-number">{person.experience}</span>
+                  <span className="stat-label">გამოცდ.</span>
                 </div>
-              ))}
+                <div className="modal-photo-stat">
+                  <span className="stat-number">{person.sessions}</span>
+                  <span className="stat-label">სეანსი</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* ── Body ── */}
-        <div style={{ flex:1, padding:"2rem 1.8rem", position:"relative", overflowY:"auto", display:"flex", flexDirection:"column", gap:"0.9rem" }}>
-
-          {/* Close */}
-          <button
-            onClick={onClose}
-            style={{
-              position:"absolute", top:"1.1rem", right:"1.1rem",
-              background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)",
-              color:"rgba(255,255,255,0.4)", borderRadius:10, width:36, height:36,
-              display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer",
-              transition:"all 0.2s ease",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "rgba(255,255,255,0.8)"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "rgba(255,255,255,0.4)"; }}
-          >
+          <button onClick={onClose} className="modal-close-btn">
             <CloseIcon />
           </button>
+        </div>
 
-          <div style={{ fontSize:"0.6rem", fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", color: person.color }}>{person.role}</div>
-          <h2 style={{ fontSize:"1.8rem", fontWeight:900, color:"#fff", letterSpacing:"-0.022em", margin:0, lineHeight:1.1 }}>{person.name}</h2>
+        {/* ── Content section ── */}
+        <div className="modal-content-section">
+          <div className="modal-role" style={{ color: person.color }}>{person.role}</div>
           <RatingStars rating={person.rating} />
-          <p style={{ fontSize:"0.85rem", lineHeight:1.72, color:"rgba(255,255,255,0.6)", margin:0 }}>{person.fullBio}</p>
+          <p className="modal-bio">{person.fullBio}</p>
 
-          <div style={{ fontSize:"0.58rem", fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", color:"rgba(255,255,255,0.28)", marginTop:"0.3rem" }}>
-            კვალიფიკაცია
-          </div>
+          <div className="modal-certs-label">კვალიფიკაცია</div>
 
-          {/* Modal certs — vertical list style */}
-          <div style={{ display:"flex", flexDirection:"column", gap:"0.4rem" }}>
+          <div className="modal-certs">
             {person.certs.map((c, i) => (
-              <div key={i} style={{
-                display:"flex", alignItems:"flex-start", gap:"0.6rem",
-                padding:"0.48rem 0.75rem",
-                background:`rgba(${person.colorRgb},0.08)`,
-                border:`1px solid rgba(${person.colorRgb},0.18)`,
-                borderRadius:10,
-              }}>
-                <span style={{
-                  width:18, height:18, borderRadius:6, flexShrink:0, marginTop:1,
-                  background:`rgba(${person.colorRgb},0.25)`,
-                  color: person.color, display:"flex", alignItems:"center", justifyContent:"center",
-                }}><CheckIcon /></span>
-                <span style={{ fontSize:"0.78rem", fontWeight:500, color:"rgba(255,255,255,0.82)", lineHeight:1.5 }}>{c}</span>
+              <div key={i} className="modal-cert-item" style={{ borderColor: `rgba(${person.colorRgb},0.18)` }}>
+                <span className="modal-cert-icon" style={{ background: `rgba(${person.colorRgb},0.25)`, color: person.color }}>
+                  <CheckIcon />
+                </span>
+                <span className="modal-cert-text">{c}</span>
               </div>
             ))}
           </div>
 
-          {/* Actions */}
-          <div style={{ display:"flex", gap:"0.65rem", marginTop:"auto", paddingTop:"0.5rem" }}>
+          <div className="modal-actions">
             <button
               onClick={() => {
                 sessionStorage.setItem("selectedSpecialist", person.name);
                 window.location.href = "/contact";
                 onClose();
               }}
-              onMouseEnter={e => { e.currentTarget.style.filter = "brightness(1.15)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.filter = ""; e.currentTarget.style.transform = ""; }}
-              style={{
-                flex:1, display:"inline-flex", alignItems:"center", justifyContent:"center", gap:"0.45rem",
-                background: person.color, border:"none", color:"#fff",
-                padding:"0.78rem 1.2rem", borderRadius:12,
-                fontSize:"0.78rem", fontWeight:800, cursor:"pointer",
-                fontFamily:"'Noto Sans Georgian', sans-serif",
-                transition:"all 0.2s ease",
-              }}
+              className="modal-primary-btn"
+              style={{ background: person.color }}
             >
               <PhoneIcon /> კონსულტაციის ჩაწერა
             </button>
-            <button
-              onClick={onClose}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "rgba(255,255,255,0.8)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "rgba(255,255,255,0.45)"; }}
-              style={{
-                display:"inline-flex", alignItems:"center", gap:"0.4rem",
-                background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)",
-                color:"rgba(255,255,255,0.45)", padding:"0.78rem 1.1rem", borderRadius:12,
-                fontSize:"0.78rem", fontWeight:700, cursor:"pointer",
-                fontFamily:"'Noto Sans Georgian', sans-serif",
-                transition:"all 0.2s ease",
-              }}
-            >
+            <button onClick={onClose} className="modal-secondary-btn">
               <ArrowLeft size={13} /> უკან
             </button>
           </div>
         </div>
       </div>
 
-      {/* responsive modal style */}
       <style>{`
-        @media (max-width: 640px) {
-          [role="dialog"] { flex-direction: column !important; max-height: 95vh !important; }
-          [role="dialog"] > div:first-child { width: 100% !important; height: 200px !important; }
+        /* ── Modal Styles ── */
+        .modal-content {
+          background: linear-gradient(145deg,#071222,#04101E);
+          border-radius: 24px;
+          overflow: hidden;
+          max-width: 820px;
+          width: 100%;
+          max-height: 95vh;
+        }
+
+        /* ── Photo Section ── */
+        .modal-photo-section {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          min-height: 340px;
+          flex: 0 0 340px;
+          overflow: hidden;
+          background: #030D1A;
+        }
+
+        .modal-photo-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top;
+          display: block;
+        }
+
+        .modal-photo-overlay {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+        }
+
+        .modal-photo-gradient {
+          position: absolute;
+          inset: 0;
+        }
+
+        .modal-photo-info {
+          position: relative;
+          z-index: 2;
+          padding: 2rem 1.8rem 1.8rem;
+        }
+
+        .modal-photo-specialty {
+          display: inline-block;
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #FBBF24;
+          background: rgba(251,191,36,0.12);
+          border: 1px solid rgba(251,191,36,0.25);
+          padding: 0.25rem 0.75rem;
+          border-radius: 40px;
+          margin-bottom: 0.5rem;
+        }
+
+        .modal-photo-name {
+          font-size: 1.8rem;
+          font-weight: 900;
+          color: #fff;
+          letter-spacing: -0.02em;
+          margin: 0 0 0.5rem 0;
+          line-height: 1.1;
+          text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-photo-stats {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+        }
+
+        .modal-photo-stat {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .stat-number {
+          font-size: 1.1rem;
+          font-weight: 900;
+          color: #fff;
+          line-height: 1;
+        }
+
+        .stat-label {
+          font-size: 0.55rem;
+          font-weight: 700;
+          color: rgba(255,255,255,0.5);
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        .modal-close-btn {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          z-index: 10;
+          background: rgba(0,0,0,0.5);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: rgba(255,255,255,0.6);
+          border-radius: 10px;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+          background: rgba(255,255,255,0.1);
+          color: rgba(255,255,255,0.9);
+        }
+
+        /* ── Content Section ── */
+        .modal-content-section {
+          flex: 1;
+          padding: 1.8rem 1.8rem 1.5rem;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 0.7rem;
+          max-height: 90vh;
+        }
+
+        .modal-role {
+          font-size: 0.6rem;
+          font-weight: 800;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+        }
+
+        .modal-bio {
+          font-size: 0.82rem;
+          line-height: 1.7;
+          color: rgba(255,255,255,0.6);
+          margin: 0;
+        }
+
+        .modal-certs-label {
+          font-size: 0.55rem;
+          font-weight: 800;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.3);
+          margin-top: 0.2rem;
+        }
+
+        .modal-certs {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+        }
+
+        .modal-cert-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.6rem;
+          padding: 0.4rem 0.7rem;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(58,123,213,0.15);
+          border-radius: 8px;
+        }
+
+        .modal-cert-icon {
+          width: 16px;
+          height: 16px;
+          border-radius: 4px;
+          flex-shrink: 0;
+          margin-top: 2px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .modal-cert-icon svg {
+          width: 9px;
+          height: 9px;
+        }
+
+        .modal-cert-text {
+          font-size: 0.75rem;
+          font-weight: 500;
+          color: rgba(255,255,255,0.8);
+          line-height: 1.4;
+        }
+
+        .modal-actions {
+          display: flex;
+          gap: 0.6rem;
+          margin-top: 0.3rem;
+          padding-top: 0.5rem;
+          border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .modal-primary-btn {
+          flex: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          border: none;
+          color: #fff;
+          padding: 0.7rem 1rem;
+          border-radius: 10px;
+          font-size: 0.75rem;
+          font-weight: 800;
+          cursor: pointer;
+          font-family: 'Noto Sans Georgian', sans-serif;
+          transition: all 0.2s ease;
+        }
+
+        .modal-primary-btn:hover {
+          filter: brightness(1.15);
+          transform: translateY(-2px);
+        }
+
+        .modal-secondary-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          color: rgba(255,255,255,0.4);
+          padding: 0.7rem 1rem;
+          border-radius: 10px;
+          font-size: 0.75rem;
+          font-weight: 700;
+          cursor: pointer;
+          font-family: 'Noto Sans Georgian', sans-serif;
+          transition: all 0.2s ease;
+        }
+
+        .modal-secondary-btn:hover {
+          background: rgba(255,255,255,0.1);
+          color: rgba(255,255,255,0.8);
+        }
+
+        /* ── Responsive ── */
+        @media (min-width: 769px) {
+          .modal-content {
+            flex-direction: row !important;
+          }
+          
+          .modal-photo-section {
+            width: 280px;
+            flex: 0 0 280px;
+            min-height: 400px;
+          }
+          
+          .modal-content-section {
+            max-height: 80vh;
+          }
+        }
+
+        @media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column !important;
+    max-width: 420px !important;
+    width: calc(100% - 32px) !important;
+    max-height: 88vh !important;
+    border-radius: 22px !important;
+    margin: 0 auto;
+  }
+
+  .modal-photo-section {
+    flex: 0 0 auto;
+    min-height: 220px;
+    height: 220px;
+    width: 100%;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .modal-photo-img {
+    height: 220px;
+    object-position: center 18%;
+  }
+
+  .modal-photo-info {
+    padding: 1.1rem 1.2rem 0.9rem;
+  }
+
+  .modal-photo-name {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-photo-specialty {
+    font-size: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-number {
+    font-size: 0.92rem;
+  }
+
+  .stat-label {
+    font-size: 0.46rem;
+  }
+
+  .modal-content-section {
+    padding: 1.1rem 1.3rem 1.2rem;
+    max-height: 58vh;
+    gap: 0.55rem;
+  }
+
+  .modal-close-btn {
+    top: 0.7rem;
+    right: 0.7rem;
+    width: 32px;
+    height: 32px;
+  }
+
+  .modal-close-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .modal-role {
+    font-size: 0.52rem;
+  }
+
+  .modal-bio {
+    font-size: 0.74rem;
+    line-height: 1.6;
+  }
+
+  .modal-certs-label {
+    font-size: 0.5rem;
+    margin-top: 0.15rem;
+  }
+
+  .modal-cert-item {
+    padding: 0.35rem 0.7rem;
+    gap: 0.5rem;
+  }
+
+  .modal-cert-text {
+    font-size: 0.7rem;
+  }
+
+  .modal-cert-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .modal-cert-icon svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .modal-actions {
+    flex-direction: column !important;
+    gap: 0.45rem !important;
+    padding-top: 0.4rem !important;
+  }
+
+  .modal-primary-btn {
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.7rem !important;
+    width: 100% !important;
+  }
+
+  .modal-secondary-btn {
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.7rem !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    width: calc(100% - 24px) !important;
+    max-width: 380px !important;
+    border-radius: 18px !important;
+  }
+
+  .modal-photo-section {
+    min-height: 190px;
+    height: 190px;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .modal-photo-img {
+    height: 190px;
+    object-position: center 18%;
+  }
+
+  .modal-photo-info {
+    padding: 0.9rem 1rem 0.8rem;
+  }
+
+  .modal-photo-name {
+    font-size: 1.1rem;
+  }
+
+  .modal-photo-specialty {
+    font-size: 0.45rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 0.8rem;
+  }
+
+  .stat-label {
+    font-size: 0.42rem;
+  }
+
+  .modal-content-section {
+    padding: 0.9rem 1rem 0.9rem;
+    gap: 0.45rem;
+  }
+
+  .modal-close-btn {
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 28px;
+    height: 28px;
+  }
+
+  .modal-close-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .modal-bio {
+    font-size: 0.66rem;
+  }
+
+  .modal-cert-text {
+    font-size: 0.63rem;
+  }
+
+  .modal-primary-btn {
+    padding: 0.5rem 0.6rem !important;
+    font-size: 0.62rem !important;
+  }
+
+  .modal-secondary-btn {
+    padding: 0.5rem 0.6rem !important;
+    font-size: 0.62rem !important;
+  }
+
+  .modal-primary-btn svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .modal-secondary-btn svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+}
+
+        @media (max-width: 480px) {
+          .modal-photo-section {
+            min-height: 220px;
+            height: 220px;
+          }
+
+          .modal-photo-img {
+            height: 220px;
+          }
+
+          .modal-photo-info {
+            padding: 0.8rem 1rem 0.8rem;
+          }
+
+          .modal-photo-name {
+            font-size: 1.1rem;
+          }
+
+          .modal-photo-specialty {
+            font-size: 0.45rem;
+            padding: 0.15rem 0.5rem;
+          }
+
+          .stat-number {
+            font-size: 0.8rem;
+          }
+
+          .stat-label {
+            font-size: 0.42rem;
+          }
+
+          .modal-content-section {
+            padding: 0.8rem 0.8rem 0.8rem;
+            gap: 0.4rem;
+          }
+
+          .modal-close-btn {
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 28px;
+            height: 28px;
+          }
+
+          .modal-close-btn svg {
+            width: 14px;
+            height: 14px;
+          }
+
+          .modal-bio {
+            font-size: 0.65rem;
+          }
+
+          .modal-cert-text {
+            font-size: 0.62rem;
+          }
+
+          .modal-primary-btn {
+            padding: 0.45rem 0.6rem !important;
+            font-size: 0.6rem !important;
+          }
+
+          .modal-secondary-btn {
+            padding: 0.45rem 0.6rem !important;
+            font-size: 0.6rem !important;
+          }
+
+          .modal-primary-btn svg {
+            width: 11px !important;
+            height: 11px !important;
+          }
+
+          .modal-secondary-btn svg {
+            width: 11px !important;
+            height: 11px !important;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .modal-photo-section {
+            min-height: 180px;
+            height: 180px;
+          }
+
+          .modal-photo-img {
+            height: 180px;
+          }
+
+          .modal-photo-info {
+            padding: 0.6rem 0.7rem 0.6rem;
+          }
+
+          .modal-photo-name {
+            font-size: 0.9rem;
+          }
+
+          .stat-number {
+            font-size: 0.7rem;
+          }
+
+          .modal-content-section {
+            padding: 0.5rem 0.6rem 0.6rem;
+          }
+
+          .modal-bio {
+            font-size: 0.58rem;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .modal-content,
+          .modal-close-btn,
+          .modal-primary-btn,
+          .modal-secondary-btn {
+            transition: none !important;
+          }
         }
       `}</style>
     </div>
@@ -285,6 +817,18 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
   const cardRefs = useRef(null);
   const isFlipped = flipped === idx;
   const isVisible = visibleCards.has(idx);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleBack = (e) => {
+    e.stopPropagation();
+    setFlipped(null);
+  };
+
+  const handleFullProfile = (e) => {
+    e.stopPropagation();
+    setFlipped(null);
+    onOpenModal(person);
+  };
 
   return (
     <div
@@ -293,8 +837,10 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
       style={{
         "--pc": person.color,
         "--pcr": person.colorRgb,
-        transitionDelay: `${(idx % 3) * 0.1}s`,
+        transitionDelay: `${(idx % 3) * 0.12}s`,
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="card-scene">
 
@@ -302,42 +848,51 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
         <div className="card-face front">
           <div className="photo-area">
             <img src={person.image} alt={person.name} loading="lazy" className="photo-img" />
-            <div className="photo-grad-bottom" />
-            <div className="-pill">
-              <span className="-dot" />
+            <div className="photo-overlay">
+              <div className="overlay-gradient" />
+              <div className="overlay-content">
+                <span className="overlay-role">{person.role}</span>
+                <h3 className="overlay-name">{person.name}</h3>
+                <div className="overlay-stats">
+                  <span>{person.experience}</span>
+                  <span className="dot-sep">•</span>
+                  <span>{person.sessions}</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="front-panel">
-            <span className="role-tag">{person.role}</span>
-            <h3 className="person-name">{person.name}</h3>
-            <p className="person-bio">{person.bio}</p>
+          <div className={`content-wrapper ${isHovered ? 'content-visible' : ''}`}>
+            <div className="front-panel">
+              <span className="role-tag">{person.role}</span>
+              <h3 className="person-name">{person.name}</h3>
+              <p className="person-bio">{person.bio}</p>
 
-            {/* ── REDESIGNED: vertical cert list ── */}
-            <div className="certs-list">
-              {person.certs.map((c, i) => (
-                <div key={i} className="cert-row">
-                  <span className="cert-icon"><CheckIcon /></span>
-                  <span className="cert-text">{c}</span>
-                </div>
-              ))}
-            </div>
+              <div className="certs-list">
+                {person.certs.map((c, i) => (
+                  <div key={i} className="cert-row">
+                    <span className="cert-icon"><CheckIcon /></span>
+                    <span className="cert-text">{c}</span>
+                  </div>
+                ))}
+              </div>
 
-            <div className="front-actions">
-              <button
-                className="act-btn act-ghost"
-                onClick={() => setFlipped(isFlipped ? null : idx)}
-              >
-                <span>გამოცდილება</span>
-                <ArrowRight />
-              </button>
-              <button
-                className="act-btn act-solid"
-                onClick={() => onOpenModal(person)}
-              >
-                <span>სრული პროფილი</span>
-                <ArrowRight />
-              </button>
+              <div className="front-actions">
+                <button
+                  className="act-btn act-ghost"
+                  onClick={() => setFlipped(isFlipped ? null : idx)}
+                >
+                  <span>გამოცდილება</span>
+                  <ArrowRight />
+                </button>
+                <button
+                  className="act-btn act-solid"
+                  onClick={() => onOpenModal(person)}
+                >
+                  <span>სრული პროფილი</span>
+                  <ArrowRight />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -376,14 +931,15 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
             <p className="back-bio">{person.bio}</p>
 
             <button
+              type="button"
               className="back-profile-btn"
-              onClick={() => { setFlipped(null); onOpenModal(person); }}
+              onClick={handleFullProfile}
             >
               <span>სრული პროფილი</span>
               <ArrowRight />
             </button>
 
-            <button className="back-return" onClick={() => setFlipped(null)}>
+            <button type="button" className="back-return" onClick={handleBack}>
               <ArrowLeft /> <span>უკან</span>
             </button>
           </div>
@@ -421,7 +977,7 @@ const Team = ({ preview = false }) => {
           }
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -20px 0px" }
     );
     cardRefs.current.forEach((c) => c && cObs.observe(c));
     return () => { hObs.disconnect(); cObs.disconnect(); };
@@ -433,7 +989,6 @@ const Team = ({ preview = false }) => {
 
       <div className="tm-container">
 
-        {/* Header */}
         <div className={`tm-header ${headerIn ? "hdr-in" : ""}`}>
           <span className="tm-badge">
             <span className="badge-pulse" />
@@ -449,12 +1004,12 @@ const Team = ({ preview = false }) => {
           </p>
         </div>
 
-        {/* Grid */}
         <div className="tm-grid">
           {displayed.map((person, idx) => (
             <div
               key={person.id}
               ref={(el) => (cardRefs.current[idx] = el)}
+              className="grid-item"
             >
               <TeamCard
                 person={person}
@@ -468,7 +1023,6 @@ const Team = ({ preview = false }) => {
           ))}
         </div>
 
-        {/* CTA */}
         <div className={`tm-cta-wrap ${headerIn ? "hdr-in" : ""}`}>
           <a href="/team" className="tm-main-btn solid">
             <span>იხილეთ მეტი</span>
@@ -478,7 +1032,6 @@ const Team = ({ preview = false }) => {
 
       </div>
 
-      {/* Profile Modal */}
       {activeModal && (
         <ProfileModal person={activeModal} onClose={() => setActiveModal(null)} />
       )}
@@ -511,7 +1064,6 @@ const Team = ({ preview = false }) => {
           max-width: 1220px; margin: 0 auto; position: relative; z-index: 1;
         }
 
-        /* ── Header ── */
         .tm-header {
           text-align: center; margin-bottom: 4rem;
           opacity: 0; transform: translateY(30px);
@@ -554,292 +1106,828 @@ const Team = ({ preview = false }) => {
           max-width: 560px; margin: 0 auto; line-height: 1.65;
         }
 
-        /* ── Grid ── */
         .tm-grid {
-          display: grid; grid-template-columns: repeat(3, 1fr);
-          gap: 2rem; margin-bottom: 3.5rem;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          margin-bottom: 3.5rem;
+          justify-content: center;
         }
 
-        /* ── Card shell ── */
+        .grid-item {
+          display: flex;
+          justify-content: center;
+          align-items: start;
+          width: 100%;
+        }
+
         .tm-card {
           --pc: #2885ef; --pcr: 40,133,239;
-          perspective: 1100px; height: 560px;
-          opacity: 0; transform: translateY(40px);
-          transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+          perspective: 1100px;
+          width: 100%;
+          max-width: 360px;
+          height: 500px;
+          opacity: 0;
+          transform: translateY(50px) scale(0.96);
+          transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
           will-change: transform, opacity;
         }
-        .tm-card.card-in { opacity: 1; transform: translateY(0); }
+        .tm-card.card-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
 
         .card-scene {
-          width: 100%; height: 100%; transform-style: preserve-3d;
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
           transition: transform 0.72s cubic-bezier(0.4,0,0.2,1);
-          border-radius: 20px; position: relative;
+          border-radius: 20px;
+          position: relative;
         }
         .tm-card.is-flipped .card-scene { transform: rotateY(180deg); }
 
         .card-face {
-          position: absolute; inset: 0; border-radius: 20px;
-          overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+          position: absolute;
+          inset: 0;
+          border-radius: 20px;
+          overflow: hidden;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
 
-        /* ── Front face ── */
+        .front { pointer-events: auto; }
+        .back  { pointer-events: none; }
+        .tm-card.is-flipped .front { pointer-events: none; }
+        .tm-card.is-flipped .back  { pointer-events: auto; }
+
         .front {
-          display: flex; flex-direction: column; background: #fff;
+          display: flex;
+          flex-direction: column;
+          background: #fff;
           border: 1px solid #E8EDF5;
           box-shadow: 0 1px 3px rgba(27,42,74,0.06), 0 8px 20px rgba(27,42,74,0.07);
-          transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
-        }
-        @media (hover: hover) {
-          .tm-card:hover:not(.is-flipped) .front {
-            box-shadow: 0 4px 12px rgba(27,42,74,0.08), 0 20px 44px rgba(27,42,74,0.12);
-            border-color: rgba(var(--pcr), 0.22); transform: translateY(-8px);
-          }
-          .tm-card:hover:not(.is-flipped) .top-bar { width: 5px; }
-          .tm-card:hover:not(.is-flipped) .photo-img { transform: scale(1.05); filter: saturate(1.05) brightness(1.04); }
-          .tm-card:hover:not(.is-flipped) .-pill { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(27,42,74,0.14); }
-          .tm-card:hover:not(.is-flipped) .person-name::after { width: 52px; opacity: 0.9; }
-          .tm-card:hover:not(.is-flipped) .cert-row { border-color: rgba(var(--pcr), 0.18); }
-          .tm-card:hover:not(.is-flipped) .cert-icon { background: rgba(var(--pcr), 0.15); color: var(--pc); }
-        }
-        @media (max-width: 1024px) {
-          .tm-card:not(.is-flipped) .front {
-            box-shadow: 0 4px 12px rgba(27,42,74,0.08), 0 20px 44px rgba(27,42,74,0.12);
-            border-color: rgba(var(--pcr), 0.22); transform: translateY(-4px);
-          }
-          .tm-card:not(.is-flipped) .top-bar { width: 5px; }
-          .tm-card:not(.is-flipped) .photo-img { transform: scale(1.03); filter: saturate(1.05) brightness(1.04); }
+          transition: box-shadow 0.5s cubic-bezier(0.22,1,0.36,1),
+                      border-color 0.5s cubic-bezier(0.22,1,0.36,1);
+          position: relative;
+          overflow: hidden;
+          height: 100%;
         }
 
         .top-bar {
-          position: absolute; top: 0; left: 0; bottom: 0;
-          width: 4px; background: var(--pc); opacity: 0.9; z-index: 3;
-          border-radius: 20px 0 0 20px; transition: width 0.3s ease;
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 4px;
+          background: var(--pc);
+          opacity: 0.9;
+          z-index: 10;
+          border-radius: 20px 0 0 20px;
+          transition: width 0.4s cubic-bezier(0.22,1,0.36,1);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          .tm-card:not(.is-flipped):hover .top-bar { width: 6px; }
+          .tm-card:not(.is-flipped):hover .front {
+            box-shadow: 0 8px 30px rgba(27,42,74,0.12), 0 24px 60px rgba(27,42,74,0.15);
+            border-color: rgba(var(--pcr), 0.3);
+          }
+          .tm-card:not(.is-flipped):hover .photo-img {
+            transform: scale(1.05);
+            filter: saturate(1.08) brightness(1.05);
+          }
         }
 
         .photo-area {
-          position: relative; height: 220px; flex-shrink: 0; overflow: hidden; background: #dde4ef;
+          position: relative;
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
+          background: #dde4ef;
         }
         .photo-img {
-          width: 100%; height: 100%; object-fit: cover; object-position: center 12%; display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 12%;
+          display: block;
           transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.4s ease;
-          filter: saturate(0.92) brightness(1.02);
-        }
-        .photo-grad-bottom {
-          position: absolute; bottom: 0; left: 0; right: 0; height: 56px;
-          background: linear-gradient(to top, #fff 0%, transparent 100%); z-index: 1;
+          filter: saturate(1.05) brightness(1.02);
         }
 
-        .-pill {
-          position: absolute; bottom: 14px; right: 14px;
-          background: #fff; border: 1px solid #E2E8F0;
-          box-shadow: 0 2px 8px rgba(27,42,74,0.1);
-          color: var(--navy); font-size: 0.68rem; font-weight: 700;
-          padding: 0.3rem 0.75rem 0.3rem 0.55rem; border-radius: 8px;
-          display: flex; align-items: center; gap: 0.45rem; z-index: 2;
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+        .photo-overlay {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: 2rem 1.8rem 1.8rem;
+          z-index: 2;
+          pointer-events: none;
         }
-        .-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pc); flex-shrink: 0; }
+        .overlay-gradient {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.02) 0%,
+            rgba(0,0,0,0.08) 25%,
+            rgba(var(--pcr), 0.3) 50%,
+            rgba(var(--pcr), 0.6) 70%,
+            rgba(var(--pcr), 0.85) 90%,
+            rgba(var(--pcr), 0.95) 100%
+          );
+          border-radius: 20px 20px 0 0;
+          transition: opacity 0.4s ease;
+        }
+        .overlay-content {
+          position: relative;
+          z-index: 3;
+          color: #fff;
+        }
+        .overlay-role {
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          opacity: 0.85;
+          display: block;
+          margin-bottom: 0.2rem;
+        }
+        .overlay-name {
+          font-size: 1.5rem;
+          font-weight: 800;
+          margin: 0;
+          letter-spacing: -0.02em;
+          line-height: 1.2;
+          text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+        }
+        .overlay-stats {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-top: 0.3rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          opacity: 0.85;
+        }
+        .dot-sep {
+          opacity: 0.4;
+        }
 
-        /* ── Front panel ── */
+        .content-wrapper {
+          position: relative;
+          background: #fff;
+          border-radius: 0;
+          transform: none;
+          transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+          box-shadow: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          .content-wrapper {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            border-radius: 20px 20px 0 0;
+            padding-top: 0.5rem;
+            transform: translateY(100%);
+            z-index: 5;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
+            max-height: 70%;
+            overflow-y: auto;
+          }
+          .content-wrapper.content-visible {
+            transform: translateY(0);
+          }
+          .content-wrapper.content-visible ~ .photo-area .overlay-gradient {
+            opacity: 0.7;
+          }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+          .tm-card {
+            height: auto;
+            min-height: 0;
+          }
+          .card-face { position: relative; }
+          .tm-card.is-flipped .card-scene { transform: none; }
+          .tm-card.is-flipped .back { display: flex; }
+          .tm-card.is-flipped .front { display: none; }
+          .tm-card:not(.is-flipped) .back { display: none; }
+
+          .photo-area {
+            flex: none;
+            aspect-ratio: 4 / 3;
+          }
+          .photo-overlay {
+            padding: 1.2rem 1.5rem 1rem;
+          }
+          .overlay-name { font-size: 1.15rem; }
+          .overlay-role { font-size: 0.58rem; }
+          .overlay-stats { font-size: 0.68rem; }
+          .front-panel {
+            padding: 0.7rem 1.2rem 1rem 1.4rem;
+          }
+          .person-name { display: block !important; }
+        }
+
         .front-panel {
-          padding: 1rem 1.4rem 1.2rem 1.6rem;
-          display: flex; flex-direction: column; gap: 0.42rem; flex: 1;
+          padding: 0.7rem 1.2rem 1rem 1.4rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
         }
 
         .role-tag {
-          font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
-          text-transform: uppercase; color: var(--pc);
+          font-size: 0.55rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--pc);
         }
 
         .person-name {
-          font-size: 1.15rem; font-weight: 800; color: var(--navy);
-          letter-spacing: -0.018em; line-height: 1.25; margin: 0;
+          font-size: 0.95rem;
+          font-weight: 800;
+          color: var(--navy);
+          letter-spacing: -0.018em;
+          line-height: 1.25;
+          margin: 0;
+          display: none;
         }
         .person-name::after {
-          content: ''; display: block; width: 32px; height: 2px;
-          background: var(--pc); border-radius: 2px; margin-top: 0.5rem;
-          opacity: 0.5; transition: width 0.3s ease, opacity 0.3s ease;
+          content: '';
+          display: block;
+          width: 32px;
+          height: 2.5px;
+          background: var(--pc);
+          border-radius: 2px;
+          margin-top: 0.25rem;
+          opacity: 0.5;
+          transition: width 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          .person-name { display: none; }
+          .tm-card:not(.is-flipped):hover .person-name::after {
+            width: 56px;
+            opacity: 1;
+          }
         }
 
         .person-bio {
-          font-size: 0.78rem; line-height: 1.62; color: #5A5A72; margin: 0; font-weight: 400;
-          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+          font-size: 0.7rem;
+          line-height: 1.5;
+          color: #5A5A72;
+          margin: 0;
+          font-weight: 400;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
 
-        /* ── REDESIGNED CERTS: vertical list ── */
         .certs-list {
-          display: flex; flex-direction: column;
-          margin-top: 0.15rem;
+          display: flex;
+          flex-direction: column;
           border-top: 1px solid #EEF1F8;
-          padding-top: 0.4rem;
+          padding-top: 0.25rem;
         }
         .cert-row {
-          display: flex; align-items: flex-start; gap: 0.52rem;
-          padding: 0.3rem 0;
+          display: flex;
+          align-items: flex-start;
+          gap: 0.45rem;
+          padding: 0.15rem 0;
           border-bottom: 1px solid #EEF1F8;
-          transition: border-color 0.2s ease;
+          transition: border-color 0.3s ease;
         }
-        .cert-row:last-child { border-bottom: none; }
+        .cert-row:last-child {
+          border-bottom: none;
+        }
         .cert-icon {
-          width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0; margin-top: 1px;
-          background: rgba(var(--pcr), 0.1);
+          width: 14px;
+          height: 14px;
+          border-radius: 3px;
+          flex-shrink: 0;
+          margin-top: 1px;
+          background: rgba(var(--pcr), 0.08);
           color: var(--pc);
-          display: flex; align-items: center; justify-content: center;
-          transition: background 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.3s ease, color 0.3s ease;
         }
         .cert-text {
-          font-size: 0.73rem; font-weight: 500; color: #3A4A6A;
-          line-height: 1.45; word-break: break-word; hyphens: auto;
+          font-size: 0.65rem;
+          font-weight: 500;
+          color: #3A4A6A;
+          line-height: 1.4;
+          word-break: break-word;
+          hyphens: auto;
         }
 
-        /* ── REDESIGNED ACTIONS ── */
         .front-actions {
-          display: flex; gap: 0.5rem;
-          margin-top: auto; padding-top: 0.55rem;
+          display: flex;
+          gap: 0.4rem;
+          margin-top: 0.2rem;
+          padding-top: 0.35rem;
           border-top: 1px solid #EEF1F8;
         }
         .act-btn {
-          flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.38rem;
-          font-family: 'Noto Sans Georgian', sans-serif; font-size: 0.7rem;
-          border-radius: 10px; padding: 0.55rem 0.65rem; cursor: pointer;
-          transition: all 0.2s ease; letter-spacing: 0.01em; white-space: nowrap;
+          flex: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.3rem;
+          font-family: 'Noto Sans Georgian', sans-serif;
+          font-size: 0.6rem;
+          border-radius: 8px;
+          padding: 0.4rem 0.5rem;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+          letter-spacing: 0.01em;
+          white-space: nowrap;
         }
         .act-ghost {
-          background: #F5F7FB; border: 1px solid #DDE4F0;
-          color: var(--navy); font-weight: 600;
+          background: #F5F7FB;
+          border: 1px solid #DDE4F0;
+          color: var(--navy);
+          font-weight: 600;
         }
         .act-ghost:hover {
-          background: rgba(var(--pcr), 0.07); border-color: rgba(var(--pcr), 0.28);
-          color: var(--pc); transform: translateY(-1px);
+          background: rgba(var(--pcr), 0.07);
+          border-color: rgba(var(--pcr), 0.28);
+          color: var(--pc);
         }
         .act-solid {
-          background: var(--pc); border: 1px solid var(--pc);
-          color: #fff; font-weight: 700;
+          background: var(--pc);
+          border: 1px solid var(--pc);
+          color: #fff;
+          font-weight: 700;
         }
         .act-solid:hover {
-          filter: brightness(1.1); transform: translateY(-1px);
-          box-shadow: 0 4px 14px rgba(var(--pcr),0.35);
+          filter: brightness(1.1);
+          box-shadow: 0 4px 14px rgba(var(--pcr), 0.3);
         }
-        .act-btn svg { transition: transform 0.18s ease; flex-shrink: 0; opacity: 0.7; }
-        .act-btn:hover svg { transform: translateX(3px); opacity: 1; }
+        .act-btn svg {
+          transition: transform 0.3s ease;
+          flex-shrink: 0;
+          opacity: 0.7;
+        }
+        .act-btn:hover svg {
+          transform: translateX(3px);
+          opacity: 1;
+        }
 
-        /* ── Back face ── */
         .back {
-          transform: rotateY(180deg); background: var(--navy);
-          display: flex; flex-direction: column; overflow: hidden;
+          transform: rotateY(180deg);
+          background: var(--navy);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          height: 100%;
         }
-        .back-photo-bg { position: absolute; inset: 0; overflow: hidden; }
+        .back-photo-bg {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
         .back-bg-img {
-          width: 100%; height: 50%; object-fit: cover; object-position: center 15%; display: block;
+          width: 100%;
+          height: 50%;
+          object-fit: cover;
+          object-position: center 15%;
+          display: block;
           filter: brightness(0.28) saturate(0.4);
         }
         .back-bg-mask {
-          position: absolute; inset: 0;
+          position: absolute;
+          inset: 0;
           background: linear-gradient(to bottom, rgba(27,42,74,0.5) 0%, rgba(27,42,74,0.98) 38%, rgba(27,42,74,1) 100%);
         }
         .back-body {
-          position: relative; z-index: 1; display: flex; flex-direction: column;
-          align-items: center; padding: 1.6rem 1.6rem 1.4rem; height: 100%;
-          gap: 0.45rem; overflow-y: auto;
+          position: relative;
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 1.4rem 1.4rem 1.2rem;
+          height: 100%;
+          gap: 0.4rem;
+          overflow-y: auto;
         }
-        .back-ring { position: relative; width: 76px; height: 76px; flex-shrink: 0; }
+        .back-ring {
+          position: relative;
+          width: 68px;
+          height: 68px;
+          flex-shrink: 0;
+        }
         .back-avatar-img {
-          width: 100%; height: 100%; border-radius: 12px; object-fit: cover; object-position: top;
-          display: block; border: 2px solid rgba(255,255,255,0.15);
+          width: 100%;
+          height: 100%;
+          border-radius: 12px;
+          object-fit: cover;
+          object-position: top;
+          display: block;
+          border: 2px solid rgba(255,255,255,0.15);
         }
-        .back-name { font-size: 1.08rem; font-weight: 800; color: #fff; letter-spacing: -0.015em; text-align: center; margin: 0; }
+        .back-name {
+          font-size: 1rem;
+          font-weight: 800;
+          color: #fff;
+          letter-spacing: -0.015em;
+          text-align: center;
+          margin: 0;
+        }
         .back-role-tag {
-          font-size: 0.63rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
-          color: rgba(var(--pcr), 1); background: none; border: none; padding: 0;
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.09em;
+          text-transform: uppercase;
+          color: rgba(var(--pcr), 1);
+          background: none;
+          border: none;
+          padding: 0;
         }
         .back-certs {
-          width: 100%; border-top: 1px solid rgba(255,255,255,0.1);
-          padding-top: 0.65rem; margin-top: 0.1rem;
+          width: 100%;
+          border-top: 1px solid rgba(255,255,255,0.1);
+          padding-top: 0.5rem;
+          margin-top: 0.1rem;
         }
         .back-certs-label {
-          font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-          color: rgba(255,255,255,0.35); margin: 0 0 0.5rem;
+          font-size: 0.55rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.35);
+          margin: 0 0 0.4rem;
         }
         .back-cert-item {
-          display: flex; align-items: flex-start; gap: 0.55rem;
-          font-size: 0.73rem; font-weight: 500; color: rgba(255,255,255,0.82);
-          padding: 0.28rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
-          line-height: 1.45;
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
+          font-size: 0.68rem;
+          font-weight: 500;
+          color: rgba(255,255,255,0.82);
+          padding: 0.2rem 0;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          line-height: 1.4;
         }
-        .back-cert-item:last-child { border-bottom: none; }
+        .back-cert-item:last-child {
+          border-bottom: none;
+        }
         .bci-check {
-          width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; margin-top: 1px;
-          background: rgba(var(--pcr), 0.25); color: rgba(var(--pcr), 1);
-          display: flex; align-items: center; justify-content: center;
+          width: 14px;
+          height: 14px;
+          border-radius: 3px;
+          flex-shrink: 0;
+          margin-top: 1px;
+          background: rgba(var(--pcr), 0.25);
+          color: rgba(var(--pcr), 1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .back-bio {
-          font-size: 0.73rem; font-weight: 400; line-height: 1.62; color: rgba(255,255,255,0.5);
-          text-align: center; margin: 0;
-          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+          font-size: 0.68rem;
+          font-weight: 400;
+          line-height: 1.6;
+          color: rgba(255,255,255,0.5);
+          text-align: center;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
 
         .back-profile-btn {
-          display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
           font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.7rem; font-weight: 700; color: #fff;
-          background: var(--pc); border: none;
-          padding: 0.5rem 1.1rem; border-radius: 10px; cursor: pointer;
-          transition: all 0.2s ease; width: 100%; margin-top: 0.2rem;
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: #fff;
+          background: var(--pc);
+          border: none;
+          padding: 0.45rem 1rem;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+          width: 100%;
+          margin-top: 0.15rem;
         }
-        .back-profile-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
-        .back-profile-btn svg { opacity: 0.85; transition: transform 0.18s ease; }
-        .back-profile-btn:hover svg { transform: translateX(3px); opacity: 1; }
+        .back-profile-btn:hover {
+          filter: brightness(1.12);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(var(--pcr), 0.3);
+        }
+        .back-profile-btn svg {
+          opacity: 0.85;
+          transition: transform 0.3s ease;
+        }
+        .back-profile-btn:hover svg {
+          transform: translateX(3px);
+          opacity: 1;
+        }
 
         .back-return {
-          display: inline-flex; align-items: center; gap: 0.4rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
           font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.5);
-          background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
-          padding: 0.42rem 1rem; border-radius: 10px; cursor: pointer;
-          transition: all 0.2s ease;
+          font-size: 0.65rem;
+          font-weight: 600;
+          color: rgba(255,255,255,0.5);
+          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.1);
+          padding: 0.35rem 0.9rem;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.3s ease;
         }
-        .back-return:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
+        .back-return:hover {
+          background: rgba(255,255,255,0.12);
+          color: rgba(255,255,255,0.85);
+          transform: translateY(-2px);
+        }
 
-        /* ── CTA ── */
         .tm-cta-wrap {
-          text-align: center; opacity: 0; transform: translateY(18px);
+          text-align: center;
+          opacity: 0;
+          transform: translateY(18px);
           transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
         }
-        .tm-cta-wrap.hdr-in { opacity: 1; transform: none; }
+        .tm-cta-wrap.hdr-in {
+          opacity: 1;
+          transform: none;
+        }
         .tm-main-btn {
-          display: inline-flex; align-items: center; gap: 0.8rem;
-          background: transparent; border: 2px solid var(--navy); color: var(--navy);
-          padding: 0.85rem 2.1rem; border-radius: 50px;
-          font-family: 'Noto Sans Georgian', sans-serif; font-weight: 700; font-size: 0.9rem;
-          text-decoration: none; transition: all 0.28s ease; letter-spacing: 0.01em;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.8rem;
+          background: transparent;
+          border: 2px solid var(--navy);
+          color: var(--navy);
+          padding: 0.85rem 2.1rem;
+          border-radius: 50px;
+          font-family: 'Noto Sans Georgian', sans-serif;
+          font-weight: 700;
+          font-size: 0.9rem;
+          text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+          letter-spacing: 0.01em;
+          position: relative;
+          overflow: hidden;
         }
-        .tm-main-btn:hover { background: var(--navy); color: var(--cream); transform: translateY(-2px); box-shadow: 0 14px 30px -8px rgba(27,42,74,0.28); }
-        .tm-main-btn.solid { background: var(--navy); color: var(--cream); }
-        .tm-main-btn.solid:hover { background: var(--blue-mid); box-shadow: 0 14px 30px -8px rgba(27,42,74,0.35); }
-        .main-btn-arr { display: flex; align-items: center; transition: transform 0.25s ease; }
-        .tm-main-btn:hover .main-btn-arr { transform: translateX(4px); }
+        .tm-main-btn::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: var(--navy);
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+        }
+        .tm-main-btn:hover::before {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+        .tm-main-btn span {
+          position: relative;
+          z-index: 1;
+        }
+        .tm-main-btn:hover {
+          color: var(--cream);
+          transform: translateY(-3px);
+          box-shadow: 0 14px 30px -8px rgba(27,42,74,0.3);
+        }
+        .tm-main-btn.solid {
+          background: var(--navy);
+          color: var(--cream);
+        }
+        .tm-main-btn.solid::before {
+          background: var(--blue-mid);
+        }
+        .tm-main-btn.solid:hover {
+          box-shadow: 0 14px 30px -8px rgba(27,42,74,0.4);
+        }
+        .main-btn-arr {
+          display: flex;
+          align-items: center;
+          transition: transform 0.3s ease;
+          position: relative;
+          z-index: 1;
+        }
+        .tm-main-btn:hover .main-btn-arr {
+          transform: translateX(4px);
+        }
 
-        /* ── Responsive ── */
+        /* ── Team Card Responsive ── */
         @media (max-width: 1024px) {
-          .tm-grid { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
-          .tm-card { height: 580px; }
-        }
-        @media (max-width: 640px) {
-          .tm-section { padding: 4rem 1rem 3.5rem; }
-          .tm-grid { grid-template-columns: 1fr; gap: 1.4rem; }
-          .tm-card { height: 540px; }
-          .tm-title { font-size: 1.8rem; }
-          .tm-title br { display: none; }
-          .photo-area { height: 200px; }
-          .tm-main-btn { width: 100%; justify-content: center; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .tm-header, .tm-cta-wrap, .tm-card, .card-scene, .photo-img,
-          .-pill, .act-btn, .back-return, .badge-pulse {
-            transition: none !important; animation: none !important;
+          .tm-section {
+            padding: 4rem 1.5rem 4rem;
           }
-          .tm-card { opacity: 1; transform: none; }
-          .tm-header, .tm-cta-wrap { opacity: 1; transform: none; }
+          .tm-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+          }
+          .grid-item {
+            max-width: 380px;
+          }
+          .tm-card {
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+          }
+          .card-face {
+            position: relative;
+          }
+          .tm-card.is-flipped .card-scene {
+            transform: none;
+          }
+          .tm-card.is-flipped .back {
+            display: flex;
+          }
+          .tm-card.is-flipped .front {
+            display: none;
+          }
+          .tm-card:not(.is-flipped) .back {
+            display: none;
+          }
+          .photo-area {
+            flex: none;
+            aspect-ratio: 4 / 3;
+            min-height: auto;
+          }
+          .photo-overlay {
+            padding: 1.2rem 1.5rem 1rem;
+          }
+          .overlay-name {
+            font-size: 1.15rem;
+          }
+          .overlay-role {
+            font-size: 0.58rem;
+          }
+          .overlay-stats {
+            font-size: 0.68rem;
+          }
+          .front-panel {
+            padding: 0.7rem 1.2rem 1rem 1.4rem;
+          }
+          .person-name {
+            display: block !important;
+          }
+          .content-wrapper {
+            position: relative !important;
+            transform: none !important;
+            box-shadow: none !important;
+            max-height: none !important;
+            overflow-y: visible !important;
+            border-radius: 0 !important;
+            padding-top: 0 !important;
+          }
+          .content-wrapper.content-visible ~ .photo-area .overlay-gradient {
+            opacity: 1 !important;
+          }
+          .tm-card:not(.is-flipped):hover .photo-img {
+            transform: none !important;
+          }
+          .tm-card:not(.is-flipped):hover .front {
+            box-shadow: 0 1px 3px rgba(27,42,74,0.06), 0 8px 20px rgba(27,42,74,0.07) !important;
+          }
+          .tm-card:not(.is-flipped):hover .top-bar {
+            width: 4px !important;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .tm-section {
+            padding: 3rem 0.8rem 3rem;
+          }
+          .tm-grid {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+            justify-items: center;
+          }
+          .grid-item {
+            max-width: 360px;
+          }
+          .tm-title {
+            font-size: 1.6rem;
+          }
+          .tm-title br {
+            display: none;
+          }
+          .tm-subtitle {
+            font-size: 0.85rem;
+          }
+          .photo-overlay {
+            padding: 0.8rem 1rem 0.8rem;
+          }
+          .overlay-name {
+            font-size: 0.95rem;
+          }
+          .overlay-role {
+            font-size: 0.5rem;
+          }
+          .overlay-stats {
+            font-size: 0.6rem;
+          }
+          .front-panel {
+            padding: 0.6rem 0.8rem 0.8rem 1rem;
+          }
+          .person-name {
+            font-size: 0.85rem;
+          }
+          .person-bio {
+            font-size: 0.65rem;
+          }
+          .cert-text {
+            font-size: 0.6rem;
+          }
+          .act-btn {
+            font-size: 0.55rem;
+            padding: 0.35rem 0.4rem;
+          }
+          .tm-main-btn {
+            width: 100%;
+            justify-content: center;
+            font-size: 0.8rem;
+            padding: 0.7rem 1.5rem;
+          }
+          .back-body {
+            padding: 1rem 1rem 0.8rem;
+          }
+          .back-name {
+            font-size: 0.9rem;
+          }
+          .back-cert-item {
+            font-size: 0.6rem;
+          }
+          .back-profile-btn {
+            font-size: 0.6rem;
+            padding: 0.4rem 0.8rem;
+          }
+          .back-return {
+            font-size: 0.6rem;
+            padding: 0.3rem 0.7rem;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .grid-item {
+            max-width: 100%;
+          }
+          .photo-overlay {
+            padding: 0.6rem 0.8rem 0.6rem;
+          }
+          .overlay-name {
+            font-size: 0.85rem;
+          }
+          .overlay-role {
+            font-size: 0.45rem;
+          }
+          .overlay-stats {
+            font-size: 0.55rem;
+          }
+          .front-panel {
+            padding: 0.5rem 0.6rem 0.6rem 0.8rem;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .tm-header,
+          .tm-cta-wrap,
+          .tm-card,
+          .card-scene,
+          .photo-img,
+          .content-wrapper,
+          .act-btn,
+          .back-return,
+          .badge-pulse,
+          .front,
+          .tm-main-btn::before,
+          .overlay-gradient {
+            transition: none !important;
+            animation: none !important;
+          }
+          .tm-card {
+            opacity: 1;
+            transform: none;
+          }
+          .tm-header,
+          .tm-cta-wrap {
+            opacity: 1;
+            transform: none;
+          }
+          .content-wrapper {
+            transform: translateY(0) !important;
+          }
         }
       `}</style>
     </section>

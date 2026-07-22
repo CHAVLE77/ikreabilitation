@@ -108,12 +108,17 @@ function LoginScreen({ onLogin }) {
     e.preventDefault();
     setErr("");
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
-    if (error) {
-      setErr(error.message);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+      if (error) {
+        setErr(error.message);
+        setLoading(false);
+      } else {
+        onLogin();
+      }
+    } catch (error) {
+      setErr("კავშირის შეცდომა. გთხოვთ შეამოწმოთ ინტერნეტი.");
       setLoading(false);
-    } else {
-      onLogin();
     }
   };
 
@@ -631,20 +636,24 @@ function AdminPanel({ onLogout }) {
     setTimeout(() => setToast(null), 3000);
   }, []);
 
- const fetchSubmissions = useCallback(async (silent = false) => {
-  if (!silent) setLoading(true); else setRefreshing(true);
-  
-  const [{ data, error }, { data: delData }] = await Promise.all([
-    supabase.from("submissions").select("*").order("created_at", { ascending: false }),
-    supabase.from("deleted_count").select("count").single(),
-  ]);
-  
-  if (!error && data) setSubmissions(data);
-  if (delData) setDeletedCount(delData.count);
-  
-  setLoading(false);
-  setRefreshing(false);
-}, []);
+  const fetchSubmissions = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true); else setRefreshing(true);
+    
+    try {
+      const [{ data, error }, { data: delData }] = await Promise.all([
+        supabase.from("submissions").select("*").order("created_at", { ascending: false }),
+        supabase.from("deleted_count").select("count").single(),
+      ]);
+      
+      if (!error && data) setSubmissions(data);
+      if (delData) setDeletedCount(delData.count);
+    } catch (error) {
+      console.error("Error fetching submissions:", error);
+    }
+    
+    setLoading(false);
+    setRefreshing(false);
+  }, []);
 
   useEffect(() => {
     fetchSubmissions();
@@ -660,42 +669,58 @@ function AdminPanel({ onLogout }) {
 
   /* ── Handlers ── */
   const handleConfirm = useCallback(async (id) => {
-    await supabase.from("submissions").update({ status: "confirmed" }).eq("id", id);
-    fetchSubmissions(true);
-    setSelected(null);
-    showToast("განაცხადი წარმატებით დადასტურდა ✓");
+    try {
+      await supabase.from("submissions").update({ status: "confirmed" }).eq("id", id);
+      fetchSubmissions(true);
+      setSelected(null);
+      showToast("განაცხადი წარმატებით დადასტურდა ✓");
+    } catch (error) {
+      showToast("შეცდომა დადასტურებისას", "error");
+    }
   }, [fetchSubmissions, showToast]);
 
   const handleRejectFinal = useCallback(async (reason) => {
-    await supabase.from("submissions").update({ status: "rejected", rejectReason: reason || null }).eq("id", rejectTarget.id);
-    setRejectTarget(null);
-    setSelected(null);
-    fetchSubmissions(true);
-    showToast("განაცხადი უარყოფილია", "error");
+    try {
+      await supabase.from("submissions").update({ status: "rejected", rejectReason: reason || null }).eq("id", rejectTarget.id);
+      setRejectTarget(null);
+      setSelected(null);
+      fetchSubmissions(true);
+      showToast("განაცხადი უარყოფილია", "error");
+    } catch (error) {
+      showToast("შეცდომა უარყოფისას", "error");
+    }
   }, [rejectTarget, fetchSubmissions, showToast]);
 
   const handleEditFinal = useCallback(async (status, reason) => {
-    await supabase.from("submissions").update({
-      status,
-      rejectReason: reason || null,
-    }).eq("id", editTarget.id);
-    setEditTarget(null);
-    setSelected(null);
-    fetchSubmissions(true);
-    showToast("სტატუსი წარმატებით განახლდა ✓");
+    try {
+      await supabase.from("submissions").update({
+        status,
+        rejectReason: reason || null,
+      }).eq("id", editTarget.id);
+      setEditTarget(null);
+      setSelected(null);
+      fetchSubmissions(true);
+      showToast("სტატუსი წარმატებით განახლდა ✓");
+    } catch (error) {
+      showToast("შეცდომა სტატუსის განახლებისას", "error");
+    }
   }, [editTarget, fetchSubmissions, showToast]);
 
   const handleDeleteFinal = useCallback(async () => {
-  await supabase.from("submissions").delete().eq("id", deleteTarget.id);
-  
-  // counter გაზარდე ბაზაში
-  await supabase.rpc("increment_deleted_count");
-  setDeletedCount(prev => prev + 1);
-  setDeleteTarget(null);
-  setSelected(null);
-  fetchSubmissions(true);
-  showToast("განაცხადი წაშლილია", "error");
-}, [deleteTarget, fetchSubmissions, showToast]);
+    try {
+      await supabase.from("submissions").delete().eq("id", deleteTarget.id);
+      // counter გაზარდე ბაზაში
+      await supabase.rpc("increment_deleted_count");
+      setDeletedCount(prev => prev + 1);
+      setDeleteTarget(null);
+      setSelected(null);
+      fetchSubmissions(true);
+      showToast("განაცხადი წაშლილია", "error");
+    } catch (error) {
+      showToast("შეცდომა წაშლისას", "error");
+    }
+  }, [deleteTarget, fetchSubmissions, showToast]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     onLogout();
@@ -709,19 +734,20 @@ function AdminPanel({ onLogout }) {
   });
 
   const stats = {
-  total:     submissions.length,
-  pending:   submissions.filter(s => s.status === "pending").length,
-  confirmed: submissions.filter(s => s.status === "confirmed").length,
-  rejected:  submissions.filter(s => s.status === "rejected").length,
-  deleted:   deletedCount, 
-};
+    total:     submissions.length,
+    pending:   submissions.filter(s => s.status === "pending").length,
+    confirmed: submissions.filter(s => s.status === "confirmed").length,
+    rejected:  submissions.filter(s => s.status === "rejected").length,
+    deleted:   deletedCount, 
+  };
 
   const STAT_CARDS = [
     { label:"სულ განაცხადი",  value:stats.total,     key:"all",       color:"#3A7BD5", bg:"rgba(58,123,213,0.1)",  border:"rgba(58,123,213,0.2)",  icon:<IconMsg size={16}/> },
     { label:"მოლოდინში",      value:stats.pending,   key:"pending",   color:"#F59E0B", bg:"rgba(245,158,11,0.1)",  border:"rgba(245,158,11,0.2)",  icon:<IconClock size={16}/> },
     { label:"დადასტურებული",  value:stats.confirmed, key:"confirmed", color:"#10B981", bg:"rgba(16,185,129,0.1)",  border:"rgba(16,185,129,0.2)",  icon:<IconCheck size={16}/> },
     { label:"უარყოფილი",      value:stats.rejected,  key:"rejected",  color:"#EF4444", bg:"rgba(239,68,68,0.1)",   border:"rgba(239,68,68,0.2)",   icon:<IconX size={16}/> },
-{ label:"წაშლილი (სეს.)", value:deletedCount, key:"all", color:"#6B7280", bg:"rgba(107,114,128,0.1)", border:"rgba(107,114,128,0.2)", icon:<IconTrash size={16}/> }  ];
+    { label:"წაშლილი (სეს.)", value:deletedCount, key:"all", color:"#6B7280", bg:"rgba(107,114,128,0.1)", border:"rgba(107,114,128,0.2)", icon:<IconTrash size={16}/> }
+  ];
 
   return (
     <div style={{ minHeight:"100vh", background:"linear-gradient(160deg,#060F20 0%,#08172E 50%,#060E1C 100%)", fontFamily:"'Noto Sans Georgian',sans-serif", color:"#E2E8F0" }}>

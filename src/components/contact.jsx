@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../lib/supabase";
+// NOTE: adjust this relative path to match where ServicesPage.jsx actually
+// lives in your project (e.g. "../pages/ServicesPage" or "../ServicesPage").
+// SERVICES is exported from that file so this dropdown always matches the
+// exact list of services shown on the Services page.
+import { SERVICES } from "../pages/ServicesPage";
+
+const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
 
 /* ─────────────── DATA ─────────────── */
 const HOURS = [
@@ -85,6 +92,8 @@ export default function Contact() {
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", specialist: "", service: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const rootRef = useRef(null);
   const formRef = useRef(null);
 
@@ -95,19 +104,16 @@ export default function Contact() {
     );
     if (rootRef.current) obs.observe(rootRef.current);
 
-    // ── Read pre-selected specialist (from team section etc.) ──
     const preselectedSpecialist = sessionStorage.getItem("selectedSpecialist");
     if (preselectedSpecialist) {
       setFormData(prev => ({ ...prev, specialist: preselectedSpecialist }));
       sessionStorage.removeItem("selectedSpecialist");
     }
 
-    // ── Read pre-selected service (from Services modal CTA) ──
     const preselectedService = sessionStorage.getItem("selectedService");
     if (preselectedService) {
       setFormData(prev => ({ ...prev, service: preselectedService }));
       sessionStorage.removeItem("selectedService");
-      // Scroll form into view smoothly after a short delay so page has settled
       setTimeout(() => {
         formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 300);
@@ -118,24 +124,60 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const { error } = await supabase
-      .from("submissions")
-      .insert([{
-        name:       formData.name,
-        phone:      formData.phone,
-        specialist: formData.specialist,
-        service:    formData.service,
-        message:    formData.message,
-        status:     "pending",
-      }]);
+    // Validate required fields
+    if (!formData.name.trim()) {
+      setError("გთხოვთ შეიყვანოთ სახელი");
+      setLoading(false);
+      return;
+    }
+    if (!formData.phone.trim()) {
+      setError("გთხოვთ შეიყვანოთ ტელეფონის ნომერი");
+      setLoading(false);
+      return;
+    }
 
-    if (!error) {
+    try {
+      // Prepare data with only the fields that exist in your table
+      const submissionData = {
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        specialist: formData.specialist?.trim() || null,
+        service: formData.service?.trim() || null,
+        message: formData.message?.trim() || null,
+        status: "pending",
+      };
+
+      console.log("Submitting data:", submissionData);
+
+      const { data, error } = await supabase
+        .from("submissions")
+        .insert([submissionData])
+        .select();
+
+      if (error) {
+        console.error("Supabase error:", error);
+        console.error("Error details:", error.message, error.details, error.hint);
+        setError(`მონაცემების გაგზავნა ვერ მოხერხდა: ${error.message}`);
+        setLoading(false);
+        return;
+      }
+
+      console.log("Successfully submitted:", data);
       setSent(true);
-      setTimeout(() => setSent(false), 4000);
+      setLoading(false);
       setFormData({ name: "", phone: "", specialist: "", service: "", message: "" });
-    } else {
-      console.error("შეცდომა:", error);
+      
+      setTimeout(() => {
+        setSent(false);
+      }, 4000);
+      
+    } catch (err) {
+      console.error("Error:", err);
+      setError("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
+      setLoading(false);
     }
   };
 
@@ -169,7 +211,6 @@ export default function Contact() {
           position: relative;
         }
 
-        /* ── Background Decoration ── */
         .ct-bg {
           position: absolute;
           inset: 0;
@@ -191,7 +232,6 @@ export default function Contact() {
           background-size: 56px 56px;
         }
 
-        /* ── Section Wrapper ── */
         .ct-wrap {
           position: relative;
           z-index: 1;
@@ -200,7 +240,6 @@ export default function Contact() {
           padding: 96px 32px 80px;
         }
 
-        /* ── Header ── */
         .ct-header {
           text-align: center;
           margin-bottom: 72px;
@@ -254,7 +293,6 @@ export default function Contact() {
           line-height: 1.75;
         }
 
-        /* ── Main Grid ── */
         .ct-grid {
           display: grid;
           grid-template-columns: 1fr 1.08fr;
@@ -262,14 +300,12 @@ export default function Contact() {
           align-items: start;
         }
 
-        /* ── LEFT COLUMN ── */
         .ct-left {
           display: flex;
           flex-direction: column;
           gap: 16px;
         }
 
-        /* ── Info strip ── */
         .ct-info-strip {
           display: flex;
           flex-direction: column;
@@ -340,7 +376,6 @@ export default function Contact() {
           color: var(--text-muted);
         }
 
-        /* ── Messenger Buttons ── */
         .ct-messengers {
           display: flex;
           gap: 10px;
@@ -371,7 +406,6 @@ export default function Contact() {
         .ct-msg-wa { background: linear-gradient(135deg, #25D366, #1AAD5A); }
         .ct-msg-fb { background: linear-gradient(135deg, #0084FF, #005AC4); }
 
-        /* ── Hours Card ── */
         .ct-hours {
           background: var(--card);
           border: 1px solid var(--card-border);
@@ -416,7 +450,6 @@ export default function Contact() {
         .ct-hours-badge--open { background: rgba(16,185,129,0.18); color: #6EE7B7; border: 1px solid rgba(16,185,129,0.35); }
         .ct-hours-badge--closed { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.08); }
 
-        /* ── RIGHT COLUMN ── */
         .ct-right {
           display: flex;
           flex-direction: column;
@@ -427,7 +460,6 @@ export default function Contact() {
         }
         .ct-right--in { opacity: 1; transform: translateX(0); }
 
-        /* ── Form Card ── */
         .ct-form-card {
           background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.11);
@@ -460,7 +492,7 @@ export default function Contact() {
           letter-spacing: 0.1em; text-transform: uppercase;
           color: rgba(245,166,35,0.8);
         }
-        .ct-field input, .ct-field textarea {
+        .ct-field input, .ct-field textarea, .ct-field select {
           padding: 11px 15px;
           border-radius: 13px;
           border: 1.5px solid rgba(255,255,255,0.08);
@@ -472,21 +504,52 @@ export default function Contact() {
           transition: all 0.22s ease;
         }
         .ct-field input::placeholder, .ct-field textarea::placeholder { color: rgba(255,255,255,0.22); }
-        .ct-field input:focus, .ct-field textarea:focus {
+        .ct-field input:focus, .ct-field textarea:focus, .ct-field select:focus {
           border-color: rgba(245,166,35,0.5);
           background: rgba(245,166,35,0.05);
           box-shadow: 0 0 0 4px rgba(245,166,35,0.08);
         }
         .ct-field textarea { resize: none; min-height: 90px; }
 
-        /* highlighted pre-filled fields */
-        .ct-field-prefilled input {
+        /* Custom select styling — native arrow removed, custom gold chevron added */
+        .ct-field select {
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          cursor: pointer;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23F5A623' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 14px center;
+          padding-right: 36px;
+        }
+        .ct-field select option {
+          background: #0F2344;
+          color: #fff;
+        }
+        .ct-field select:invalid,
+        .ct-field select.ct-select-empty {
+          color: rgba(255,255,255,0.4);
+        }
+
+        .ct-field-prefilled input, .ct-field-prefilled select {
           border-color: rgba(245,166,35,0.45);
           background: rgba(245,166,35,0.07);
           color: var(--gold-light);
           font-weight: 600;
         }
         .ct-field-prefilled label { color: var(--gold); }
+
+        .ct-error {
+          background: rgba(239,68,68,0.12);
+          border: 1px solid rgba(239,68,68,0.3);
+          border-radius: 10px;
+          padding: 10px 14px;
+          color: #FCA5A5;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
 
         .ct-submit {
           display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -501,19 +564,21 @@ export default function Contact() {
           box-shadow: 0 8px 28px rgba(245,166,35,0.28);
           letter-spacing: 0.01em;
         }
-        .ct-submit:hover {
+        .ct-submit:hover:not(:disabled) {
           transform: translateY(-3px);
           box-shadow: 0 14px 36px rgba(245,166,35,0.38);
           filter: brightness(1.06);
+        }
+        .ct-submit:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
         .ct-submit--sent {
           background: linear-gradient(135deg, #10B981, #059669);
           box-shadow: 0 8px 28px rgba(16,185,129,0.3);
           color: #fff;
-          pointer-events: none;
         }
 
-        /* ── Map Card ── */
         .ct-map-card {
           position: relative;
           border-radius: 20px;
@@ -566,7 +631,6 @@ export default function Contact() {
         }
         .ct-map-link:hover { background: rgba(245,166,35,0.22); }
 
-        /* ── FOOTER ── */
         .ft-root {
           background: #0D2040;
           border-top: 1px solid rgba(255,255,255,0.08);
@@ -593,8 +657,6 @@ export default function Contact() {
       `}</style>
 
       <section className="ct-root" id="contact" ref={rootRef}>
-
-        {/* Background */}
         <div className="ct-bg">
           <div className="ct-bg-grid" />
           <div className="ct-bg-orb" style={{ width:700, height:700, top:-250, right:-200, background:"radial-gradient(circle, rgba(56,139,255,0.16) 0%, transparent 70%)" }} />
@@ -603,8 +665,6 @@ export default function Contact() {
         </div>
 
         <div className="ct-wrap">
-
-          {/* Header */}
           <header className={`ct-header ${visible ? "ct-header--in" : ""}`}>
             <div className="ct-eyebrow">
               <div className="ct-eyebrow-dot" />
@@ -620,20 +680,14 @@ export default function Contact() {
             </p>
           </header>
 
-          {/* Main Grid */}
           <div className="ct-grid">
-
-            {/* LEFT */}
             <div className="ct-left">
-
-              {/* Contact Info */}
               <div className={`ct-info-strip ${visible ? "ct-info-strip--in" : ""}`}>
                 {CONTACT_ITEMS.map((item, i) => (
                   <ContactItem key={item.id} item={item} visible={visible} delay={i * 0.1} />
                 ))}
               </div>
 
-              {/* Messengers */}
               <div className={`ct-messengers ${visible ? "ct-messengers--in" : ""}`}>
                 <a href="https://wa.me/995555123456" target="_blank" rel="noopener noreferrer" className="ct-msg-btn ct-msg-wa">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -649,7 +703,6 @@ export default function Contact() {
                 </a>
               </div>
 
-              {/* Hours */}
               <div className={`ct-hours ${visible ? "ct-hours--in" : ""}`}>
                 <div className="ct-hours-head">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -669,13 +722,9 @@ export default function Contact() {
                   </div>
                 ))}
               </div>
-
             </div>
 
-            {/* RIGHT */}
             <div className={`ct-right ${visible ? "ct-right--in" : ""}`}>
-
-              {/* Form */}
               <div className="ct-form-card" ref={formRef}>
                 <div className="ct-form-head">
                   <h3 className="ct-form-title">გამოგვიგზავნეთ შეტყობინება</h3>
@@ -684,23 +733,25 @@ export default function Contact() {
                 <form className="ct-form" onSubmit={handleSubmit}>
                   <div className="ct-field-row">
                     <div className="ct-field">
-                      <label>სახელი</label>
+                      <label>სახელი *</label>
                       <input
                         type="text"
                         placeholder="თქვენი სახელი"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         required
+                        disabled={loading}
                       />
                     </div>
                     <div className="ct-field">
-                      <label>ტელეფონი</label>
+                      <label>ტელეფონი *</label>
                       <input
                         type="tel"
                         placeholder="+995 5XX XX XX XX"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         required
+                        disabled={loading}
                       />
                     </div>
                   </div>
@@ -712,17 +763,25 @@ export default function Contact() {
                       placeholder="სპეციალისტი რომელთანაც ეწერებით"
                       value={formData.specialist}
                       onChange={(e) => setFormData({ ...formData, specialist: e.target.value })}
+                      disabled={loading}
                     />
                   </div>
 
                   <div className={`ct-field ${formData.service ? "ct-field-prefilled" : ""}`}>
                     <label>სერვისი</label>
-                    <input
-                      type="text"
-                      placeholder="სერვისი რომელზეც ეწერებით"
+                    <select
+                      className={!formData.service ? "ct-select-empty" : ""}
                       value={formData.service}
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    />
+                      disabled={loading}
+                    >
+                      <option value="">აირჩიეთ სერვისი</option>
+                      {SERVICE_OPTIONS.map((name) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="ct-field">
@@ -731,16 +790,42 @@ export default function Contact() {
                       placeholder="მოგვიყევით თქვენი ბავშვის საჭიროებებზე..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      disabled={loading}
                     />
                   </div>
 
-                  <button type="submit" className={`ct-submit ${sent ? "ct-submit--sent" : ""}`}>
-                    {sent ? (
+                  {error && (
+                    <div className="ct-error">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                      </svg>
+                      {error}
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit" 
+                    className={`ct-submit ${sent ? "ct-submit--sent" : ""}`}
+                    disabled={loading || sent}
+                  >
+                    {loading ? (
                       <>
-                        გაგზავნილია
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <path d="M20 6L9 17l-5-5"/>
-                        </svg>
+                        <span style={{ 
+                          display: 'inline-block', 
+                          width: 14, 
+                          height: 14, 
+                          border: '2px solid rgba(15,35,68,0.3)', 
+                          borderTopColor: '#0F2344', 
+                          borderRadius: '50%', 
+                          animation: 'spin 0.7s linear infinite' 
+                        }} />
+                        იტვირთება...
+                      </>
+                    ) : sent ? (
+                      <>
+                        გაგზავნილია ✓
                       </>
                     ) : (
                       <>
@@ -754,7 +839,6 @@ export default function Contact() {
                 </form>
               </div>
 
-              {/* Map */}
               <div className="ct-map-card">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000.0!2d41.6282323!3d41.6410399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406787123775ff67%3A0x87dba33f22dd4919!2sIrma%20Khvichia%20Rehabilitation%20Center!5e0!3m2!1sen!2sge!4v1740000000000"
@@ -780,17 +864,13 @@ export default function Contact() {
                   </a>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
 
-        {/* FOOTER */}
         <footer className="ft-root">
           <div className="ft-gold-line" />
           <div style={{ maxWidth:1200, margin:'0 auto', padding:'60px 32px 44px', display:'grid', gridTemplateColumns:'2fr 1fr 1.4fr 1.4fr', gap:44 }}>
-
-            {/* Brand */}
             <div>
               <div style={{ display:'flex', gap:12, marginBottom:20 }}>
                 <div style={{ width:42, height:42, background:'rgba(245,166,35,0.1)', borderRadius:11, display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgba(245,166,35,0.2)', flexShrink:0 }}>
@@ -812,7 +892,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Nav */}
             <div>
               <h4 style={{ color:'#F5A623', fontSize:11, fontWeight:800, letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:18 }}>ნავიგაცია</h4>
               <nav style={{ display:'flex', flexDirection:'column', gap:10 }}>
@@ -824,7 +903,6 @@ export default function Contact() {
               </nav>
             </div>
 
-            {/* Services */}
             <div>
               <h4 style={{ color:'#F5A623', fontSize:11, fontWeight:800, letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:18 }}>სერვისები</h4>
               <nav style={{ display:'flex', flexDirection:'column', gap:10 }}>
@@ -836,7 +914,6 @@ export default function Contact() {
               </nav>
             </div>
 
-            {/* Contact */}
             <div>
               <h4 style={{ color:'#F5A623', fontSize:11, fontWeight:800, letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:18 }}>საკონტაქტო</h4>
               <div style={{ display:'flex', flexDirection:'column', gap:10, marginBottom:22 }}>
@@ -859,13 +936,11 @@ export default function Contact() {
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
-
           </div>
           <div style={{ borderTop:'1px solid rgba(255,255,255,0.05)', padding:'18px 32px', textAlign:'center', fontSize:12, color:'rgba(255,255,255,0.25)' }}>
             © {new Date().getFullYear()} ირმა ხვიჩიას რეაბილიტაციის ცენტრი — ყველა უფლება დაცულია
           </div>
         </footer>
-
       </section>
     </>
   );

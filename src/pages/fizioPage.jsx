@@ -344,7 +344,7 @@ export default function FizioPage() {
       </div>
 
       {/* ── Styles ── */}
-      <style jsx global>{`
+      <style>{`
         @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap");
         *,
         *::before,
@@ -355,7 +355,7 @@ export default function FizioPage() {
         }
       `}</style>
 
-      <style jsx>{`
+      <style>{`
         .fizio-page {
           font-family: "Noto Sans Georgian", system-ui, sans-serif;
           background: #020a1e;

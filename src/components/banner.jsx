@@ -347,7 +347,7 @@ export default function Banner() {
             {/* badge */}
             <div className={`cta-badge ${visible ? "cta-badge--in" : ""}`}>
               <div className="cta-badge-dot" />
-              <span className="cta-badge-text">უფასო პირველი კონსულტაცია</span>
+              <span className="cta-badge-text"> პირველი კონსულტაცია</span>
             </div>
 
             {/* heading */}
@@ -370,7 +370,7 @@ export default function Banner() {
 
             {/* subtitle */}
             <p className={`cta-sub ${visible ? "cta-sub--in" : ""}`}>
-              დაჯავშნეთ უფასო პირველადი კონსულტაცია — ჩვენი
+              დაჯავშნეთ  პირველადი კონსულტაცია — ჩვენი
               ექსპერტი დაგეხმარებათ გეგმის შედგენაში და
               სწორი სერვისის შერჩევაში.
             </p>
@@ -392,7 +392,7 @@ export default function Banner() {
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
                   </svg>
                 </div>
-                +995 555 12 34 56
+                +995 595 20 18 11
               </a>
             </div>
 
