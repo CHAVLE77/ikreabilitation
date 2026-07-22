@@ -1,10 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../lib/supabase";
-// NOTE: adjust this relative path to match where ServicesPage.jsx actually
-// lives in your project (e.g. "../pages/ServicesPage" or "../ServicesPage").
-// SERVICES is exported from that file so this dropdown always matches the
-// exact list of services shown on the Services page.
-import { SERVICES } from "../pages/ServicesPage";
+import { SERVICES } from "../pages/servicesPage";
 
 const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
 
