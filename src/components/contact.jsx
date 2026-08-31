@@ -4,6 +4,9 @@ import { SERVICES } from "../pages/servicesPage";
 
 const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
 
+/* EEG-ის ხანგრძლივობის ვარიანტები */
+const EEG_DURATIONS = ["1 საათიანი", "1-3 საათიანი", "6-12 საათიანი", "24 საათიანი"];
+
 /* ─────────────── DATA ─────────────── */
 const HOURS = [
   { day: "ორშაბათი – პარასკევი", time: "09:00 – 19:00", open: true },
@@ -37,9 +40,9 @@ const CONTACT_ITEMS = [
       </svg>
     ),
     label: "ტელეფონი",
-    value: "+995 032 242 38 64",
+    value: "+995 32 2 423 864",
     sub: "ორშ–პარ, 09:00–19:00",
-    link: "tel:+995032242386",
+    link: "tel:+995 32 2 423 864",
     color: "#10B981",
     colorRgb: "16,185,129",
   },
@@ -86,12 +89,22 @@ function ContactItem({ item, visible, delay }) {
 /* ─────────────── MAIN COMPONENT ─────────────── */
 export default function Contact() {
   const [visible, setVisible] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "", specialist: "", service: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    specialist: "",
+    service: "",
+    message: "",
+    eegDuration: "",
+  });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const rootRef = useRef(null);
   const formRef = useRef(null);
+
+  // ეეგ სერვისის ამოცნობა (ქართული და ინგლისური ჩანაწერებისთვის)
+  const isEEG = /eeg|ეეგ/i.test(formData.service);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -134,14 +147,26 @@ export default function Contact() {
       setLoading(false);
       return;
     }
+    if (isEEG && !formData.eegDuration) {
+      setError("გთხოვთ აირჩიოთ ეეგ-ის ხანგრძლივობა");
+      setLoading(false);
+      return;
+    }
 
     try {
-      // Prepare data with only the fields that exist in your table
+      // თუ ეეგ-ია და ხანგრძლივობა არჩეულია, დავურთოთ service ველს
+      // (ცალკე სვეტის დამატება Supabase-ში არ სჭირდება)
+      const serviceValue = formData.service?.trim()
+        ? isEEG && formData.eegDuration
+          ? `${formData.service.trim()} (${formData.eegDuration})`
+          : formData.service.trim()
+        : null;
+
       const submissionData = {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
         specialist: formData.specialist?.trim() || null,
-        service: formData.service?.trim() || null,
+        service: serviceValue,
         message: formData.message?.trim() || null,
         status: "pending",
       };
@@ -164,12 +189,12 @@ export default function Contact() {
       console.log("Successfully submitted:", data);
       setSent(true);
       setLoading(false);
-      setFormData({ name: "", phone: "", specialist: "", service: "", message: "" });
-      
+      setFormData({ name: "", phone: "", specialist: "", service: "", message: "", eegDuration: "" });
+
       setTimeout(() => {
         setSent(false);
       }, 4000);
-      
+
     } catch (err) {
       console.error("Error:", err);
       setError("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
@@ -507,7 +532,6 @@ export default function Contact() {
         }
         .ct-field textarea { resize: none; min-height: 90px; }
 
-        /* Custom select styling — native arrow removed, custom gold chevron added */
         .ct-field select {
           appearance: none;
           -webkit-appearance: none;
@@ -646,9 +670,625 @@ export default function Contact() {
           .ct-grid { grid-template-columns: 1fr; }
           .ct-wrap { padding: 72px 20px 64px; }
         }
+
+        /* ─── CONTACT SECTION RESPONSIVE (565px-ზე ქვემოთ) ─── */
+        @media (max-width: 565px) {
+          .ct-wrap {
+            padding: 48px 12px 40px;
+          }
+          
+          .ct-header {
+            margin-bottom: 32px;
+          }
+          
+          .ct-eyebrow {
+            font-size: 9px;
+            padding: 4px 10px;
+            gap: 5px;
+          }
+          
+          .ct-title {
+            font-size: clamp(22px, 5.5vw, 28px);
+            line-height: 1.15;
+          }
+          
+          .ct-lead {
+            font-size: 11.5px;
+            max-width: 100%;
+            padding: 0 4px;
+          }
+          
+          .ct-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+          
+          .ct-left {
+            gap: 10px;
+          }
+          
+          .ct-info-item {
+            padding: 9px 12px;
+            gap: 10px;
+            border-radius: 12px;
+          }
+          
+          .ct-info-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+          }
+          .ct-info-icon svg {
+            width: 14px;
+            height: 14px;
+          }
+          
+          .ct-info-label {
+            font-size: 7.5px;
+          }
+          
+          .ct-info-value {
+            font-size: 11px;
+            white-space: normal;
+            word-break: break-word;
+          }
+          
+          .ct-info-sub {
+            font-size: 9px;
+          }
+          
+          .ct-messengers {
+            flex-direction: column;
+            gap: 6px;
+          }
+          
+          .ct-msg-btn {
+            padding: 9px 12px;
+            font-size: 10.5px;
+            border-radius: 11px;
+          }
+          .ct-msg-btn svg {
+            width: 14px;
+            height: 14px;
+          }
+          
+          .ct-hours {
+            padding: 14px 12px 12px;
+            border-radius: 14px;
+          }
+          
+          .ct-hours-head {
+            font-size: 8.5px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+          }
+          .ct-hours-head svg {
+            width: 12px;
+            height: 12px;
+          }
+          
+          .ct-hours-row {
+            padding: 6px 0;
+            flex-wrap: wrap;
+            gap: 3px;
+          }
+          
+          .ct-hours-day {
+            font-size: 10.5px;
+          }
+          
+          .ct-hours-right {
+            gap: 5px;
+            flex-wrap: wrap;
+          }
+          
+          .ct-hours-time {
+            font-size: 10.5px;
+          }
+          
+          .ct-hours-badge {
+            font-size: 6.5px;
+            padding: 2px 6px;
+          }
+          
+          .ct-right {
+            gap: 14px;
+          }
+          
+          .ct-form-card {
+            padding: 18px 14px;
+            border-radius: 16px;
+          }
+          
+          .ct-form-head {
+            margin-bottom: 14px;
+          }
+          
+          .ct-form-title {
+            font-size: 15px;
+          }
+          
+          .ct-form-sub {
+            font-size: 10.5px;
+          }
+          
+          .ct-form {
+            gap: 9px;
+          }
+          
+          .ct-field-row {
+            flex-direction: column;
+            gap: 9px;
+          }
+          
+          .ct-field label {
+            font-size: 8.5px;
+          }
+          
+          .ct-field input,
+          .ct-field textarea,
+          .ct-field select {
+            padding: 8px 11px;
+            font-size: 11.5px;
+            border-radius: 10px;
+          }
+          
+          .ct-field textarea {
+            min-height: 65px;
+          }
+          
+          .ct-error {
+            font-size: 10.5px;
+            padding: 7px 10px;
+          }
+          
+          .ct-submit {
+            padding: 10px 16px;
+            font-size: 11.5px;
+          }
+          
+          .ct-map-card {
+            border-radius: 14px;
+          }
+          
+          .ct-map-card iframe {
+            height: 160px;
+          }
+          
+          .ct-map-overlay {
+            padding: 12px 12px 10px;
+            flex-wrap: wrap;
+            gap: 6px;
+          }
+          
+          .ct-map-loc-text {
+            font-size: 10px;
+          }
+          .ct-map-loc-dot {
+            width: 6px;
+            height: 6px;
+          }
+          
+          .ct-map-link {
+            font-size: 9.5px;
+            padding: 4px 9px;
+          }
+          .ct-map-link svg {
+            width: 8px;
+            height: 8px;
+          }
+        }
+
+        /* ─── 475px-ზე ქვემოთ (ყველაფერი პატარა) ─── */
+        @media (max-width: 475px) {
+          .ct-wrap {
+            padding: 36px 8px 32px;
+          }
+          
+          .ct-header {
+            margin-bottom: 24px;
+          }
+          
+          .ct-eyebrow {
+            font-size: 7.5px;
+            padding: 3px 8px;
+            gap: 4px;
+          }
+          .ct-eyebrow-dot {
+            width: 4px;
+            height: 4px;
+          }
+          
+          .ct-title {
+            font-size: clamp(18px, 5vw, 22px);
+            margin-bottom: 10px;
+          }
+          
+          .ct-lead {
+            font-size: 10px;
+            line-height: 1.5;
+          }
+          
+          .ct-grid {
+            gap: 12px;
+          }
+          
+          .ct-left {
+            gap: 8px;
+          }
+          
+          .ct-info-item {
+            padding: 7px 10px;
+            gap: 8px;
+            border-radius: 10px;
+          }
+          
+          .ct-info-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+          }
+          .ct-info-icon svg {
+            width: 12px;
+            height: 12px;
+          }
+          
+          .ct-info-label {
+            font-size: 6.5px;
+          }
+          
+          .ct-info-value {
+            font-size: 9.5px;
+            white-space: normal;
+            word-break: break-word;
+          }
+          
+          .ct-info-sub {
+            font-size: 8px;
+          }
+          
+          .ct-messengers {
+            gap: 5px;
+          }
+          
+          .ct-msg-btn {
+            padding: 7px 10px;
+            font-size: 9px;
+            border-radius: 9px;
+            gap: 5px;
+          }
+          .ct-msg-btn svg {
+            width: 12px;
+            height: 12px;
+          }
+          
+          .ct-hours {
+            padding: 10px 10px 8px;
+            border-radius: 12px;
+          }
+          
+          .ct-hours-head {
+            font-size: 7.5px;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+          }
+          .ct-hours-head svg {
+            width: 10px;
+            height: 10px;
+          }
+          
+          .ct-hours-row {
+            padding: 4px 0;
+          }
+          
+          .ct-hours-day {
+            font-size: 9px;
+          }
+          
+          .ct-hours-right {
+            gap: 4px;
+          }
+          
+          .ct-hours-time {
+            font-size: 9px;
+          }
+          
+          .ct-hours-badge {
+            font-size: 5.5px;
+            padding: 1px 5px;
+          }
+          
+          .ct-right {
+            gap: 10px;
+          }
+          
+          .ct-form-card {
+            padding: 14px 10px;
+            border-radius: 14px;
+          }
+          .ct-form-card::before {
+            height: 1.5px;
+          }
+          
+          .ct-form-head {
+            margin-bottom: 10px;
+          }
+          
+          .ct-form-title {
+            font-size: 13px;
+          }
+          
+          .ct-form-sub {
+            font-size: 9px;
+          }
+          
+          .ct-form {
+            gap: 7px;
+          }
+          
+          .ct-field-row {
+            gap: 7px;
+          }
+          
+          .ct-field {
+            gap: 4px;
+          }
+          
+          .ct-field label {
+            font-size: 7.5px;
+            letter-spacing: 0.08em;
+          }
+          
+          .ct-field input,
+          .ct-field textarea,
+          .ct-field select {
+            padding: 6px 9px;
+            font-size: 10px;
+            border-radius: 8px;
+            border-width: 1px;
+          }
+          
+          .ct-field textarea {
+            min-height: 50px;
+          }
+          
+          .ct-field select {
+            background-position: right 10px center;
+            padding-right: 28px;
+          }
+          .ct-field select option {
+            font-size: 10px;
+          }
+          
+          .ct-error {
+            font-size: 9px;
+            padding: 6px 8px;
+            border-radius: 8px;
+          }
+          .ct-error svg {
+            width: 12px;
+            height: 12px;
+          }
+          
+          .ct-submit {
+            padding: 8px 14px;
+            font-size: 10px;
+            border-radius: 50px;
+            margin-top: 2px;
+          }
+          .ct-submit svg {
+            width: 11px;
+            height: 11px;
+          }
+          
+          .ct-map-card {
+            border-radius: 12px;
+          }
+          
+          .ct-map-card iframe {
+            height: 120px;
+          }
+          
+          .ct-map-overlay {
+            padding: 8px 8px 6px;
+            gap: 4px;
+          }
+          
+          .ct-map-loc {
+            gap: 4px;
+          }
+          .ct-map-loc-dot {
+            width: 5px;
+            height: 5px;
+          }
+          
+          .ct-map-loc-text {
+            font-size: 8.5px;
+          }
+          
+          .ct-map-link {
+            font-size: 8px;
+            padding: 3px 7px;
+            border-radius: 30px;
+            gap: 3px;
+          }
+          .ct-map-link svg {
+            width: 7px;
+            height: 7px;
+          }
+        }
+
+        /* ─── 380px-ზე ქვემოთ (ძალიან პატარა) ─── */
+        @media (max-width: 380px) {
+          .ct-wrap {
+            padding: 28px 6px 24px;
+          }
+          
+          .ct-title {
+            font-size: clamp(16px, 4.5vw, 19px);
+          }
+          
+          .ct-lead {
+            font-size: 9px;
+          }
+          
+          .ct-info-item {
+            padding: 5px 8px;
+            gap: 6px;
+          }
+          
+          .ct-info-icon {
+            width: 22px;
+            height: 22px;
+          }
+          .ct-info-icon svg {
+            width: 10px;
+            height: 10px;
+          }
+          
+          .ct-info-value {
+            font-size: 8.5px;
+          }
+          
+          .ct-info-sub {
+            font-size: 7px;
+          }
+          
+          .ct-msg-btn {
+            padding: 6px 8px;
+            font-size: 8px;
+          }
+          .ct-msg-btn svg {
+            width: 10px;
+            height: 10px;
+          }
+          
+          .ct-hours {
+            padding: 8px 8px 6px;
+          }
+          
+          .ct-hours-day {
+            font-size: 8px;
+          }
+          
+          .ct-hours-time {
+            font-size: 8px;
+          }
+          
+          .ct-hours-badge {
+            font-size: 5px;
+            padding: 1px 4px;
+          }
+          
+          .ct-form-card {
+            padding: 10px 8px;
+          }
+          
+          .ct-form-title {
+            font-size: 11px;
+          }
+          
+          .ct-form-sub {
+            font-size: 8px;
+          }
+          
+          .ct-field input,
+          .ct-field textarea,
+          .ct-field select {
+            padding: 5px 8px;
+            font-size: 9px;
+          }
+          
+          .ct-field textarea {
+            min-height: 40px;
+          }
+          
+          .ct-submit {
+            padding: 6px 12px;
+            font-size: 9px;
+          }
+          
+          .ct-map-card iframe {
+            height: 100px;
+          }
+          
+          .ct-map-loc-text {
+            font-size: 7.5px;
+          }
+          
+          .ct-map-link {
+            font-size: 7px;
+            padding: 2px 6px;
+          }
+        }
+
         @media (max-width: 600px) {
           .ct-field-row { flex-direction: column; }
           .ct-info-value { white-space: normal; }
+        }
+
+        /* ─── FOOTER RESPONSIVE (არ შეხებია) ─── */
+        @media (max-width: 1024px) {
+          .ft-root > div {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 32px !important;
+            padding: 48px 24px 36px !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .ft-root > div {
+            grid-template-columns: 1fr !important;
+            gap: 28px !important;
+            padding: 40px 20px 32px !important;
+            text-align: center !important;
+          }
+          .ft-root > div > div:first-child p {
+            max-width: 100% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+          .ft-root > div > div:first-child > div:first-child {
+            justify-content: center !important;
+          }
+          .ft-root > div > div:first-child > div:last-child {
+            justify-content: center !important;
+          }
+          .ft-root > div > div nav {
+            align-items: center !important;
+          }
+          .ft-root > div > div:last-child > div {
+            align-items: center !important;
+          }
+          .ft-root > div > div:last-child > a {
+            margin: 0 auto !important;
+          }
+          .ft-root > div:last-child {
+            padding: 14px 16px !important;
+            font-size: 10px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .ft-root > div {
+            padding: 32px 16px 28px !important;
+            gap: 24px !important;
+          }
+          .ft-root > div > div:first-child > div:first-child {
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          .ft-root > div > div:first-child > div:first-child > div {
+            text-align: center !important;
+          }
+          .ft-root > div > div:last-child > a {
+            font-size: 10px !important;
+            padding: 8px 14px !important;
+          }
+          .ft-root > div:last-child {
+            padding: 12px 12px !important;
+            font-size: 9px !important;
+          }
         }
       `}</style>
 
@@ -723,16 +1363,16 @@ export default function Contact() {
             <div className={`ct-right ${visible ? "ct-right--in" : ""}`}>
               <div className="ct-form-card" ref={formRef}>
                 <div className="ct-form-head">
-                  <h3 className="ct-form-title">გამოგვიგზავნეთ შეტყობინება</h3>
+                  <h3 className="ct-form-title">დაჯავშნეთ ვიზიტი</h3>
                   <p className="ct-form-sub">დაგვიკავშირდებით მოკლე ხანში</p>
                 </div>
                 <form className="ct-form" onSubmit={handleSubmit}>
                   <div className="ct-field-row">
                     <div className="ct-field">
                       <label>სახელი *</label>
-                      <input
+                      <input 
                         type="text"
-                        placeholder="თქვენი სახელი"
+                        placeholder="თქვენი სრული სახელი"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         required
@@ -768,7 +1408,16 @@ export default function Contact() {
                     <select
                       className={!formData.service ? "ct-select-empty" : ""}
                       value={formData.service}
-                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        const stillEEG = /eeg|ეეგ/i.test(value);
+                        setFormData({
+                          ...formData,
+                          service: value,
+                          // სერვისის შეცვლისას, თუ ახალი სერვისი აღარაა ეეგ, ვასუფთავებთ ხანგრძლივობას
+                          eegDuration: stillEEG ? formData.eegDuration : "",
+                        });
+                      }}
                       disabled={loading}
                     >
                       <option value="">აირჩიეთ სერვისი</option>
@@ -780,10 +1429,30 @@ export default function Contact() {
                     </select>
                   </div>
 
+                  {isEEG && (
+                    <div className={`ct-field ${formData.eegDuration ? "ct-field-prefilled" : ""}`}>
+                      <label>ეეგ-ის ხანგრძლივობა *</label>
+                      <select
+                        className={!formData.eegDuration ? "ct-select-empty" : ""}
+                        value={formData.eegDuration}
+                        onChange={(e) => setFormData({ ...formData, eegDuration: e.target.value })}
+                        required={isEEG}
+                        disabled={loading}
+                      >
+                        <option value="">აირჩიეთ ხანგრძლივობა</option>
+                        {EEG_DURATIONS.map((d) => (
+                          <option key={d} value={d}>
+                            {d}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
                   <div className="ct-field">
                     <label>შეტყობინება</label>
                     <textarea
-                      placeholder="მოგვიყევით თქვენი ბავშვის საჭიროებებზე..."
+                      placeholder="მოგვიყევით თქვენს საჭიროებებზე..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       disabled={loading}
@@ -873,7 +1542,7 @@ export default function Contact() {
                   <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#F5A623" strokeWidth="1.5"/><path d="M12 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="#F5A623" strokeWidth="2"/><circle cx="20" cy="24" r="4" fill="#F5A623"/></svg>
                 </div>
                 <div>
-                  <div style={{ fontSize:17, fontWeight:900, color:'white', letterSpacing:'-0.02em' }}>რეაბილიტაციის<span style={{ color:'#F5A623' }}>ცენტრი</span></div>
+                  <div style={{ fontSize:17, fontWeight:900, color:'white', letterSpacing:'-0.02em' }}>ირმა ხვიჩიას რეაბილიტაციის<span style={{ color:'#F5A623' }}>ცენტრი</span></div>
                   <div style={{ fontSize:10, color:'rgba(255,255,255,0.35)', marginTop:2 }}>განვითარება · მხარდაჭერა</div>
                 </div>
               </div>

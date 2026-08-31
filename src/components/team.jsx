@@ -1,34 +1,37 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import team1 from "/team1.webp";
+import team2 from "/team2.jpg";
+import team3 from "/team3.jpg";
 
 /* ─────────────────────────── ICONS ─────────────────────────── */
 const ArrowRight = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 const ArrowLeft = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <path d="M19 12H5M5 12L12 5M5 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path d="M19 12H5M5 12L12 5M5 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 const CheckIcon = () => (
-  <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
-    <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 const StarIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 );
 const CloseIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 const PhoneIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-    <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.28 5.18 2 2 0 015.27 3h3.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 11.09a16 16 0 006.83 6.83l1.61-1.61a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.28 5.18 2 2 0 015.27 3h3.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 11.09a16 16 0 006.83 6.83l1.61-1.61a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -38,18 +41,15 @@ const teamData = [
     id: 1,
     name: "ირმა ხვიჩია",
     role: "ნევროლოგი",
-    experience: "8 წელი",
+    experience: "26 წელი",
     sessions: "1,200+",
     rating: 5.0,
     specialty: "ბავშვთა ნევროლოგია",
-    certs: [
-      "ნევროლოგიის სერტიფიკატი",
-      "ბავშვთა ნევროლოგიის ტრენინგი",
-      "EEG დიაგნოსტიკა"
-    ],
+    certs: ["ნევროლოგიის სერტიფიკატი", "ბავშვთა ნევროლოგიის ტრენინგი", "EEG დიაგნოსტიკა"],
     bio: "ირმა ხვიჩია არის ბავშვთა ნევროლოგი, რომელიც ეხმარება პაციენტებს ნერვული სისტემის დარღვევების დიაგნოსტიკასა და მართვაში.",
-    fullBio: "8 წლიანი გამოცდილებით, ირმა ხვიჩია მუშაობს ბავშვთა ნევროლოგიური მდგომარეობების შეფასებაზე, დიაგნოსტიკასა და ინდივიდუალური მკურნალობის დაგეგმვაზე.",
-    image: "/team1.webp",
+    fullBio:
+      "26 წლიანი გამოცდილებით, ირმა ხვიჩია მუშაობს ბავშვთა ნევროლოგიური მდგომარეობების შეფასებაზე, დიაგნოსტიკასა და ინდივიდუალური მკურნალობის დაგეგმვაზე.",
+    image: team1,
     color: "#3A7BD5",
     colorRgb: "58,123,213",
   },
@@ -59,16 +59,13 @@ const teamData = [
     role: "ეპილეფტოლოგი",
     experience: "10 წელი",
     sessions: "2,000+",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ეპილეფსიური და კრუნჩხვითი დარღვევების დიაგნოსტიკა და მკურნალობა",
-    certs: [
-      "ნევროლოგიის სერტიფიკატი",
-      "EEG დიაგნოსტიკის ტრენინგი",
-      "ეპილეფტოლოგიის სპეციალიზაცია"
-    ],
+    certs: ["ნევროლოგიის სერტიფიკატი", "EEG დიაგნოსტიკის ტრენინგი", "ეპილეფტოლოგიის სპეციალიზაცია"],
     bio: "გია მელიქიშვილი სპეციალიზდება ეპილეფსიისა და კრუნჩხვითი დარღვევების მართვაში. პაციენტებს ეხმარება ზუსტი დიაგნოსტიკისა და ინდივიდუალური მკურნალობის დაგეგმვაში.",
-    fullBio: "10 წლიანი გამოცდილებით, გია მელიქიშვილი მუშაობს ეპილეფსიის სხვადასხვა ფორმის დიაგნოსტიკასა და მკურნალობაზე. მისი მიმართულებები მოიცავს EEG კვლევების შეფასებას, კრუნჩხვითი ეპიზოდების მართვას და თანამედროვე თერაპიული მიდგომების გამოყენებას.",
-    image: "/team2.webp",
+    fullBio:
+      "10 წლიანი გამოცდილებით, გია მელიქიშვილი მუშაობს ეპილეფსიის სხვადასხვა ფორმის დიაგნოსტიკასა და მკურნალობაზე. მისი მიმართულებები მოიცავს EEG კვლევების შეფასებას, კრუნჩხვითი ეპიზოდების მართვას და თანამედროვე თერაპიული მიდგომების გამოყენებას.",
+    image: team2,
     color: "#1B6FD4",
     colorRgb: "27,111,212",
   },
@@ -80,31 +77,30 @@ const teamData = [
     sessions: "900+",
     rating: 5.0,
     specialty: "ძვალ-სახსროვანი სისტემის დიაგნოსტიკა და მკურნალობა",
-    certs: [
-      "ორთოპედია-ტრავმატოლოგიის სერტიფიკატი",
-      "სახსრების ქირურგიის ტრენინგი",
-      "ბავშვთა ორთოპედიის კურსი"
-    ],
+    certs: ["ორთოპედია-ტრავმატოლოგიის სერტიფიკატი", "სახსრების ქირურგიის ტრენინგი", "ბავშვთა ორთოპედიის კურსი"],
     bio: "ლევან ჩიკვატია არის ორთოპედ-ტრავმატოლოგი, რომელიც ეხმარება პაციენტებს ძვალ-სახსროვანი პრობლემების დიაგნოსტიკასა და მკურნალობაში.",
-    fullBio: "6 წლიანი გამოცდილებით, ლევან ჩიკვატია მუშაობს ტრავმების, ხერხემლისა და სახსრების პრობლემების შეფასებასა და მკურნალობაზე. მისი მიზანია პაციენტებისთვის უსაფრთხო და ეფექტური მკურნალობის გზების შერჩევა.",
-    image: "/team3.webp",
+    fullBio:
+      "6 წლიანი გამოცდილებით, ლევან ჩიკვატია მუშაობს ტრავმების, ხერხემლისა და სახსრების პრობლემების შეფასებასა და მკურნალობაზე. მისი მიზანია პაციენტებისთვის უსაფრთხო და ეფექტური მკურნალობის გზების შერჩევა.",
+    image: team3,
     color: "#2B4A8A",
     colorRgb: "43,74,138",
-  }
+  },
 ];
 
 /* ─────────────────── RATING STARS ─────────────────── */
-function RatingStars({ rating }) {
+function RatingStars({ rating, tone = "dark" }) {
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:3 }}>
+    <div className={`tm-stars ${tone === "light" ? "stars-light" : ""}`}>
       {[...Array(5)].map((_, i) => (
-        <span key={i} style={{ color: i < Math.floor(rating) ? "#FBBF24" : "rgba(251,191,36,0.22)", display:"flex" }}>
+        <span
+          key={i}
+          className="tm-star"
+          style={{ "--sd": `${i * 0.07}s`, opacity: i < Math.floor(rating) ? 1 : 0.22 }}
+        >
           <StarIcon />
         </span>
       ))}
-      <span style={{ marginLeft:6, fontSize:"0.72rem", fontWeight:700, color:"rgba(255,255,255,0.45)" }}>
-        {rating.toFixed(1)}
-      </span>
+      <span className="tm-star-val">{rating.toFixed(1)}</span>
     </div>
   );
 }
@@ -114,11 +110,14 @@ function ProfileModal({ person, onClose }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const id = requestAnimationFrame(() => setMounted(true));
     document.body.style.overflow = "hidden";
-    const esc = (e) => { if (e.key === "Escape") onClose(); };
+    const esc = (e) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", esc);
     return () => {
+      cancelAnimationFrame(id);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", esc);
     };
@@ -126,825 +125,257 @@ function ProfileModal({ person, onClose }) {
 
   return (
     <div
+      className={`pm-backdrop ${mounted ? "is-open" : ""}`}
       onClick={onClose}
-      style={{
-        position:"fixed", inset:0, zIndex:9999,
-        background:"rgba(1,10,28,0.88)",
-        backdropFilter:"blur(18px)",
-        display:"flex", alignItems:"center", justifyContent:"center",
-        padding:16,
-        opacity: mounted ? 1 : 0,
-        transition:"opacity 0.35s ease",
-      }}
+      style={{ "--pc": person.color, "--pcr": person.colorRgb }}
     >
-      <div
-        onClick={e => e.stopPropagation()}
-        role="dialog" aria-modal="true"
-        style={{
-          background:"linear-gradient(145deg,#071222,#04101E)",
-          border:`1px solid rgba(${person.colorRgb},0.3)`,
-          borderRadius:24,
-          overflow:"hidden",
-          display:"flex",
-          flexDirection: window.innerWidth <= 768 ? "column" : "row",
-          maxWidth:820, 
-          width:"100%",
-          maxHeight:"95vh",
-          boxShadow:`0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(${person.colorRgb},0.12)`,
-          transform: mounted ? "translateY(0) scale(1)" : "translateY(28px) scale(0.97)",
-          transition:"transform 0.4s cubic-bezier(0.16,1,0.3,1)",
-        }}
-        className="modal-content"
-      >
-        {/* ── Photo section ── */}
-        <div className="modal-photo-section">
-          <img
-            src={person.image} 
-            alt={person.name}
-            className="modal-photo-img"
-          />
-          <div className="modal-photo-overlay">
-            <div className="modal-photo-gradient" style={{
-              background:`linear-gradient(to bottom, rgba(${person.colorRgb},0.1) 0%, rgba(${person.colorRgb},0.4) 40%, rgba(3,13,26,0.85) 70%, rgba(3,13,26,0.95) 100%)`
-            }} />
-            <div className="modal-photo-info">
-              <span className="modal-photo-specialty">{person.specialty}</span>
-              <h2 className="modal-photo-name">{person.name}</h2>
-              <div className="modal-photo-stats">
-                <div className="modal-photo-stat">
-                  <span className="stat-number">{person.experience}</span>
-                  <span className="stat-label">გამოცდ.</span>
-                </div>
-                <div className="modal-photo-stat">
-                  <span className="stat-number">{person.sessions}</span>
-                  <span className="stat-label">სეანსი</span>
-                </div>
+      <div className="pm-box" role="dialog" aria-modal="true" aria-label={person.name} onClick={(e) => e.stopPropagation()}>
+        <div className="pm-photo">
+          <img src={person.image} alt={person.name} className="pm-photo-img" />
+          <div className="pm-photo-grad" />
+          <div className="pm-photo-info">
+            <span className="pm-specialty pm-stg" style={{ "--d": "0.14s" }}>
+              {person.specialty}
+            </span>
+            <h2 className="pm-name pm-stg" style={{ "--d": "0.19s" }}>
+              {person.name}
+            </h2>
+            <div className="pm-stats pm-stg" style={{ "--d": "0.24s" }}>
+              <div className="pm-stat">
+                <span className="pm-stat-num">{person.experience}</span>
+                <span className="pm-stat-lbl">გამოცდ.</span>
+              </div>
+              <span className="pm-stat-div" />
+              <div className="pm-stat">
+                <span className="pm-stat-num">{person.sessions}</span>
+                <span className="pm-stat-lbl">სეანსი</span>
               </div>
             </div>
           </div>
-          <button onClick={onClose} className="modal-close-btn">
+          <button onClick={onClose} className="pm-close" aria-label="დახურვა">
             <CloseIcon />
           </button>
         </div>
 
-        {/* ── Content section ── */}
-        <div className="modal-content-section">
-          <div className="modal-role" style={{ color: person.color }}>{person.role}</div>
-          <RatingStars rating={person.rating} />
-          <p className="modal-bio">{person.fullBio}</p>
+        <div className="pm-content">
+          <div className="pm-role pm-stg" style={{ "--d": "0.2s" }}>
+            {person.role}
+          </div>
+          <div className="pm-stg" style={{ "--d": "0.25s" }}>
+            <RatingStars rating={person.rating} />
+          </div>
+          <p className="pm-bio pm-stg" style={{ "--d": "0.3s" }}>
+            {person.fullBio}
+          </p>
 
-          <div className="modal-certs-label">კვალიფიკაცია</div>
-
-          <div className="modal-certs">
+          <div className="pm-certs-label pm-stg" style={{ "--d": "0.35s" }}>
+            კვალიფიკაცია
+          </div>
+          <div className="pm-certs">
             {person.certs.map((c, i) => (
-              <div key={i} className="modal-cert-item" style={{ borderColor: `rgba(${person.colorRgb},0.18)` }}>
-                <span className="modal-cert-icon" style={{ background: `rgba(${person.colorRgb},0.25)`, color: person.color }}>
+              <div key={c} className="pm-cert pm-stg" style={{ "--d": `${0.4 + i * 0.07}s` }}>
+                <span className="pm-cert-icon">
                   <CheckIcon />
                 </span>
-                <span className="modal-cert-text">{c}</span>
+                <span className="pm-cert-text">{c}</span>
               </div>
             ))}
           </div>
 
-          <div className="modal-actions">
+          <div className="pm-actions pm-stg" style={{ "--d": "0.62s" }}>
             <button
+              className="pm-primary"
               onClick={() => {
                 sessionStorage.setItem("selectedSpecialist", person.name);
-                window.location.href = "/contact";
                 onClose();
+                const contactEl = document.getElementById("contact");
+                if (contactEl) contactEl.scrollIntoView({ behavior: "smooth" });
               }}
-              className="modal-primary-btn"
-              style={{ background: person.color }}
             >
               <PhoneIcon /> კონსულტაციის ჩაწერა
             </button>
-            <button onClick={onClose} className="modal-secondary-btn">
+            <button onClick={onClose} className="pm-secondary">
               <ArrowLeft size={13} /> უკან
             </button>
           </div>
         </div>
       </div>
-
-      <style>{`
-        /* ── Modal Styles ── */
-        .modal-content {
-          background: linear-gradient(145deg,#071222,#04101E);
-          border-radius: 24px;
-          overflow: hidden;
-          max-width: 820px;
-          width: 100%;
-          max-height: 95vh;
-        }
-
-        /* ── Photo Section ── */
-        .modal-photo-section {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          min-height: 340px;
-          flex: 0 0 340px;
-          overflow: hidden;
-          background: #030D1A;
-        }
-
-        .modal-photo-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: top;
-          display: block;
-        }
-
-        .modal-photo-overlay {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-        }
-
-        .modal-photo-gradient {
-          position: absolute;
-          inset: 0;
-        }
-
-        .modal-photo-info {
-          position: relative;
-          z-index: 2;
-          padding: 2rem 1.8rem 1.8rem;
-        }
-
-        .modal-photo-specialty {
-          display: inline-block;
-          font-size: 0.6rem;
-          font-weight: 700;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #FBBF24;
-          background: rgba(251,191,36,0.12);
-          border: 1px solid rgba(251,191,36,0.25);
-          padding: 0.25rem 0.75rem;
-          border-radius: 40px;
-          margin-bottom: 0.5rem;
-        }
-
-        .modal-photo-name {
-          font-size: 1.8rem;
-          font-weight: 900;
-          color: #fff;
-          letter-spacing: -0.02em;
-          margin: 0 0 0.5rem 0;
-          line-height: 1.1;
-          text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-        }
-
-        .modal-photo-stats {
-          display: flex;
-          align-items: center;
-          gap: 1.5rem;
-        }
-
-        .modal-photo-stat {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .stat-number {
-          font-size: 1.1rem;
-          font-weight: 900;
-          color: #fff;
-          line-height: 1;
-        }
-
-        .stat-label {
-          font-size: 0.55rem;
-          font-weight: 700;
-          color: rgba(255,255,255,0.5);
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-        }
-
-        .modal-close-btn {
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-          z-index: 10;
-          background: rgba(0,0,0,0.5);
-          backdrop-filter: blur(8px);
-          border: 1px solid rgba(255,255,255,0.1);
-          color: rgba(255,255,255,0.6);
-          border-radius: 10px;
-          width: 36px;
-          height: 36px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .modal-close-btn:hover {
-          background: rgba(255,255,255,0.1);
-          color: rgba(255,255,255,0.9);
-        }
-
-        /* ── Content Section ── */
-        .modal-content-section {
-          flex: 1;
-          padding: 1.8rem 1.8rem 1.5rem;
-          overflow-y: auto;
-          display: flex;
-          flex-direction: column;
-          gap: 0.7rem;
-          max-height: 90vh;
-        }
-
-        .modal-role {
-          font-size: 0.6rem;
-          font-weight: 800;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-        }
-
-        .modal-bio {
-          font-size: 0.82rem;
-          line-height: 1.7;
-          color: rgba(255,255,255,0.6);
-          margin: 0;
-        }
-
-        .modal-certs-label {
-          font-size: 0.55rem;
-          font-weight: 800;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.3);
-          margin-top: 0.2rem;
-        }
-
-        .modal-certs {
-          display: flex;
-          flex-direction: column;
-          gap: 0.35rem;
-        }
-
-        .modal-cert-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.6rem;
-          padding: 0.4rem 0.7rem;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(58,123,213,0.15);
-          border-radius: 8px;
-        }
-
-        .modal-cert-icon {
-          width: 16px;
-          height: 16px;
-          border-radius: 4px;
-          flex-shrink: 0;
-          margin-top: 2px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .modal-cert-icon svg {
-          width: 9px;
-          height: 9px;
-        }
-
-        .modal-cert-text {
-          font-size: 0.75rem;
-          font-weight: 500;
-          color: rgba(255,255,255,0.8);
-          line-height: 1.4;
-        }
-
-        .modal-actions {
-          display: flex;
-          gap: 0.6rem;
-          margin-top: 0.3rem;
-          padding-top: 0.5rem;
-          border-top: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .modal-primary-btn {
-          flex: 1;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.4rem;
-          border: none;
-          color: #fff;
-          padding: 0.7rem 1rem;
-          border-radius: 10px;
-          font-size: 0.75rem;
-          font-weight: 800;
-          cursor: pointer;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          transition: all 0.2s ease;
-        }
-
-        .modal-primary-btn:hover {
-          filter: brightness(1.15);
-          transform: translateY(-2px);
-        }
-
-        .modal-secondary-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.08);
-          color: rgba(255,255,255,0.4);
-          padding: 0.7rem 1rem;
-          border-radius: 10px;
-          font-size: 0.75rem;
-          font-weight: 700;
-          cursor: pointer;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          transition: all 0.2s ease;
-        }
-
-        .modal-secondary-btn:hover {
-          background: rgba(255,255,255,0.1);
-          color: rgba(255,255,255,0.8);
-        }
-
-        /* ── Responsive ── */
-        @media (min-width: 769px) {
-          .modal-content {
-            flex-direction: row !important;
-          }
-          
-          .modal-photo-section {
-            width: 280px;
-            flex: 0 0 280px;
-            min-height: 400px;
-          }
-          
-          .modal-content-section {
-            max-height: 80vh;
-          }
-        }
-
-        @media (max-width: 768px) {
-  .modal-content {
-    flex-direction: column !important;
-    max-width: 420px !important;
-    width: calc(100% - 32px) !important;
-    max-height: 88vh !important;
-    border-radius: 22px !important;
-    margin: 0 auto;
-  }
-
-  .modal-photo-section {
-    flex: 0 0 auto;
-    min-height: 220px;
-    height: 220px;
-    width: 100%;
-    border-radius: 22px 22px 0 0;
-  }
-
-  .modal-photo-img {
-    height: 220px;
-    object-position: center 18%;
-  }
-
-  .modal-photo-info {
-    padding: 1.1rem 1.2rem 0.9rem;
-  }
-
-  .modal-photo-name {
-    font-size: 1.3rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .modal-photo-specialty {
-    font-size: 0.5rem;
-    padding: 0.2rem 0.6rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .stat-number {
-    font-size: 0.92rem;
-  }
-
-  .stat-label {
-    font-size: 0.46rem;
-  }
-
-  .modal-content-section {
-    padding: 1.1rem 1.3rem 1.2rem;
-    max-height: 58vh;
-    gap: 0.55rem;
-  }
-
-  .modal-close-btn {
-    top: 0.7rem;
-    right: 0.7rem;
-    width: 32px;
-    height: 32px;
-  }
-
-  .modal-close-btn svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .modal-role {
-    font-size: 0.52rem;
-  }
-
-  .modal-bio {
-    font-size: 0.74rem;
-    line-height: 1.6;
-  }
-
-  .modal-certs-label {
-    font-size: 0.5rem;
-    margin-top: 0.15rem;
-  }
-
-  .modal-cert-item {
-    padding: 0.35rem 0.7rem;
-    gap: 0.5rem;
-  }
-
-  .modal-cert-text {
-    font-size: 0.7rem;
-  }
-
-  .modal-cert-icon {
-    width: 14px;
-    height: 14px;
-  }
-
-  .modal-cert-icon svg {
-    width: 8px;
-    height: 8px;
-  }
-
-  .modal-actions {
-    flex-direction: column !important;
-    gap: 0.45rem !important;
-    padding-top: 0.4rem !important;
-  }
-
-  .modal-primary-btn {
-    padding: 0.6rem 0.8rem !important;
-    font-size: 0.7rem !important;
-    width: 100% !important;
-  }
-
-  .modal-secondary-btn {
-    padding: 0.6rem 0.8rem !important;
-    font-size: 0.7rem !important;
-    width: 100% !important;
-    justify-content: center !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .modal-content {
-    width: calc(100% - 24px) !important;
-    max-width: 380px !important;
-    border-radius: 18px !important;
-  }
-
-  .modal-photo-section {
-    min-height: 190px;
-    height: 190px;
-    border-radius: 18px 18px 0 0;
-  }
-
-  .modal-photo-img {
-    height: 190px;
-    object-position: center 18%;
-  }
-
-  .modal-photo-info {
-    padding: 0.9rem 1rem 0.8rem;
-  }
-
-  .modal-photo-name {
-    font-size: 1.1rem;
-  }
-
-  .modal-photo-specialty {
-    font-size: 0.45rem;
-    padding: 0.15rem 0.5rem;
-  }
-
-  .stat-number {
-    font-size: 0.8rem;
-  }
-
-  .stat-label {
-    font-size: 0.42rem;
-  }
-
-  .modal-content-section {
-    padding: 0.9rem 1rem 0.9rem;
-    gap: 0.45rem;
-  }
-
-  .modal-close-btn {
-    top: 0.55rem;
-    right: 0.55rem;
-    width: 28px;
-    height: 28px;
-  }
-
-  .modal-close-btn svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .modal-bio {
-    font-size: 0.66rem;
-  }
-
-  .modal-cert-text {
-    font-size: 0.63rem;
-  }
-
-  .modal-primary-btn {
-    padding: 0.5rem 0.6rem !important;
-    font-size: 0.62rem !important;
-  }
-
-  .modal-secondary-btn {
-    padding: 0.5rem 0.6rem !important;
-    font-size: 0.62rem !important;
-  }
-
-  .modal-primary-btn svg {
-    width: 11px !important;
-    height: 11px !important;
-  }
-
-  .modal-secondary-btn svg {
-    width: 11px !important;
-    height: 11px !important;
-  }
-}
-
-        @media (max-width: 480px) {
-          .modal-photo-section {
-            min-height: 220px;
-            height: 220px;
-          }
-
-          .modal-photo-img {
-            height: 220px;
-          }
-
-          .modal-photo-info {
-            padding: 0.8rem 1rem 0.8rem;
-          }
-
-          .modal-photo-name {
-            font-size: 1.1rem;
-          }
-
-          .modal-photo-specialty {
-            font-size: 0.45rem;
-            padding: 0.15rem 0.5rem;
-          }
-
-          .stat-number {
-            font-size: 0.8rem;
-          }
-
-          .stat-label {
-            font-size: 0.42rem;
-          }
-
-          .modal-content-section {
-            padding: 0.8rem 0.8rem 0.8rem;
-            gap: 0.4rem;
-          }
-
-          .modal-close-btn {
-            top: 0.5rem;
-            right: 0.5rem;
-            width: 28px;
-            height: 28px;
-          }
-
-          .modal-close-btn svg {
-            width: 14px;
-            height: 14px;
-          }
-
-          .modal-bio {
-            font-size: 0.65rem;
-          }
-
-          .modal-cert-text {
-            font-size: 0.62rem;
-          }
-
-          .modal-primary-btn {
-            padding: 0.45rem 0.6rem !important;
-            font-size: 0.6rem !important;
-          }
-
-          .modal-secondary-btn {
-            padding: 0.45rem 0.6rem !important;
-            font-size: 0.6rem !important;
-          }
-
-          .modal-primary-btn svg {
-            width: 11px !important;
-            height: 11px !important;
-          }
-
-          .modal-secondary-btn svg {
-            width: 11px !important;
-            height: 11px !important;
-          }
-        }
-
-        @media (max-width: 380px) {
-          .modal-photo-section {
-            min-height: 180px;
-            height: 180px;
-          }
-
-          .modal-photo-img {
-            height: 180px;
-          }
-
-          .modal-photo-info {
-            padding: 0.6rem 0.7rem 0.6rem;
-          }
-
-          .modal-photo-name {
-            font-size: 0.9rem;
-          }
-
-          .stat-number {
-            font-size: 0.7rem;
-          }
-
-          .modal-content-section {
-            padding: 0.5rem 0.6rem 0.6rem;
-          }
-
-          .modal-bio {
-            font-size: 0.58rem;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .modal-content,
-          .modal-close-btn,
-          .modal-primary-btn,
-          .modal-secondary-btn {
-            transition: none !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }
 
 /* ─────────────────── TEAM CARD ─────────────────── */
-function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal }) {
-  const cardRefs = useRef(null);
+function TeamCard({
+  person,
+  idx,
+  isVisible,
+  flipped,
+  setFlipped,
+  onOpenModal,
+}) {
+  const shellRef = useRef(null);
   const isFlipped = flipped === idx;
-  const isVisible = visibleCards.has(idx);
-  const [isHovered, setIsHovered] = useState(false);
+  const overActionsRef = useRef(false);
 
-  const handleBack = (e) => {
-    e.stopPropagation();
-    setFlipped(null);
-  };
+  const resetTilt = useCallback(() => {
+    const el = shellRef.current;
+    if (!el) return;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
+  }, []);
 
-  const handleFullProfile = (e) => {
-    e.stopPropagation();
-    setFlipped(null);
-    onOpenModal(person);
-  };
+  const onMove = useCallback(
+    (e) => {
+      if (isFlipped || overActionsRef.current) return;
+      const el = shellRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      el.style.setProperty("--rx", `${(0.5 - py) * 8}deg`);
+      el.style.setProperty("--ry", `${(px - 0.5) * 10}deg`);
+      el.style.setProperty("--mx", `${px * 100}%`);
+      el.style.setProperty("--my", `${py * 100}%`);
+    },
+    [isFlipped],
+  );
+
+  const onLeave = useCallback(() => {
+    overActionsRef.current = false;
+    resetTilt();
+  }, [resetTilt]);
+
+  const onActionsEnter = useCallback(() => {
+    overActionsRef.current = true;
+    resetTilt();
+  }, [resetTilt]);
+
+  const onActionsLeave = useCallback(() => {
+    overActionsRef.current = false;
+  }, []);
 
   return (
     <div
-      ref={cardRefs}
       className={`tm-card ${isVisible ? "card-in" : ""} ${isFlipped ? "is-flipped" : ""}`}
       style={{
         "--pc": person.color,
         "--pcr": person.colorRgb,
-        transitionDelay: `${(idx % 3) * 0.12}s`,
+        transitionDelay: `${(idx % 3) * 0.13}s`,
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
     >
-      <div className="card-scene">
-
-        {/* ════ FRONT ════ */}
+      <div className="card-scene" ref={shellRef}>
+        {/* ── FRONT ── */}
         <div className="card-face front">
+          <span className="card-glow" aria-hidden />
           <div className="photo-area">
             <img src={person.image} alt={person.name} loading="lazy" className="photo-img" />
-            <div className="photo-overlay">
-              <div className="overlay-gradient" />
-              <div className="overlay-content">
-                <span className="overlay-role">{person.role}</span>
-                <h3 className="overlay-name">{person.name}</h3>
-                <div className="overlay-stats">
-                  <span>{person.experience}</span>
-                  <span className="dot-sep">•</span>
-                  <span>{person.sessions}</span>
+            <span className="photo-tint" aria-hidden />
+            <div className="overlay-gradient" />
+            <span className="photo-sheen" aria-hidden />
+            <div className="overlay-content">
+              <span className="overlay-role">{person.role}</span>
+              <h3 className="overlay-name">{person.name}</h3>
+              <div className="overlay-stats">
+                <span>{person.experience}</span>
+                <span className="dot-sep">•</span>
+                <span>{person.sessions}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="front-panel">
+            <span className="role-tag">{person.role}</span>
+            <h3 className="person-name">{person.name}</h3>
+            <p className="person-bio">{person.bio}</p>
+
+            <div className="certs-list">
+              {person.certs.slice(0, 2).map((c, i) => (
+                <div key={c} className="cert-row" style={{ "--cd": `${0.06 + i * 0.06}s` }}>
+                  <span className="cert-icon">
+                    <CheckIcon />
+                  </span>
+                  <span className="cert-text">{c}</span>
                 </div>
-              </div>
+              ))}
+            </div>
+
+            <div
+              className="front-actions"
+              onMouseEnter={onActionsEnter}
+              onMouseLeave={onActionsLeave}
+            >
+              <button type="button" className="act-btn act-ghost" onClick={() => setFlipped(isFlipped ? null : idx)}>
+                <span>გამოცდილება</span>
+                <ArrowRight />
+              </button>
+              <button type="button" className="act-btn act-solid" onClick={() => onOpenModal(person)}>
+                <span>სრული პროფილი</span>
+                <ArrowRight />
+              </button>
             </div>
           </div>
 
-          <div className={`content-wrapper ${isHovered ? 'content-visible' : ''}`}>
-            <div className="front-panel">
-              <span className="role-tag">{person.role}</span>
-              <h3 className="person-name">{person.name}</h3>
-              <p className="person-bio">{person.bio}</p>
-
-              <div className="certs-list">
-                {person.certs.map((c, i) => (
-                  <div key={i} className="cert-row">
-                    <span className="cert-icon"><CheckIcon /></span>
-                    <span className="cert-text">{c}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="front-actions">
-                <button
-                  className="act-btn act-ghost"
-                  onClick={() => setFlipped(isFlipped ? null : idx)}
-                >
-                  <span>გამოცდილება</span>
-                  <ArrowRight />
-                </button>
-                <button
-                  className="act-btn act-solid"
-                  onClick={() => onOpenModal(person)}
-                >
-                  <span>სრული პროფილი</span>
-                  <ArrowRight />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="top-bar" />
+          <span className="top-bar" />
         </div>
 
-        {/* ════ BACK ════ */}
+        {/* ── BACK ── */}
         <div className="card-face back">
           <div className="back-photo-bg">
             <img src={person.image} alt="" aria-hidden className="back-bg-img" />
             <div className="back-bg-mask" />
           </div>
 
+          {/* ყოველთვის ხელმისაწვდომი "უკან" ღილაკი */}
+          <button
+            type="button"
+            className="back-nav"
+            onClick={(e) => {
+              e.stopPropagation();
+              setFlipped(null);
+            }}
+          >
+            <ArrowLeft size={12} /> <span>უკან</span>
+          </button>
+
           <div className="back-body">
             <div className="back-ring">
               <img src={person.image} alt={person.name} className="back-avatar-img" />
-              <div className="ring-border" />
+              <span className="ring-border" />
             </div>
             <h3 className="back-name">{person.name}</h3>
             <span className="back-role-tag">{person.role}</span>
-
-            <div style={{ marginTop:2 }}>
-              <RatingStars rating={person.rating} />
-            </div>
+            <RatingStars rating={person.rating} tone="light" />
 
             <div className="back-certs">
               <p className="back-certs-label">კვალიფიკაცია</p>
-              {person.certs.map((c, i) => (
-                <div key={i} className="back-cert-item">
-                  <span className="bci-check"><CheckIcon /></span>
+              {person.certs.map((c) => (
+                <div key={c} className="back-cert-item">
+                  <span className="bci-check">
+                    <CheckIcon />
+                  </span>
                   <span>{c}</span>
                 </div>
               ))}
             </div>
 
-            <p className="back-bio">{person.bio}</p>
+            <p className="back-bio">{person.fullBio}</p>
 
             <button
               type="button"
               className="back-profile-btn"
-              onClick={handleFullProfile}
+              onClick={(e) => {
+                e.stopPropagation();
+                setFlipped(null);
+                onOpenModal(person);
+              }}
             >
               <span>სრული პროფილი</span>
               <ArrowRight />
             </button>
-
-            <button type="button" className="back-return" onClick={handleBack}>
-              <ArrowLeft /> <span>უკან</span>
-            </button>
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -953,18 +384,20 @@ function TeamCard({ person, idx, visibleCards, flipped, setFlipped, onOpenModal 
 /* ─────────────────── MAIN COMPONENT ─────────────────── */
 const Team = ({ preview = false }) => {
   const [visibleCards, setVisibleCards] = useState(new Set());
-  const [flipped, setFlipped]           = useState(null);
-  const [activeModal, setActiveModal]   = useState(null);
-  const cardRefs   = useRef([]);
+  const [flipped, setFlipped] = useState(null);
+  const [activeModal, setActiveModal] = useState(null);
+  const [headerIn, setHeaderIn] = useState(false);
+  const cardRefs = useRef([]);
   const sectionRef = useRef(null);
-  const [headerIn, setHeaderIn]         = useState(false);
 
   const displayed = preview ? teamData.slice(0, 3) : teamData;
 
   useEffect(() => {
     const hObs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setHeaderIn(true); },
-      { threshold: 0.12 }
+      ([e]) => {
+        if (e.isIntersecting) setHeaderIn(true);
+      },
+      { threshold: 0.12 },
     );
     if (sectionRef.current) hObs.observe(sectionRef.current);
 
@@ -977,30 +410,34 @@ const Team = ({ preview = false }) => {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -20px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
     );
     cardRefs.current.forEach((c) => c && cObs.observe(c));
-    return () => { hObs.disconnect(); cObs.disconnect(); };
+    return () => {
+      hObs.disconnect();
+      cObs.disconnect();
+    };
   }, [displayed.length]);
 
   return (
     <section id="team" className="tm-section" ref={sectionRef}>
-      <div className="tm-noise" />
+      <span className="tm-noise" aria-hidden />
+      <span className="tm-aura tm-aura-1" aria-hidden />
+      <span className="tm-aura tm-aura-2" aria-hidden />
 
       <div className="tm-container">
-
         <div className={`tm-header ${headerIn ? "hdr-in" : ""}`}>
           <span className="tm-badge">
             <span className="badge-pulse" />
             ჩვენი სპეციალისტები
           </span>
           <h2 className="tm-title">
-            გუნდი, რომელსაც<br />
+            გუნდი, რომელსაც
+            <br />
             <span className="title-em">ენდობიან ოჯახები</span>
           </h2>
           <p className="tm-subtitle">
-            გამოცდილი, სერტიფიცირებული და გულწრფელი — ჩვენი
-            სპეციალისტები ყოველ ბავშვს პირადად იცნობენ.
+            გამოცდილი, სერტიფიცირებული და გულწრფელი — ჩვენი სპეციალისტები ყოველ ბავშვს პირადად იცნობენ.
           </p>
         </div>
 
@@ -1008,13 +445,15 @@ const Team = ({ preview = false }) => {
           {displayed.map((person, idx) => (
             <div
               key={person.id}
-              ref={(el) => (cardRefs.current[idx] = el)}
+              ref={(el) => {
+                cardRefs.current[idx] = el;
+              }}
               className="grid-item"
             >
               <TeamCard
                 person={person}
                 idx={idx}
-                visibleCards={visibleCards}
+                isVisible={visibleCards.has(idx)}
                 flipped={flipped}
                 setFlipped={setFlipped}
                 onOpenModal={setActiveModal}
@@ -1026,48 +465,61 @@ const Team = ({ preview = false }) => {
         <div className={`tm-cta-wrap ${headerIn ? "hdr-in" : ""}`}>
           <a href="/team" className="tm-main-btn solid">
             <span>იხილეთ მეტი</span>
-            <span className="main-btn-arr"><ArrowRight /></span>
+            <span className="main-btn-arr">
+              <ArrowRight />
+            </span>
           </a>
         </div>
-
       </div>
 
-      {activeModal && (
-        <ProfileModal person={activeModal} onClose={() => setActiveModal(null)} />
-      )}
+      {activeModal && <ProfileModal person={activeModal} onClose={() => setActiveModal(null)} />}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;900&display=swap');
-
-        :root {
+        .tm-section {
           --cream: #F5F0E8;
           --navy: #1B2A4A;
           --blue-mid: #2B4A8A;
           --accent: #2885ef;
           --text-body: #3A3A3A;
           --text-muted: #7A7A8C;
-        }
-
-        .tm-section {
           background: var(--cream);
-          padding: 6rem 1.5rem 5.5rem;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          position: relative;
-          overflow: hidden;
+          padding: 6.5rem 1.5rem 5.5rem;
+          font-family: 'Noto Sans Georgian', system-ui, sans-serif;
+          position: relative; overflow: hidden;
         }
         .tm-noise {
-          position: absolute; inset: 0;
+          position: absolute; inset: 0; z-index: 0; pointer-events: none;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+        .tm-aura {
+          position: absolute; border-radius: 50%; filter: blur(100px);
           pointer-events: none; z-index: 0;
         }
-        .tm-container {
-          max-width: 1220px; margin: 0 auto; position: relative; z-index: 1;
+        button{
+          cursor:pointer;
+          }
+        .tm-aura-1 {
+          width: 520px; height: 520px; top: -160px; left: -120px;
+          background: rgba(40,133,239,0.10);
+          animation: aura-drift 20s ease-in-out infinite;
+        }
+        .tm-aura-2 {
+          width: 460px; height: 460px; bottom: -180px; right: -100px;
+          background: rgba(43,74,138,0.09);
+          animation: aura-drift 26s ease-in-out infinite reverse;
+        }
+        @keyframes aura-drift {
+          0%,100% { transform: translate3d(0,0,0) scale(1); }
+          50%     { transform: translate3d(40px,30px,0) scale(1.1); }
         }
 
+        .tm-container { max-width: 1220px; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* Header */
         .tm-header {
           text-align: center; margin-bottom: 4rem;
-          opacity: 0; transform: translateY(30px);
-          transition: opacity 0.7s ease, transform 0.7s ease;
+          opacity: 0; transform: translateY(32px);
+          transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
         }
         .tm-header.hdr-in { opacity: 1; transform: none; }
 
@@ -1079,854 +531,551 @@ const Team = ({ preview = false }) => {
           padding: 0.35rem 1rem 0.35rem 0.75rem; border-radius: 40px; margin-bottom: 1.1rem;
         }
         .badge-pulse {
-          width: 7px; height: 7px; border-radius: 50%;
-          background: var(--accent); box-shadow: 0 0 0 0 rgba(40,133,239,0.5);
+          width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
           animation: pulse-anim 2.4s ease infinite;
         }
         @keyframes pulse-anim {
-          0%   { box-shadow: 0 0 0 0   rgba(40,133,239,0.5); }
+          0%   { box-shadow: 0 0 0 0 rgba(40,133,239,0.5); }
           70%  { box-shadow: 0 0 0 8px rgba(40,133,239,0); }
-          100% { box-shadow: 0 0 0 0   rgba(40,133,239,0); }
+          100% { box-shadow: 0 0 0 0 rgba(40,133,239,0); }
         }
 
         .tm-title {
           font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900;
           color: var(--navy); line-height: 1.18; letter-spacing: -0.025em; margin: 0 0 0.85rem;
         }
-        .title-em {
-          color: var(--blue-mid); position: relative; display: inline-block;
-        }
+        .title-em { color: var(--blue-mid); position: relative; display: inline-block; }
         .title-em::after {
           content: ''; position: absolute; bottom: 0.06em; left: 0;
           width: 100%; height: 0.13em; background: var(--accent);
           opacity: 0.4; border-radius: 2px;
+          transform: scaleX(0); transform-origin: left;
+          transition: transform 1s cubic-bezier(0.22,1,0.36,1) 0.4s;
         }
+        .tm-header.hdr-in .title-em::after { transform: scaleX(1); }
         .tm-subtitle {
           font-size: 1rem; color: var(--text-muted);
           max-width: 560px; margin: 0 auto; line-height: 1.65;
         }
 
+        /* Grid */
         .tm-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 2rem;
-          margin-bottom: 3.5rem;
-          justify-content: center;
+          display: grid; grid-template-columns: repeat(3, 1fr);
+          gap: 2rem; margin-bottom: 3.5rem; justify-content: center;
         }
+        .grid-item { display: flex; justify-content: center; align-items: start; width: 100%; }
 
-        .grid-item {
-          display: flex;
-          justify-content: center;
-          align-items: start;
-          width: 100%;
-        }
-
+        /* Card shell */
         .tm-card {
-          --pc: #2885ef; --pcr: 40,133,239;
-          perspective: 1100px;
-          width: 100%;
-          max-width: 360px;
-          height: 500px;
-          opacity: 0;
-          transform: translateY(50px) scale(0.96);
-          transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+          --pc: #2885ef; --pcr: 40,133,239; --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 50%;
+          perspective: 1400px;
+          width: 100%; max-width: 360px; height: 560px;
+          opacity: 0; transform: translateY(54px) scale(0.96);
+          transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
           will-change: transform, opacity;
         }
-        .tm-card.card-in {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
+        .tm-card.card-in { opacity: 1; transform: none; }
 
         .card-scene {
-          width: 100%;
-          height: 100%;
+          position: relative; width: 100%; height: 100%;
           transform-style: preserve-3d;
-          transition: transform 0.72s cubic-bezier(0.4,0,0.2,1);
-          border-radius: 20px;
-          position: relative;
+          transform: rotateX(var(--rx)) rotateY(var(--ry));
+          transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
         }
         .tm-card.is-flipped .card-scene { transform: rotateY(180deg); }
 
+        /* ფლიპისას წინა (ვიზუალურად დამალული) გვერდი აღარ იჭერდეს click/hover-ს —
+           ეს ასწორებს "უკან" ღილაკის non-clickable ბაგს დესკტოპზე */
+        .tm-card.is-flipped .card-face.front,
+.tm-card.is-flipped .front-panel,
+.tm-card.is-flipped .front-actions {
+  pointer-events: none !important;
+}
+.card-face.back { pointer-events: auto; }
+
         .card-face {
-          position: absolute;
-          inset: 0;
-          border-radius: 20px;
-          overflow: hidden;
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-        }
-
-        .front { pointer-events: auto; }
-        .back  { pointer-events: none; }
-        .tm-card.is-flipped .front { pointer-events: none; }
-        .tm-card.is-flipped .back  { pointer-events: auto; }
-
-        .front {
-          display: flex;
-          flex-direction: column;
+          position: absolute; inset: 0;
+          border-radius: 1.6rem; overflow: hidden;
+          backface-visibility: hidden; -webkit-backface-visibility: hidden;
           background: #fff;
-          border: 1px solid #E8EDF5;
-          box-shadow: 0 1px 3px rgba(27,42,74,0.06), 0 8px 20px rgba(27,42,74,0.07);
-          transition: box-shadow 0.5s cubic-bezier(0.22,1,0.36,1),
-                      border-color 0.5s cubic-bezier(0.22,1,0.36,1);
-          position: relative;
-          overflow: hidden;
-          height: 100%;
+          box-shadow:
+            0 0 0 1px rgba(147,197,253,0.25),
+            0 0 20px rgba(64,140,255,0.15),
+            0 20px 55px -20px rgba(27,42,74,0.30);
+          transition: box-shadow 0.45s ease;
         }
-
-        .top-bar {
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          width: 4px;
-          background: var(--pc);
-          opacity: 0.9;
-          z-index: 10;
-          border-radius: 20px 0 0 20px;
-          transition: width 0.4s cubic-bezier(0.22,1,0.36,1);
+        .tm-card:hover .card-face.front {
+          box-shadow:
+            0 0 0 1.5px rgba(var(--pcr),0.5),
+            0 0 0 4px rgba(var(--pcr),0.08),
+            0 0 40px rgba(var(--pcr),0.35),
+            0 40px 70px -28px rgba(27,42,74,0.40);
         }
-
-        @media (hover: hover) and (pointer: fine) {
-          .tm-card:not(.is-flipped):hover .top-bar { width: 6px; }
-          .tm-card:not(.is-flipped):hover .front {
-            box-shadow: 0 8px 30px rgba(27,42,74,0.12), 0 24px 60px rgba(27,42,74,0.15);
-            border-color: rgba(var(--pcr), 0.3);
-          }
-          .tm-card:not(.is-flipped):hover .photo-img {
-            transform: scale(1.05);
-            filter: saturate(1.08) brightness(1.05);
-          }
-        }
-
-        .photo-area {
-          position: relative;
-          flex: 1;
-          min-height: 0;
-          overflow: hidden;
-          background: #dde4ef;
-        }
-        .photo-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center 12%;
-          display: block;
-          transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.4s ease;
-          filter: saturate(1.05) brightness(1.02);
-        }
-
-        .photo-overlay {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          padding: 2rem 1.8rem 1.8rem;
-          z-index: 2;
-          pointer-events: none;
-        }
-        .overlay-gradient {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to bottom,
-            rgba(0,0,0,0.02) 0%,
-            rgba(0,0,0,0.08) 25%,
-            rgba(var(--pcr), 0.3) 50%,
-            rgba(var(--pcr), 0.6) 70%,
-            rgba(var(--pcr), 0.85) 90%,
-            rgba(var(--pcr), 0.95) 100%
-          );
-          border-radius: 20px 20px 0 0;
+        .card-glow {
+          position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0;
+          background: radial-gradient(340px circle at var(--mx) var(--my), rgba(var(--pcr),0.12), transparent 62%);
           transition: opacity 0.4s ease;
         }
-        .overlay-content {
-          position: relative;
-          z-index: 3;
-          color: #fff;
+        .tm-card:hover .card-glow { opacity: 1; }
+
+        .top-bar {
+          position: absolute; top: 0; left: 0; right: 0; height: 4px; z-index: 7;
+          pointer-events: none;
+          background: linear-gradient(90deg, var(--pc), rgba(var(--pcr),0.25));
+          transform: scaleX(0); transform-origin: left;
+          transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
         }
+        .tm-card:hover .top-bar { transform: scaleX(1); }
+
+        /* Photo */
+        .photo-area { position: absolute; inset: 0; overflow: hidden; }
+        .photo-img {
+          width: 100%; height: 100%; object-fit: cover; object-position: top center;
+          transition: transform 1.1s cubic-bezier(0.22,1,0.36,1), filter 0.6s ease;
+        }
+        .tm-card:hover .photo-img { transform: scale(1.06) translateY(-1.5%); filter: saturate(1.05); }
+
+        /* მსუბუქი მუქი ტონი მთელ ფოტოზე — ნაგულისხმევად გამორთული, ირთვება მობილურზე */
+        .photo-tint {
+          position: absolute; inset: 0; z-index: 1; pointer-events: none;
+          background: rgba(3,13,26,0);
+          transition: background 0.3s ease;
+        }
+
+        .overlay-gradient {
+          position: absolute; inset: 0; z-index: 2;
+          background: linear-gradient(180deg, rgba(3,13,26,0) 25%, rgba(3,13,26,0.45) 55%, rgba(3,13,26,0.92) 100%);
+          transition: opacity 0.5s ease, background 0.3s ease;
+        }
+        .photo-sheen {
+          position: absolute; inset: 0; z-index: 3; pointer-events: none;
+          background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+          transform: translateX(-120%);
+        }
+        .tm-card:hover .photo-sheen { animation: tm-sheen 1s cubic-bezier(0.22,1,0.36,1); }
+        @keyframes tm-sheen { to { transform: translateX(120%); } }
+
+        .overlay-content {
+          position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
+          padding: 1.8rem 1.5rem 1.7rem;
+          pointer-events: none;
+          transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1);
+        }
+        .tm-card:hover .overlay-content { opacity: 0; transform: translateY(20px); }
         .overlay-role {
-          font-size: 0.65rem;
-          font-weight: 700;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          opacity: 0.85;
-          display: block;
-          margin-bottom: 0.2rem;
+          display: inline-block; font-size: 0.6rem; font-weight: 800;
+          letter-spacing: 0.14em; text-transform: uppercase; color: #fff;
+          background: rgba(var(--pcr),0.85); padding: 0.24rem 0.75rem;
+          border-radius: 40px; margin-bottom: 0.5rem;
         }
         .overlay-name {
-          font-size: 1.5rem;
-          font-weight: 800;
-          margin: 0;
-          letter-spacing: -0.02em;
-          line-height: 1.2;
-          text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+          font-size: 1.3rem; font-weight: 900; color: #fff; margin: 0 0 0.35rem;
+          letter-spacing: -0.02em; text-shadow: 0 2px 18px rgba(0,0,0,0.4);
         }
         .overlay-stats {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          margin-top: 0.3rem;
-          font-size: 0.75rem;
-          font-weight: 600;
-          opacity: 0.85;
+          display: flex; align-items: center; gap: 0.5rem;
+          font-size: 0.74rem; font-weight: 600; color: rgba(255,255,255,0.8);
         }
-        .dot-sep {
-          opacity: 0.4;
-        }
+        .dot-sep { color: rgba(255,255,255,0.4); }
 
-        .content-wrapper {
-          position: relative;
-          background: #fff;
-          border-radius: 0;
-          transform: none;
-          transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
-          box-shadow: none;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-          .content-wrapper {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            border-radius: 20px 20px 0 0;
-            padding-top: 0.5rem;
-            transform: translateY(100%);
-            z-index: 5;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
-            max-height: 70%;
-            overflow-y: auto;
-          }
-          .content-wrapper.content-visible {
-            transform: translateY(0);
-          }
-          .content-wrapper.content-visible ~ .photo-area .overlay-gradient {
-            opacity: 0.7;
-          }
-        }
-
-        @media (hover: none), (pointer: coarse) {
-          .tm-card {
-            height: auto;
-            min-height: 0;
-          }
-          .card-face { position: relative; }
-          .tm-card.is-flipped .card-scene { transform: none; }
-          .tm-card.is-flipped .back { display: flex; }
-          .tm-card.is-flipped .front { display: none; }
-          .tm-card:not(.is-flipped) .back { display: none; }
-
-          .photo-area {
-            flex: none;
-            aspect-ratio: 4 / 3;
-          }
-          .photo-overlay {
-            padding: 1.2rem 1.5rem 1rem;
-          }
-          .overlay-name { font-size: 1.15rem; }
-          .overlay-role { font-size: 0.58rem; }
-          .overlay-stats { font-size: 0.68rem; }
-          .front-panel {
-            padding: 0.7rem 1.2rem 1rem 1.4rem;
-          }
-          .person-name { display: block !important; }
-        }
-
+        /* Front hover panel — desktop only (>1024px), see media query below for touch devices */
         .front-panel {
-          padding: 0.7rem 1.2rem 1rem 1.4rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.3rem;
+          position: absolute; inset: 0; z-index: 5;
+          display: flex; flex-direction: column; gap: 0.5rem;
+          padding: 1.5rem 1.4rem 1.4rem;
+          justify-content: flex-end;
+          background: linear-gradient(180deg, rgba(4,12,24,0.3) 0%, rgba(4,12,24,0.7) 30%, rgba(2,8,18,0.97) 100%);
+          backdrop-filter: blur(4px);
+          opacity: 0; transform: translateY(18px);
+          transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1);
+          pointer-events: none;
         }
+        .tm-card:hover .front-panel { opacity: 1; transform: none; pointer-events: auto; }
 
         .role-tag {
-          font-size: 0.55rem;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: var(--pc);
+          align-self: flex-start; font-size: 0.58rem; font-weight: 800;
+          letter-spacing: 0.14em; text-transform: uppercase; color: #fff;
+          background: rgba(var(--pcr),0.95); padding: 0.24rem 0.8rem; border-radius: 40px;
+          box-shadow: 0 4px 14px -4px rgba(var(--pcr),0.5);
         }
-
         .person-name {
-          font-size: 0.95rem;
-          font-weight: 800;
-          color: var(--navy);
-          letter-spacing: -0.018em;
-          line-height: 1.25;
-          margin: 0;
-          display: none;
+          font-size: 1.2rem; font-weight: 900; color: #fff; margin: 0;
+          letter-spacing: -0.02em; line-height: 1.2;
+          text-shadow: 0 2px 12px rgba(0,0,0,0.5);
         }
-        .person-name::after {
-          content: '';
-          display: block;
-          width: 32px;
-          height: 2.5px;
-          background: var(--pc);
-          border-radius: 2px;
-          margin-top: 0.25rem;
-          opacity: 0.5;
-          transition: width 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-          .person-name { display: none; }
-          .tm-card:not(.is-flipped):hover .person-name::after {
-            width: 56px;
-            opacity: 1;
-          }
-        }
-
         .person-bio {
-          font-size: 0.7rem;
-          line-height: 1.5;
-          color: #5A5A72;
-          margin: 0;
-          font-weight: 400;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
+          font-size: 0.78rem; line-height: 1.5; color: rgba(255,255,255,0.85); margin: 0;
+          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
           overflow: hidden;
+          text-shadow: 0 1px 8px rgba(0,0,0,0.3);
         }
 
-        .certs-list {
-          display: flex;
-          flex-direction: column;
-          border-top: 1px solid #EEF1F8;
-          padding-top: 0.25rem;
-        }
+        .certs-list { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.05rem; }
         .cert-row {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.45rem;
-          padding: 0.15rem 0;
-          border-bottom: 1px solid #EEF1F8;
-          transition: border-color 0.3s ease;
+          display: flex; align-items: flex-start; gap: 0.5rem;
+          font-size: 0.7rem; color: rgba(255,255,255,0.9);
+          opacity: 0; transform: translateX(-10px);
+          transition: opacity 0.4s ease var(--cd), transform 0.4s cubic-bezier(0.22,1,0.36,1) var(--cd);
         }
-        .cert-row:last-child {
-          border-bottom: none;
-        }
+        .tm-card:hover .cert-row { opacity: 1; transform: none; }
         .cert-icon {
-          width: 14px;
-          height: 14px;
-          border-radius: 3px;
-          flex-shrink: 0;
-          margin-top: 1px;
-          background: rgba(var(--pcr), 0.08);
-          color: var(--pc);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: background 0.3s ease, color 0.3s ease;
+          width: 15px; height: 15px; border-radius: 4px; flex-shrink: 0; margin-top: 1px;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(var(--pcr),0.4); color: #fff;
         }
-        .cert-text {
-          font-size: 0.65rem;
-          font-weight: 500;
-          color: #3A4A6A;
-          line-height: 1.4;
-          word-break: break-word;
-          hyphens: auto;
-        }
+        .cert-text { line-height: 1.4; }
 
-        .front-actions {
-          display: flex;
-          gap: 0.4rem;
-          margin-top: 0.2rem;
-          padding-top: 0.35rem;
-          border-top: 1px solid #EEF1F8;
-        }
+        .front-actions { display: flex; gap: 0.5rem; margin-top: 0.4rem; position: relative; z-index: 8; }
         .act-btn {
-          flex: 1;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.3rem;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.6rem;
-          border-radius: 8px;
-          padding: 0.4rem 0.5rem;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
-          letter-spacing: 0.01em;
-          white-space: nowrap;
+          flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+          font-family: inherit; font-size: 0.7rem; font-weight: 700;
+          padding: 0.6rem 0.7rem; border-radius: 40px; cursor: pointer;
+          position: relative; z-index: 1;
+          transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
         }
+        .act-btn * { pointer-events: none; }
         .act-ghost {
-          background: #F5F7FB;
-          border: 1px solid #DDE4F0;
-          color: var(--navy);
-          font-weight: 600;
-        }
-        .act-ghost:hover {
-          background: rgba(var(--pcr), 0.07);
-          border-color: rgba(var(--pcr), 0.28);
-          color: var(--pc);
-        }
-        .act-solid {
-          background: var(--pc);
-          border: 1px solid var(--pc);
+          background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
           color: #fff;
-          font-weight: 700;
         }
-        .act-solid:hover {
-          filter: brightness(1.1);
-          box-shadow: 0 4px 14px rgba(var(--pcr), 0.3);
+        .act-ghost:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
+        .act-solid {
+          background: var(--pc); border: 1px solid var(--pc); color: #fff;
+          box-shadow: 0 8px 20px -8px rgba(var(--pcr),0.7);
         }
-        .act-btn svg {
-          transition: transform 0.3s ease;
-          flex-shrink: 0;
-          opacity: 0.7;
+        .act-solid:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(var(--pcr),0.9); }
+        .act-btn svg { transition: transform 0.25s ease; }
+        .act-btn:hover svg { transform: translateX(3px); }
+
+        /* Back face */
+        .card-face.back {
+          transform: rotateY(180deg);
+          background: linear-gradient(150deg, #081426, #04101E);
+          border: 1px solid rgba(var(--pcr),0.25);
+          box-shadow: 0 0 0 1px rgba(var(--pcr),0.15), 0 20px 55px -20px rgba(27,42,74,0.4);
         }
-        .act-btn:hover svg {
-          transform: translateX(3px);
-          opacity: 1;
+        .back-photo-bg { position: absolute; inset: 0; overflow: hidden; }
+        .back-bg-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.15; filter: blur(2px); }
+        .back-bg-mask {
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(4,16,30,0.7), rgba(4,16,30,0.95));
         }
 
-        .back {
-          transform: rotateY(180deg);
-          background: var(--navy);
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-          height: 100%;
+        /* პინირებული "უკან" ღილაკი — ფლიპისთანავე ჩანს, სქროლის გარეშე */
+        .back-nav {
+          position: absolute; top: 1rem; left: 1rem; z-index: 20;
+          display: inline-flex; align-items: center; gap: 0.4rem;
+          background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.18);
+          color: #fff; backdrop-filter: blur(8px);
+          font-family: inherit; font-size: 0.68rem; font-weight: 700;
+          padding: 0.42rem 0.9rem; border-radius: 40px; cursor: pointer;
+          pointer-events: auto;
+          transition: background 0.2s ease, transform 0.2s ease;
         }
-        .back-photo-bg {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-        }
-        .back-bg-img {
-          width: 100%;
-          height: 50%;
-          object-fit: cover;
-          object-position: center 15%;
-          display: block;
-          filter: brightness(0.28) saturate(0.4);
-        }
-        .back-bg-mask {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, rgba(27,42,74,0.5) 0%, rgba(27,42,74,0.98) 38%, rgba(27,42,74,1) 100%);
-        }
+        .back-nav:hover { background: rgba(255,255,255,0.2); transform: translateX(-3px); }
+
         .back-body {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 1.4rem 1.4rem 1.2rem;
-          height: 100%;
-          gap: 0.4rem;
-          overflow-y: auto;
+          position: relative; z-index: 2; height: 100%;
+          padding: 3.1rem 1.35rem 1.3rem;
+          display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+          text-align: center; overflow-y: auto;
         }
-        .back-ring {
-          position: relative;
-          width: 68px;
-          height: 68px;
-          flex-shrink: 0;
-        }
+        .back-ring { position: relative; width: 72px; height: 72px; margin-bottom: 0.15rem; flex-shrink: 0; }
         .back-avatar-img {
-          width: 100%;
-          height: 100%;
-          border-radius: 12px;
-          object-fit: cover;
-          object-position: top;
-          display: block;
-          border: 2px solid rgba(255,255,255,0.15);
+          width: 100%; height: 100%; border-radius: 50%;
+          object-fit: cover; object-position: top; border: 2px solid rgba(var(--pcr),0.5);
         }
-        .back-name {
-          font-size: 1rem;
-          font-weight: 800;
-          color: #fff;
-          letter-spacing: -0.015em;
-          text-align: center;
-          margin: 0;
+        .ring-border {
+          position: absolute; inset: -5px; border-radius: 50%;
+          border: 1px dashed rgba(var(--pcr),0.4);
+          animation: ring-spin 14s linear infinite;
         }
+        @keyframes ring-spin { to { transform: rotate(360deg); } }
+
+        .back-name { font-size: 1.05rem; font-weight: 900; color: #fff; margin: 0; letter-spacing: -0.01em; }
         .back-role-tag {
-          font-size: 0.58rem;
-          font-weight: 700;
-          letter-spacing: 0.09em;
-          text-transform: uppercase;
-          color: rgba(var(--pcr), 1);
-          background: none;
-          border: none;
-          padding: 0;
+          font-size: 0.55rem; font-weight: 800; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--pc);
         }
         .back-certs {
-          width: 100%;
-          border-top: 1px solid rgba(255,255,255,0.1);
-          padding-top: 0.5rem;
-          margin-top: 0.1rem;
+          width: 100%; display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.3rem;
         }
         .back-certs-label {
-          font-size: 0.55rem;
-          font-weight: 700;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.35);
-          margin: 0 0 0.4rem;
+          font-size: 0.5rem; font-weight: 800; letter-spacing: 0.14em;
+          text-transform: uppercase; color: rgba(255,255,255,0.3); margin: 0 0 0.1rem;
         }
         .back-cert-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.5rem;
-          font-size: 0.68rem;
-          font-weight: 500;
-          color: rgba(255,255,255,0.82);
-          padding: 0.2rem 0;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          line-height: 1.4;
+          display: flex; align-items: flex-start; gap: 0.5rem; text-align: left;
+          font-size: 0.7rem; color: rgba(255,255,255,0.8);
+          background: rgba(255,255,255,0.03); border: 1px solid rgba(var(--pcr),0.15);
+          border-radius: 8px; padding: 0.35rem 0.6rem;
+          transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
         }
-        .back-cert-item:last-child {
-          border-bottom: none;
+        .back-cert-item:hover {
+          background: rgba(var(--pcr),0.08); border-color: rgba(var(--pcr),0.35); transform: translateX(3px);
         }
         .bci-check {
-          width: 14px;
-          height: 14px;
-          border-radius: 3px;
-          flex-shrink: 0;
-          margin-top: 1px;
-          background: rgba(var(--pcr), 0.25);
-          color: rgba(var(--pcr), 1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; margin-top: 1px;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(var(--pcr),0.25); color: var(--pc);
         }
         .back-bio {
-          font-size: 0.68rem;
-          font-weight: 400;
-          line-height: 1.6;
-          color: rgba(255,255,255,0.5);
-          text-align: center;
-          margin: 0;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
+          font-size: 0.7rem; line-height: 1.5; color: rgba(255,255,255,0.5);
+          margin: 0.3rem 0 0;
+          display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
           overflow: hidden;
         }
-
         .back-profile-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.4rem;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.65rem;
-          font-weight: 700;
-          color: #fff;
-          background: var(--pc);
-          border: none;
-          padding: 0.45rem 1rem;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
-          width: 100%;
-          margin-top: 0.15rem;
+          margin-top: auto; width: 100%;
+          display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+          background: var(--pc); color: #fff; border: none; cursor: pointer;
+          font-family: inherit; font-size: 0.72rem; font-weight: 700;
+          padding: 0.6rem 1rem; border-radius: 40px;
+          box-shadow: 0 10px 20px -10px rgba(var(--pcr),0.8);
+          transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), filter 0.25s ease;
         }
-        .back-profile-btn:hover {
-          filter: brightness(1.12);
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(var(--pcr), 0.3);
-        }
-        .back-profile-btn svg {
-          opacity: 0.85;
-          transition: transform 0.3s ease;
-        }
-        .back-profile-btn:hover svg {
-          transform: translateX(3px);
-          opacity: 1;
-        }
+        .back-profile-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        .back-return {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: 0.65rem;
-          font-weight: 600;
-          color: rgba(255,255,255,0.5);
-          background: rgba(255,255,255,0.07);
-          border: 1px solid rgba(255,255,255,0.1);
-          padding: 0.35rem 0.9rem;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .back-return:hover {
-          background: rgba(255,255,255,0.12);
-          color: rgba(255,255,255,0.85);
-          transform: translateY(-2px);
-        }
+        /* Stars */
+        .tm-stars { display: flex; align-items: center; gap: 2px; }
+        .tm-star { display: flex; color: #FBBF24; animation: star-pop 0.5s cubic-bezier(0.22,1,0.36,1) both; animation-delay: var(--sd); }
+        @keyframes star-pop { from { opacity: 0; transform: scale(0.4) rotate(-25deg); } }
+        .tm-star-val { margin-left: 5px; font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.4); }
+        .stars-light .tm-star-val { color: rgba(255,255,255,0.45); }
 
+        /* Section CTA */
         .tm-cta-wrap {
-          text-align: center;
-          opacity: 0;
-          transform: translateY(18px);
-          transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+          text-align: center; opacity: 0; transform: translateY(20px);
+          transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
         }
-        .tm-cta-wrap.hdr-in {
-          opacity: 1;
-          transform: none;
-        }
+        .tm-cta-wrap.hdr-in { opacity: 1; transform: none; }
         .tm-main-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.8rem;
-          background: transparent;
-          border: 2px solid var(--navy);
-          color: var(--navy);
-          padding: 0.85rem 2.1rem;
-          border-radius: 50px;
-          font-family: 'Noto Sans Georgian', sans-serif;
-          font-weight: 700;
-          font-size: 0.9rem;
-          text-decoration: none;
-          transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
-          letter-spacing: 0.01em;
-          position: relative;
-          overflow: hidden;
+          position: relative; overflow: hidden;
+          display: inline-flex; align-items: center; gap: 0.75rem;
+          padding: 0.9rem 2.1rem; border-radius: 50px;
+          font-family: inherit; font-weight: 700; font-size: 0.9rem; text-decoration: none;
+          background: var(--navy); color: var(--cream); border: 2px solid var(--navy);
+          transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
         }
-        .tm-main-btn::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: var(--navy);
-          transform: scaleX(0);
-          transform-origin: right;
-          transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+        .tm-main-btn::after {
+          content: ''; position: absolute; inset: 0;
+          background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+          transform: translateX(-120%);
         }
-        .tm-main-btn:hover::before {
-          transform: scaleX(1);
-          transform-origin: left;
-        }
-        .tm-main-btn span {
-          position: relative;
-          z-index: 1;
-        }
+        .tm-main-btn:hover::after { animation: tm-sheen 0.85s ease; }
+        .tm-main-btn > * { position: relative; z-index: 1; }
         .tm-main-btn:hover {
-          color: var(--cream);
-          transform: translateY(-3px);
-          box-shadow: 0 14px 30px -8px rgba(27,42,74,0.3);
+          background: var(--blue-mid); border-color: var(--blue-mid);
+          transform: translateY(-3px); box-shadow: 0 18px 36px -12px rgba(27,42,74,0.42);
         }
-        .tm-main-btn.solid {
-          background: var(--navy);
-          color: var(--cream);
-        }
-        .tm-main-btn.solid::before {
-          background: var(--blue-mid);
-        }
-        .tm-main-btn.solid:hover {
-          box-shadow: 0 14px 30px -8px rgba(27,42,74,0.4);
-        }
-        .main-btn-arr {
-          display: flex;
-          align-items: center;
-          transition: transform 0.3s ease;
-          position: relative;
-          z-index: 1;
-        }
-        .tm-main-btn:hover .main-btn-arr {
-          transform: translateX(4px);
-        }
+        .main-btn-arr { display: flex; transition: transform 0.28s ease; }
+        .tm-main-btn:hover .main-btn-arr { transform: translateX(5px); }
 
-        /* ── Team Card Responsive ── */
+        /* ── Profile modal ── */
+        .pm-backdrop {
+          position: fixed; inset: 0; z-index: 9999;
+          background: rgba(1,10,28,0.86); backdrop-filter: blur(16px);
+          display: flex; align-items: center; justify-content: center; padding: 16px;
+          opacity: 0; transition: opacity 0.35s ease;
+          font-family: 'Noto Sans Georgian', system-ui, sans-serif;
+        }
+        .pm-backdrop.is-open { opacity: 1; }
+        .pm-box {
+          display: flex; max-width: 840px; width: 100%; max-height: 94vh;
+          background: linear-gradient(145deg,#071222,#04101E);
+          border: 1px solid rgba(var(--pcr),0.3); border-radius: 24px; overflow: hidden;
+          box-shadow: 0 44px 90px rgba(0,0,0,0.7), 0 0 70px rgba(var(--pcr),0.14);
+          opacity: 0; transform: translateY(34px) scale(0.96);
+          transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.16,1,0.3,1);
+        }
+        .pm-backdrop.is-open .pm-box { opacity: 1; transform: none; }
+        .pm-stg {
+          opacity: 0; transform: translateY(14px);
+          transition: opacity 0.55s ease var(--d,0s), transform 0.55s cubic-bezier(0.22,1,0.36,1) var(--d,0s);
+        }
+        .pm-backdrop.is-open .pm-stg { opacity: 1; transform: none; }
+
+        .pm-photo { position: relative; flex: 0 0 380px; min-height: 440px; overflow: hidden; background: #030D1A; }
+        .pm-photo-img {
+          width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%;
+          animation: pm-img-in 1.2s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        @keyframes pm-img-in { from { transform: scale(1.14); } to { transform: scale(1); } }
+        .pm-photo-grad {
+          position: absolute; inset: 0;
+          background: linear-gradient(to bottom, rgba(var(--pcr),0.1) 0%, rgba(var(--pcr),0.35) 40%, rgba(3,13,26,0.85) 72%, rgba(3,13,26,0.96) 100%);
+        }
+        .pm-photo-info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 2rem 1.8rem 1.8rem; }
+        .pm-specialty {
+          display: inline-block; font-size: 0.6rem; font-weight: 700;
+          letter-spacing: 0.12em; text-transform: uppercase; color: #FBBF24;
+          background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.25);
+          padding: 0.25rem 0.75rem; border-radius: 40px; margin-bottom: 0.5rem;
+        }
+        .pm-name {
+          font-size: 1.8rem; font-weight: 900; color: #fff; margin: 0 0 0.6rem;
+          letter-spacing: -0.02em; line-height: 1.12; text-shadow: 0 2px 20px rgba(0,0,0,0.35);
+        }
+        .pm-stats { display: flex; align-items: center; gap: 1.2rem; }
+        .pm-stat { display: flex; flex-direction: column; }
+        .pm-stat-div { width: 1px; height: 26px; background: rgba(255,255,255,0.15); }
+        .pm-stat-num { font-size: 1.1rem; font-weight: 900; color: #fff; line-height: 1; }
+        .pm-stat-lbl {
+          font-size: 0.55rem; font-weight: 700; color: rgba(255,255,255,0.5);
+          text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px;
+        }
+        .pm-close {
+          position: absolute; top: 1rem; right: 1rem; z-index: 10;
+          width: 36px; height: 36px; border-radius: 12px; cursor: pointer;
+          background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+          border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.65);
+          display: flex; align-items: center; justify-content: center;
+          transition: background 0.22s ease, color 0.22s ease, transform 0.3s ease;
+        }
+        .pm-close:hover { background: rgba(255,255,255,0.12); color: #fff; transform: rotate(90deg); }
+
+        .pm-content {
+          flex: 1; padding: 1.9rem 1.8rem 1.6rem; overflow-y: auto;
+          display: flex; flex-direction: column; gap: 0.72rem; max-height: 94vh;
+        }
+        .pm-role {
+          font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--pc);
+        }
+        .pm-bio { font-size: 0.85rem; line-height: 1.75; color: rgba(255,255,255,0.65); margin: 0; }
+        .pm-certs-label {
+          font-size: 0.55rem; font-weight: 800; letter-spacing: 0.14em;
+          text-transform: uppercase; color: rgba(255,255,255,0.32); margin-top: 0.2rem;
+        }
+        .pm-certs { display: flex; flex-direction: column; gap: 0.35rem; }
+        .pm-cert {
+          display: flex; align-items: flex-start; gap: 0.6rem;
+          padding: 0.45rem 0.7rem; background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(var(--pcr),0.18); border-radius: 9px;
+          transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+        .pm-cert:hover {
+          background: rgba(var(--pcr),0.1); border-color: rgba(var(--pcr),0.4); transform: translateX(4px);
+        }
+        .pm-cert-icon {
+          width: 17px; height: 17px; border-radius: 5px; flex-shrink: 0; margin-top: 2px;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(var(--pcr),0.25); color: var(--pc);
+        }
+        .pm-cert-text { font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.82); line-height: 1.5; }
+
+        .pm-actions { display: flex; align-items: center; gap: 0.6rem; margin-top: auto; padding-top: 1rem; flex-wrap: wrap; }
+        .pm-primary {
+          display: inline-flex; align-items: center; gap: 0.5rem;
+          background: var(--pc); color: #fff; border: none; cursor: pointer;
+          font-family: inherit; font-size: 0.8rem; font-weight: 700;
+          padding: 0.78rem 1.5rem; border-radius: 50px;
+          box-shadow: 0 14px 28px -12px rgba(var(--pcr),1);
+          transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), filter 0.25s ease, box-shadow 0.25s ease;
+        }
+        .pm-primary:hover { transform: translateY(-3px); filter: brightness(1.08); box-shadow: 0 20px 34px -12px rgba(var(--pcr),1); }
+        .pm-secondary {
+          display: inline-flex; align-items: center; gap: 0.4rem;
+          background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+          color: rgba(255,255,255,0.6); cursor: pointer;
+          font-family: inherit; font-size: 0.78rem; font-weight: 600;
+          padding: 0.72rem 1.15rem; border-radius: 50px;
+          transition: background 0.22s ease, color 0.22s ease;
+        }
+        .pm-secondary:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+        /* ── Responsive: ტაბლეტი/iPad ჩათვლით <1024px ჰოვერის-გარეშე დიზაინი ── */
         @media (max-width: 1024px) {
-          .tm-section {
-            padding: 4rem 1.5rem 4rem;
+          .tm-grid { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+
+          /* ფოტო ბოლომდე ჩანდეს — მსუბუქი გრადიენტი მხოლოდ ქვედა ზოლში */
+          .overlay-gradient {
+            background: linear-gradient(180deg, rgba(3,13,26,0) 58%, rgba(3,13,26,0.55) 82%, rgba(3,13,26,0.88) 100%);
           }
-          .tm-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-          }
-          .grid-item {
-            max-width: 380px;
-          }
-          .tm-card {
-            max-width: 100%;
-            height: auto;
-            min-height: 0;
-          }
-          .card-face {
-            position: relative;
-          }
-          .tm-card.is-flipped .card-scene {
-            transform: none;
-          }
-          .tm-card.is-flipped .back {
-            display: flex;
-          }
-          .tm-card.is-flipped .front {
-            display: none;
-          }
-          .tm-card:not(.is-flipped) .back {
-            display: none;
-          }
-          .photo-area {
-            flex: none;
-            aspect-ratio: 4 / 3;
-            min-height: auto;
-          }
-          .photo-overlay {
-            padding: 1.2rem 1.5rem 1rem;
-          }
-          .overlay-name {
-            font-size: 1.15rem;
-          }
-          .overlay-role {
-            font-size: 0.58rem;
-          }
-          .overlay-stats {
-            font-size: 0.68rem;
-          }
+          .overlay-content { display: none; }
+
+          /* front-panel ყოველთვის ჩართული, ჰოვერზე დამოკიდებული აღარაა */
           .front-panel {
-            padding: 0.7rem 1.2rem 1rem 1.4rem;
+            top: auto; left: 0; right: 0; bottom: 0; height: auto; max-height: 42%;
+            opacity: 1; transform: none; pointer-events: auto;
+            justify-content: flex-end;
+            gap: 0.4rem;
+            padding: 1.15rem 1.2rem 1.1rem;
+            background: linear-gradient(180deg, rgba(4,12,24,0) 0%, rgba(4,12,24,0.55) 30%, rgba(2,8,18,0.94) 100%);
           }
-          .person-name {
-            display: block !important;
-          }
-          .content-wrapper {
-            position: relative !important;
-            transform: none !important;
-            box-shadow: none !important;
-            max-height: none !important;
-            overflow-y: visible !important;
-            border-radius: 0 !important;
-            padding-top: 0 !important;
-          }
-          .content-wrapper.content-visible ~ .photo-area .overlay-gradient {
-            opacity: 1 !important;
-          }
-          .tm-card:not(.is-flipped):hover .photo-img {
-            transform: none !important;
-          }
-          .tm-card:not(.is-flipped):hover .front {
-            box-shadow: 0 1px 3px rgba(27,42,74,0.06), 0 8px 20px rgba(27,42,74,0.07) !important;
-          }
-          .tm-card:not(.is-flipped):hover .top-bar {
-            width: 4px !important;
-          }
+          .front-panel .certs-list { display: none; }
+          .front-panel .role-tag { font-size: 0.56rem; padding: 0.2rem 0.68rem; }
+          .front-panel .person-name { font-size: 1.1rem; margin: 0; }
+          .person-bio { -webkit-line-clamp: 2; font-size: 0.75rem; }
+
+          .front-actions { flex-direction: row; gap: 0.5rem; margin-top: 0.3rem; }
+          .act-btn { padding: 0.65rem 0.7rem; font-size: 0.68rem; }
+
+          .cert-row { opacity: 1; transform: none; }
+
+          .back-nav { padding: 0.38rem 0.8rem; font-size: 0.66rem; }
         }
 
         @media (max-width: 640px) {
-          .tm-section {
-            padding: 3rem 0.8rem 3rem;
+          .tm-section { padding: 4rem 1rem 3.25rem; }
+          .tm-grid { grid-template-columns: 1fr; gap: 1.3rem; }
+          .tm-title { font-size: 1.75rem; }
+          .tm-card { height: 480px; max-width: 400px; }
+          .tm-main-btn { width: 70%; justify-content: center; }
+
+          /* ბარათს გარედან, ტელეფონის ეკრანზე, ოდნავ მუქი ტონი დაერთოს —
+             რომ კრემისფერ ფონზე ცხადად და "მძიმედ" გამოიყურებოდეს */
+          .photo-tint {
+            background: linear-gradient(180deg, rgba(3,13,26,0.22) 0%, rgba(3,13,26,0.06) 32%, rgba(3,13,26,0.1) 55%, rgba(3,13,26,0.28) 100%);
           }
-          .tm-grid {
-            grid-template-columns: 1fr;
-            gap: 1.2rem;
-            justify-items: center;
-          }
-          .grid-item {
-            max-width: 360px;
-          }
-          .tm-title {
-            font-size: 1.6rem;
-          }
-          .tm-title br {
-            display: none;
-          }
-          .tm-subtitle {
-            font-size: 0.85rem;
-          }
-          .photo-overlay {
-            padding: 0.8rem 1rem 0.8rem;
-          }
-          .overlay-name {
-            font-size: 0.95rem;
-          }
-          .overlay-role {
-            font-size: 0.5rem;
-          }
-          .overlay-stats {
-            font-size: 0.6rem;
-          }
-          .front-panel {
-            padding: 0.6rem 0.8rem 0.8rem 1rem;
-          }
-          .person-name {
-            font-size: 0.85rem;
-          }
-          .person-bio {
-            font-size: 0.65rem;
-          }
-          .cert-text {
-            font-size: 0.6rem;
-          }
-          .act-btn {
-            font-size: 0.55rem;
-            padding: 0.35rem 0.4rem;
-          }
-          .tm-main-btn {
-            width: 100%;
-            justify-content: center;
-            font-size: 0.8rem;
-            padding: 0.7rem 1.5rem;
-          }
-          .back-body {
-            padding: 1rem 1rem 0.8rem;
-          }
-          .back-name {
-            font-size: 0.9rem;
-          }
-          .back-cert-item {
-            font-size: 0.6rem;
-          }
-          .back-profile-btn {
-            font-size: 0.6rem;
-            padding: 0.4rem 0.8rem;
-          }
-          .back-return {
-            font-size: 0.6rem;
-            padding: 0.3rem 0.7rem;
+          .card-face.front {
+            box-shadow:
+              0 0 0 1px rgba(27,42,74,0.14),
+              0 18px 40px -16px rgba(27,42,74,0.42);
           }
         }
 
-        @media (max-width: 400px) {
-          .grid-item {
-            max-width: 100%;
+        /* ── Profile modal: ტელეფონი/პატარა ეკრანი — ფოტო + ტექსტი სვეტურად, კარგად ჩანდეს ── */
+        @media (max-width: 760px) {
+          .pm-backdrop { padding: 0; align-items: flex-end; }
+          .pm-box {
+            flex-direction: column;
+            max-width: 100%; width: 100%;
+            max-height: 92vh;
+            border-radius: 22px 22px 0 0;
           }
-          .photo-overlay {
-            padding: 0.6rem 0.8rem 0.6rem;
+          .pm-photo {
+            flex: 0 0 auto; width: 100%; height: 46vh; min-height: 260px; max-height: 340px;
           }
-          .overlay-name {
-            font-size: 0.85rem;
+          .pm-photo-img { object-position: 50% 18%; }
+          .pm-photo-info { padding: 1.3rem 1.3rem 1.1rem; }
+          .pm-name { font-size: 1.45rem; margin: 0 0 0.5rem; }
+          .pm-specialty { font-size: 0.56rem; }
+          .pm-stats { gap: 0.9rem; }
+          .pm-stat-num { font-size: 0.95rem; }
+
+          .pm-content {
+            padding: 1.4rem 1.3rem 1.4rem; gap: 0.6rem;
+            max-height: none; overflow-y: auto;
           }
-          .overlay-role {
-            font-size: 0.45rem;
-          }
-          .overlay-stats {
-            font-size: 0.55rem;
-          }
-          .front-panel {
-            padding: 0.5rem 0.6rem 0.6rem 0.8rem;
-          }
+          .pm-bio { font-size: 0.82rem; line-height: 1.65; }
+          .pm-cert-text { font-size: 0.72rem; }
+
+          .pm-actions { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+          .pm-primary, .pm-secondary { width: 100%; justify-content: center; }
+          .pm-close { top: 0.75rem; right: 0.75rem; }
+        }
+
+        @media (max-width: 420px) {
+          .pm-photo { height: 40vh; min-height: 220px; }
+          .pm-name { font-size: 1.25rem; }
+          .pm-photo-info { padding: 1rem 1.1rem 0.9rem; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .tm-header,
-          .tm-cta-wrap,
-          .tm-card,
-          .card-scene,
-          .photo-img,
-          .content-wrapper,
-          .act-btn,
-          .back-return,
-          .badge-pulse,
-          .front,
-          .tm-main-btn::before,
-          .overlay-gradient {
-            transition: none !important;
-            animation: none !important;
-          }
-          .tm-card {
-            opacity: 1;
-            transform: none;
-          }
-          .tm-header,
-          .tm-cta-wrap {
-            opacity: 1;
-            transform: none;
-          }
-          .content-wrapper {
-            transform: translateY(0) !important;
+          .tm-section *, .pm-backdrop * { animation: none !important; transition-duration: 0.001s !important; }
+          .tm-card, .tm-header, .tm-cta-wrap, .pm-stg, .pm-box, .cert-row {
+            opacity: 1 !important; transform: none !important;
           }
         }
       `}</style>

@@ -24,17 +24,20 @@ export default function Banner() {
           background: #F5F0E8;
           padding: 0 28px 96px;
           font-family: 'Noto Sans Georgian', sans-serif;
+          display: flex;
+          justify-content: center;
         }
 
         /* ── CARD ── */
         .cta-card {
-           margin: 0 auto;
+          max-width: 1100px;
+          width: 100%;
           border-radius: 28px;
           background:
             radial-gradient(ellipse at 20% 50%, rgba(40,133,239,0.22) 0%, transparent 55%),
             radial-gradient(ellipse at 80% 20%, rgba(251,191,36,0.1) 0%, transparent 50%),
             linear-gradient(135deg, #0F1C38 0%, #1B2A4A 45%, #162242 100%);
-          padding: clamp(52px, 8vw, 84px) clamp(28px, 6vw, 80px);
+          padding: clamp(60px, 8vw, 84px) clamp(40px, 6vw, 80px);
           position: relative;
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.07);
@@ -119,7 +122,7 @@ export default function Banner() {
 
         /* heading */
         .cta-heading {
-          font-size: clamp(28px, 5.5vw, 60px);
+          font-size: clamp(32px, 4.5vw, 56px);
           font-weight: 900;
           color: #fff;
           line-height: 1.1;
@@ -160,7 +163,7 @@ export default function Banner() {
 
         /* subtitle */
         .cta-sub {
-          font-size: clamp(14px, 1.8vw, 17px);
+          font-size: clamp(15px, 1.6vw, 17px);
           color: rgba(255,255,255,0.6);
           line-height: 1.7;
           font-weight: 300;
@@ -198,7 +201,7 @@ export default function Banner() {
           border-radius: 100px;
           color: white;
           font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: clamp(13px, 1.5vw, 15px);
+          font-size: clamp(14px, 1.2vw, 15px);
           font-weight: 700;
           cursor: pointer;
           text-decoration: none;
@@ -236,7 +239,7 @@ export default function Banner() {
           border-radius: 100px;
           color: white;
           font-family: 'Noto Sans Georgian', sans-serif;
-          font-size: clamp(13px, 1.5vw, 15px);
+          font-size: clamp(14px, 1.2vw, 15px);
           font-weight: 700;
           cursor: pointer;
           text-decoration: none;
@@ -308,20 +311,192 @@ export default function Banner() {
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-          .cta-wrap { padding: 0 16px 72px; }
-          .cta-card { padding: 52px 24px; border-radius: 22px; }
+        @media (max-width: 820px) {
+          .cta-wrap { padding: 0 20px 72px; }
+          .cta-card { padding: 50px 30px; border-radius: 24px; }
+          .cta-heading { font-size: clamp(28px, 4vw, 38px); }
           .cta-dots { display: none; }
-          .cta-btns { flex-direction: column; align-items: stretch; }
-          .cta-btn-primary,
-          .cta-btn-phone { justify-content: center; width: 100%; max-width: 340px; margin: 0 auto; }
-          .cta-chips { display: none; }
+          .cta-ring--a { width: 300px; height: 300px; top: -150px; right: -100px; }
+          .cta-ring--b { width: 200px; height: 200px; top: -100px; right: -60px; }
+        }
+
+        @media (max-width: 600px) {
+          .cta-wrap { padding: 0 16px 56px; }
+          .cta-card { 
+            padding: 40px 24px; 
+            border-radius: 20px;
+            max-width: 500px;
+          }
+          
+          .cta-badge {
+            padding: 5px 14px;
+            gap: 6px;
+            margin-bottom: 20px;
+          }
+          .cta-badge-text { font-size: 10px; }
+          .cta-badge-dot { width: 5px; height: 5px; }
+          
+          .cta-heading {
+            font-size: clamp(24px, 5vw, 30px);
+            margin-bottom: 14px;
+          }
+          .cta-underline { display: none; }
+          
+          .cta-sub {
+            font-size: clamp(13px, 2vw, 14px);
+            max-width: 100%;
+            margin-bottom: 28px;
+            padding: 0 4px;
+          }
+          
+          .cta-btns {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            width: 100%;
+          }
+          
+          .cta-btn-primary {
+            display: inline-flex;
+            width: auto;
+            min-width: 200px;
+            justify-content: center;
+            padding: 14px 28px;
+            font-size: clamp(13px, 2vw, 14px);
+            white-space: nowrap;
+          }
+          
+          .cta-btn-phone {
+            display: inline-flex;
+            width: auto;
+            min-width: 180px;
+            justify-content: center;
+            padding: 12px 24px;
+            font-size: clamp(13px, 2vw, 14px);
+            white-space: nowrap;
+          }
+          
+          .cta-phone-icon {
+            width: 28px;
+            height: 28px;
+          }
+          .cta-phone-icon svg {
+            width: 12px;
+            height: 12px;
+          }
+          
+          .cta-chips {
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+          .cta-chip {
+            font-size: 10px;
+            padding: 4px 12px;
+            gap: 5px;
+          }
+          .cta-chip-check {
+            width: 13px;
+            height: 13px;
+            font-size: 7px;
+          }
+          
+          .cta-ring { display: none; }
         }
 
         @media (max-width: 480px) {
-          .cta-card { padding: 44px 20px; border-radius: 18px; }
-          .cta-heading { font-size: clamp(24px, 7vw, 32px); }
-          .cta-ring { display: none; }
+          .cta-wrap { padding: 0 12px 40px; }
+          .cta-card { 
+            padding: 32px 16px; 
+            border-radius: 16px;
+            max-width: 100%;
+          }
+          
+          .cta-heading {
+            font-size: clamp(20px, 4.5vw, 24px);
+            margin-bottom: 10px;
+          }
+          
+          .cta-sub {
+            font-size: 12px;
+            margin-bottom: 20px;
+          }
+          
+          .cta-btns {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 20px;
+          }
+          
+          .cta-btn-primary {
+            min-width: 160px;
+            padding: 11px 20px;
+            font-size: 12px;
+            gap: 6px;
+            white-space: nowrap;
+          }
+          .cta-btn-primary svg {
+            width: 13px;
+            height: 13px;
+          }
+          
+          .cta-btn-phone {
+            min-width: 140px;
+            padding: 10px 18px;
+            font-size: 12px;
+            gap: 8px;
+            white-space: nowrap;
+          }
+          .cta-phone-icon {
+            width: 24px;
+            height: 24px;
+          }
+          .cta-phone-icon svg {
+            width: 10px;
+            height: 10px;
+          }
+          
+          .cta-chip {
+            font-size: 9px;
+            padding: 3px 10px;
+            gap: 4px;
+          }
+          .cta-chip-check {
+            width: 11px;
+            height: 11px;
+            font-size: 6px;
+          }
+          
+          .cta-badge {
+            padding: 4px 10px;
+            gap: 4px;
+            margin-bottom: 14px;
+          }
+          .cta-badge-text { font-size: 8px; }
+          .cta-badge-dot { width: 4px; height: 4px; }
+        }
+
+        @media (max-width: 380px) {
+          .cta-btn-primary {
+            min-width: 130px;
+            padding: 10px 16px;
+            font-size: 11px;
+          }
+          .cta-btn-phone {
+            min-width: 120px;
+            padding: 9px 14px;
+            font-size: 11px;
+          }
+          .cta-btns {
+            gap: 6px;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -347,7 +522,7 @@ export default function Banner() {
             {/* badge */}
             <div className={`cta-badge ${visible ? "cta-badge--in" : ""}`}>
               <div className="cta-badge-dot" />
-              <span className="cta-badge-text"> პირველი კონსულტაცია</span>
+              <span className="cta-badge-text">პირველი კონსულტაცია</span>
             </div>
 
             {/* heading */}
@@ -370,7 +545,7 @@ export default function Banner() {
 
             {/* subtitle */}
             <p className={`cta-sub ${visible ? "cta-sub--in" : ""}`}>
-              დაჯავშნეთ  პირველადი კონსულტაცია — ჩვენი
+              დაჯავშნეთ პირველადი კონსულტაცია — ჩვენი
               ექსპერტი დაგეხმარებათ გეგმის შედგენაში და
               სწორი სერვისის შერჩევაში.
             </p>
@@ -385,7 +560,7 @@ export default function Banner() {
                 </svg>
               </a>
 
-              <a  className="cta-btn-phone">
+              <a href="tel:+995595201811" className="cta-btn-phone">
                 <div className="cta-phone-icon">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                        stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">

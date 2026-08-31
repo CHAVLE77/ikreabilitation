@@ -1,0 +1,622 @@
+/* ============================================
+   FIZIKURI PAGE STYLES (სკოპირებული)
+   ყველა სტილი მხოლოდ .fizio-page-ის ქვეშ მოქმედებს
+   ============================================ */
+
+   body{
+    overflow-x: hidden;
+   }
+/* ── Base ─────────────────────────────────── */
+.fizio-page {
+  --fz-bg: #020a1e;
+  --fz-bg-2: #061a3a;
+  --fz-gold: #fbbf24;
+  --fz-pink: #f472b6;
+  --fz-surface: rgba(13, 27, 62, 0.4);
+  --fz-line: rgba(255, 255, 255, 0.06);
+
+  font-family: "Noto Sans Georgian", system-ui, sans-serif;
+  background: var(--fz-bg);
+  min-height: 100vh;
+  color: #fff;
+
+  /* full-bleed: გამოაძვრება მშობელი კონტეინერის max-width/padding შეზღუდვიდან,
+     რომ ბექგრაუნდმა viewport-ის სრული სიგანე დაფაროს */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow-x: hidden;
+}
+
+/* ── Hero ─────────────────────────────────── */
+.fizio-hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(80px, 12vw, 130px) clamp(20px, 6vw, 80px) clamp(60px, 8vw, 100px);
+}
+
+.fizio-hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(251, 191, 36, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 191, 36, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+}
+
+.fizio-hero-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+}
+
+.fizio-hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+
+.fizio-hero-orb.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.25), transparent 70%);
+  top: -120px;
+  left: -100px;
+  animation: fizio-driftOrb 12s ease-in-out infinite;
+}
+
+.fizio-hero-orb.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.12), transparent 70%);
+  bottom: -80px;
+  right: -60px;
+  animation: fizio-driftOrb 15s ease-in-out infinite reverse;
+}
+
+.fizio-hero-orb.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.1), transparent 70%);
+  top: 40%;
+  left: 60%;
+  animation: fizio-driftOrb 20s ease-in-out infinite;
+  animation-delay: -7s;
+}
+
+.fizio-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.fizio-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 22px;
+  border-radius: 100px;
+  background: rgba(244, 114, 182, 0.12);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fz-pink);
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fizio-hero-badge.badge-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.fizio-hero-badge.badge-gold {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.35);
+  color: var(--fz-gold);
+}
+
+.fizio-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: fizio-pulse 2s infinite;
+}
+
+.fizio-hero-title {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease 0.15s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.fizio-hero-title.title-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fizio-title-gold {
+  background: linear-gradient(135deg, #fbbf24 30%, #f59e0b 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.fizio-hero-sub {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.75;
+  max-width: 660px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+}
+
+.fizio-hero-sub.sub-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fizio-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 30px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1a1204;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 12px 34px -12px rgba(251, 191, 36, 0.7);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  opacity: 0;
+  animation: fizio-fadeUpPlain 0.7s ease 0.45s forwards;
+}
+
+.fizio-hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px -12px rgba(251, 191, 36, 0.85);
+}
+
+.fizio-scroll-hint {
+  position: absolute;
+  bottom: clamp(24px, 4vw, 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.45);
+  animation: fizio-fadeUp 1s ease 1.5s both;
+}
+
+.fizio-scroll-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.fizio-scroll-pill {
+  width: 24px;
+  height: 38px;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 7px;
+}
+
+.fizio-scroll-pill svg {
+  animation: fizio-bounce 1.6s ease-in-out infinite;
+}
+
+/* ── Sections ────────────────────────────── */
+.fizio-section-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.fizio-section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.fizio-section-sub {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.fizio-pt-section {
+  padding: clamp(48px, 7vw, 90px) clamp(20px, 5vw, 64px);
+  position: relative;
+}
+
+.fizio-pt-section.alt {
+  background: linear-gradient(180deg, #020a1e 0%, #061a3a 55%, #020a1e 100%);
+}
+
+.fizio-pt-section.alt::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.35), transparent);
+}
+
+.fizio-pt-lead {
+  max-width: 860px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  line-height: 1.85;
+  text-align: center;
+}
+
+/* ── Cards ────────────────────────────────── */
+.fizio-pt-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.fizio-pt-card {
+  background: rgba(13, 27, 62, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fizio-pt-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(251, 191, 36, 0.35);
+  background: rgba(251, 191, 36, 0.06);
+  box-shadow: 0 12px 30px -10px rgba(251, 191, 36, 0.25);
+}
+
+.fizio-pt-num {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--fz-gold);
+  letter-spacing: 0.06em;
+  padding-top: 2px;
+  min-width: 22px;
+}
+
+.fizio-pt-check {
+  color: var(--fz-pink);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ── Reveal ───────────────────────────────── */
+.fizio-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fizio-reveal.fizio-reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Panels ───────────────────────────────── */
+.fizio-pt-panel {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: var(--fz-surface);
+  border: 1px solid var(--fz-line);
+  border-radius: 28px;
+  padding: 2.4rem 2.2rem;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.fizio-pt-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.5), transparent);
+}
+
+.fizio-pt-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.4rem;
+}
+
+.fizio-pt-subpanel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.4rem 1.6rem;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.fizio-pt-subpanel:hover {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(251, 191, 36, 0.15);
+}
+
+/* ── Sensory ──────────────────────────────── */
+.fizio-sensory-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  border-radius: 100px;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fz-gold);
+  margin-bottom: 12px;
+}
+
+.fizio-sensory-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fz-gold);
+  animation: fizio-pulse 2s infinite;
+}
+
+.fizio-sensory-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.fizio-sensory-subtitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--fz-gold);
+  margin: 0 0 0.6rem;
+}
+
+.fizio-sensory-desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.75;
+  max-width: 760px;
+}
+
+.fizio-uzay-text {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  font-size: 0.9rem;
+}
+
+/* ── Indications list ────────────────────── */
+.fizio-indications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fizio-indication-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.fizio-indication-item:hover {
+  color: #fff;
+  padding-left: 4px;
+}
+
+.fizio-indication-item:last-child {
+  border-bottom: none;
+}
+
+.fizio-indication-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fz-gold);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+}
+
+/* ── Back link ───────────────────────────── */
+.fizio-back-link-wrap {
+  padding: 2rem clamp(20px, 5vw, 64px) 4rem;
+  text-align: center;
+}
+
+.fizio-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.25s ease, transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 22px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.fizio-back-link:hover {
+  color: var(--fz-gold);
+  transform: translateX(-4px);
+  border-color: rgba(251, 191, 36, 0.3);
+  background: rgba(251, 191, 36, 0.05);
+}
+
+/* ── Animations ───────────────────────────── */
+@keyframes fizio-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes fizio-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes fizio-driftOrb {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(30px, -20px);
+  }
+  66% {
+    transform: translate(-20px, 25px);
+  }
+}
+
+@keyframes fizio-fadeUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fizio-fadeUpPlain {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 1024px) {
+  .fizio-pt-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .fizio-pt-panel-grid {
+    grid-template-columns: 1fr;
+  }
+  .fizio-pt-panel {
+    padding: 1.8rem 1.2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .fizio-pt-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .fizio-pt-panel {
+    padding: 1.2rem 1rem;
+  }
+  .fizio-sensory-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* ── Reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fizio-hero-badge,
+  .fizio-hero-title,
+  .fizio-hero-sub,
+  .fizio-hero-orb,
+  .fizio-scroll-pill svg,
+  .fizio-badge-dot,
+  .fizio-pt-card,
+  .fizio-sensory-badge-dot,
+  .fizio-reveal,
+  .fizio-hero-cta {
+    animation: none !important;
+    transition: none !important;
+  }
+  .fizio-hero-badge,
+  .fizio-hero-title,
+  .fizio-hero-sub,
+  .fizio-pt-card,
+  .fizio-reveal,
+  .fizio-hero-cta {
+    opacity: 1;
+    transform: none;
+  }
+}

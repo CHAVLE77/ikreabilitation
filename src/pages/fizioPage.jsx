@@ -329,17 +329,23 @@ export default function FizioPage() {
 
       {/* ── Back Link ── */}
       <div className="back-link-wrap">
-        <Link to="/services" className="back-link">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M19 12H5M5 12L12 5M5 12L12 19"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          უკან სერვისების გვერდზე
+        <Link to="/fizikuri" className="back-link">
+           ფიზიკური თერაპია
+           <svg
+  width="16"
+  height="16"
+  viewBox="0 0 24 24"
+  fill="none"
+  style={{ transform: "rotate(180deg)" }}
+>
+  <path
+    d="M19 12H5M5 12L12 5M5 12L12 19"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</svg>
         </Link>
       </div>
 

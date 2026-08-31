@@ -6,7 +6,6 @@ import Hero from "./components/hero";
 import About from "./components/about";
 import Services from "./components/services";
 import Team from "./components/team";
-import Gallery from "./components/gallery";
 import Contact from "./components/contact";
 import Banner from "./components/banner";
 
@@ -16,7 +15,7 @@ import TeamPage from "./pages/teamPage";
 import GalleryPage from "./pages/galleryPage";
 import AdminRoot from "./admin/AdminRoot";
 import FizioPage from "./pages/fizioPage";
-
+import FizikuriPage from "./pages/fizikuriPage"
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -48,8 +47,6 @@ function HomePage() {
       <div style={{ marginTop: "120px" }}>
         <Team />
       </div>
-
-      <Gallery />
 
       <div style={{ marginTop: "120px" }}>
         <Banner />
@@ -85,6 +82,7 @@ function App() {
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/fizio" element={<FizioPage />} />
+        <Route path="/fizikuri" element={<FizikuriPage />} />
 
         {/* ADMIN */}
         <Route path="/admin" element={<AdminRoot />} />

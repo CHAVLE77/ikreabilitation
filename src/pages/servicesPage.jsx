@@ -1552,6 +1552,7 @@ export default function ServicesPage() {
             padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 64px);
             background: linear-gradient(180deg, #020a1e 0%, #061a3a 50%, #020a1e 100%);
             position: relative;
+            overflow:hidden;
           }
           .services-section::before {
             content: "";

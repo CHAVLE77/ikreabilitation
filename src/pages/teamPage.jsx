@@ -73,93 +73,75 @@ const SparklesIcon = () => (
     <path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75L19 15z" fill="#FBBF24" opacity="0.6"/>
   </svg>
 );
+
 const CloseIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
     <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
+
 const PhoneIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
     <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.28 5.18 2 2 0 015.27 3h3.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 11.09a16 16 0 006.83 6.83l1.61-1.61a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
-// ── Team Data ───────────────────────────────────────────────────────────────
+const UserPlusIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+    <circle cx="8.5" cy="7" r="4" />
+    <line x1="20" y1="8" x2="20" y2="14" />
+    <line x1="23" y1="11" x2="17" y2="11" />
+  </svg>
+);
+
+const BriefcaseIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
+  </svg>
+);
+
+const CalendarIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+  </svg>
+);
+
+// ── Team Data ──────────────────────────────────────────────────────────────
 const teamData = [
   {
     id: 1,
     name: "ჯილდა ბლადაძე",
     role: "გენერალური დირექტორი",
-    experience: "4 წელი",
+    experience: "21 წელი",
     certs: ["გენერალური დირექტორი"],
-    bio: "ირმა ხვიჩიას რეაბილიტაციის ცენტრის გენერალური დირექტორი.",
-    fullBio: "გენერალური დირექტორი.",
+    bio: "გენერალური დირექტორი.",
+    fullBio: "Ჯილდა ბლადაძე არის ირმა ხვიჩიას რეაბილიტაციის ცენტრის გენერალური დირექტორი. ის ხელმძღვანელობს ცენტრის სტრატეგიულ განვითარებას, უზრუნველყოფს სერვისების მაღალ ხარისხს და ქმნის ინოვაციურ გარემოს, სადაც ყველა პაციენტი იღებს ინდივიდუალურ და პროფესიონალურ მხარდაჭერას.",
     image: "/team1.webp",
     accent: "#3A7BD5",
     accentRgb: "58,123,213",
     rating: 5.0,
     specialty: "დირექტორი",
-    category: "ნევროლოგია",
+    category: "",
   },
   {
     id: 2,
     name: "ირმა ხვიჩია",
     role: "ნევროლოგი",
-    experience: "10 წელი",
+    experience: "21 წელი",
     certs: ["ნევროლოგიის სერტიფიკატი", "ბავშვთა ნევროლოგიის ტრენინგი", "EEG დიაგნოსტიკა"],
-    bio: "ხელმძღვანელობს ცენტრის კლინიკურ საქმიანობას და ჩართულია ბავშვთა ნევროლოგიურ შეფასებასა და მკურნალობაში.",
-    fullBio: "გიორგი ABA-ს ადამიანურ სახეს წარმოადგენს — სტრუქტურა, სიყვარული და დაჟინება ერთ სივრცეში. 10 წლიანი გამოცდილებით, ის ბავშვებს ეხმარება ქცევითი გამოწვევების გადალახვაში.",
+    bio: "ხელმძღვანელობს ცენტრის კლინიკურ საქმიანობას.",
+    fullBio: "ირმა ხვიჩია არის ცენტრის დამფუძნებელი და წამყვანი ნევროლოგი. 21 წლიანი გამოცდილებით, ის ხელმძღვანელობს კლინიკურ საქმიანობას და ჩართულია ბავშვთა ნევროლოგიურ შეფასებასა და მკურნალობაში. მისი მიდგომა ეფუძნება ინდივიდუალურობას და თანამედროვე დიაგნოსტიკურ მეთოდებს.",
     image: "/team1.webp",
     accent: "#1B6FD4",
     accentRgb: "27,111,212",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "კლინიკური დირექტორი",
     category: "ნევროლოგია",
-  },
-  {
-    id: 3,
-    name: "გია მელიქიშვილი",
-    role: "მოწვეული სპეციალისტი",
-    experience: "6 წელი",
-    certs: ["PT სახელმწიფო ლიცენზია", "Bobath მეთოდი", "პედიატრიული PT"],
-    bio: "მოწვეული სპეციალისტი ეპილეფსიის დიაგნოსტირებასა და მართვაში.",
-    fullBio: "სოფო ყოველ ნაბიჯს ზეიმად აქცევს. 6 წლიანი გამოცდილებით, მისი პაციენტები ისწავლიან არა მხოლოდ სიარულს — არამედ სიამაყეს, რომ შეძლეს. Bobath მეთოდი და პედიატრიული PT მისი ძირითადი ინსტრუმენტებია.",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=700&fit=crop&crop=faces&auto=format",
-    accent: "#2B4A8A",
-    accentRgb: "43,74,138",
-    rating: 5.0,
-    specialty: "ეპილეფტოლოგი",
-    category: "ნევროლოგია",
-  },
-  {
-    id: 4,
-    name: "ლევან ჩიკვატია",
-    role: "მოწვეული სპეციალისტი",
-    experience: "7 წელი",
-    certs: ["SLP ლიცენზია", "AAC სერტიფიკატი", "ენობრივი განვითარება"],
-    bio: "საყრდენ-მამოძრავებელი სისტემის პათოლოგიების მიმართულებით.",
-    fullBio: "ნინო სიტყვებს სიმღერად აქცევს. 7 წლიანი გამოცდილებით, ყოველი ბავშვი მასთან პოულობს საკუთარ ხმას — მშვიდად, ნდობით, სიხარულით. AAC სისტემები და ენობრივი განვითარება მისი სპეციალობაა.",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&h=700&fit=crop&crop=faces&auto=format",
-    accent: "#1E5FAF",
-    accentRgb: "30,95,175",
-    rating: 4.9,
-    specialty: "ორთოპედ-ტრავმატოლოგი",
-    category: "ორთოპედ-ტრავმატოლოგია",
-  },
-  {
-    id: 5,
-    name: "სალომე მახაჭაძე",
-    role: "მოწვეული სპეციალისტი",
-    experience: "9 წელი",
-    certs: ["OT ლიცენზია", "Handwriting Without Tears", "SI ტრენინგი"],
-    bio: "მოწვეული ფსიქიატრი პაციენტების შეფასებისა და მკურნალობის პროცესში",
-    fullBio: "ანი ბავშვებს ეხმარება ყოველდღიური ცხოვრების დამოუკიდებლობაში. 9 წლიანი გამოცდილებით, ის ფოკუსირებულია ფინომოტორულ უნარებზე, თვითმოვლასა და სასკოლო მზაობაზე.",
-    image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=600&h=700&fit=crop&crop=faces&auto=format",
-    accent: "#2563EB",
-    accentRgb: "37,99,235",
-    rating: 5.0,
-    specialty: "ფსიქიატრი",
-    category: "ფსიქიატრი",
   },
   {
     id: 6,
@@ -168,11 +150,11 @@ const teamData = [
     experience: "6 წელი",
     certs: ["ADOS-2", "ABA ტრენინგი", "კოგნიტურ–ბიჰევიორული თერაპია"],
     bio: "ახორციელებს ფსიქოლოგიურ შეფასებასა და თერაპიულ მხარდაჭერას.",
-    fullBio: "კლინიკური ფსიქოლოგი, რომელსაც აქვს მრავალწლიანი გამოცდილება ბავშვთა და მოზრდილთა ფსიქოლოგიური შეფასებისა და თერაპიის სფეროში. მუშაობს აუტიზმის სპექტრის მქონე ბავშვებთან, განვითარების დარღვევების მქონე პირებთან და ტრავმული გამოცდილების მქონე ბენეფიციარებთან. იყენებს ქცევის თერაპიის, კოგნიტურ–ბიჰევიორული და ფსიქოკორექციული მიდგომების მეთოდებს.",
+    fullBio: "ნანა დიდმანიძე არის კლინიკური ფსიქოლოგი, რომელსაც აქვს მრავალწლიანი გამოცდილება ბავშვთა და მოზრდილთა ფსიქოლოგიური შეფასებისა და თერაპიის სფეროში. მუშაობს აუტიზმის სპექტრის მქონე ბავშვებთან, განვითარების დარღვევების მქონე პირებთან. იყენებს ქცევის თერაპიის, კოგნიტურ–ბიჰევიორული და ფსიქოკორექციული მიდგომების მეთოდებს.",
     image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1D4ED8",
     accentRgb: "29,78,216",
-    rating: 4.8,
+    rating: 5.0,
     specialty: "ბავშვთა ფსიქოლოგია",
     category: "ფსიქოლოგია",
   },
@@ -183,7 +165,7 @@ const teamData = [
     experience: "11 წელი",
     certs: ["სპეც. განათლების სახელმწ. ლიც.", "TEACCH მეთოდი", "ინკლუზიური განათლება"],
     bio: "მუშაობს პაციენტების ფსიქო-ემოციურ მხარდაჭერაზე.",
-    fullBio: "ქეთევანი ყოველ ბავშვს სასწავლო გზას ინდივიდუალურად ხატავს. 11 წლიანი გამოცდილებით, მისთვის სხვაობა არ არის დაბრკოლება — ის ნიჭია. TEACCH და ინკლუზიური განათლება მისი სტრატეგიაა.",
+    fullBio: "საბრი ბრუნჯაძე არის ფსიქოლოგი, რომელიც ყოველ ბავშვს სასწავლო გზას ინდივიდუალურად უნიშნავს. 11 წლიანი გამოცდილებით, ის თვლის რომ განსხვავება არ არის დაბრკოლება - არამედ ნიჭი. TEACCH და ინკლუზიური განათლება მისი მთავარი სტრატეგიაა.",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1565C0",
     accentRgb: "21,101,192",
@@ -198,11 +180,11 @@ const teamData = [
     experience: "5 წელი",
     certs: ["MT-BC სერტიფიკატი", "Nordoff-Robbins", "ნეირომუსიკოლოგია"],
     bio: "ჩართულია ინდივიდუალური და ჯგუფური ფსიქოლოგიური მუშაობის პროცესში.",
-    fullBio: "მარიამი მუსიკას სამკურნალოდ იყენებს. 5 წლიანი გამოცდილებით, რიტმი, მელოდია და ჰარმონია მის ხელში ბავშვის გულის გასაღებია. Nordoff-Robbins მეთოდი მისი ძირითადი პრაქტიკაა.",
+    fullBio: "ირმა ვერულიძე არის ფსიქოლოგი, რომელიც მუსიკას სამკურნალოდ იყენებს. 5 წლიანი გამოცდილებით, რიტმი, მელოდია და ჰარმონია მის ხელში ბავშვის გულის გასაღებია. Nordoff-Robbins მეთოდი მისი ძირითადი პრაქტიკაა.",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1976D2",
     accentRgb: "25,118,210",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფსიქოლოგი",
     category: "ფსიქოლოგია",
   },
@@ -213,7 +195,7 @@ const teamData = [
     experience: "14 წელი",
     certs: ["ნეიროფსიქოლ. სახელმწ. ლიც.", "NEPSY-II", "კოგნიტური შეფასება"],
     bio: "უზრუნველყოფს ფსიქოლოგიურ კონსულტაციასა და მხარდაჭერას.",
-    fullBio: "ლევანი ბავშვის ტვინის შესაძლებლობებს ავლენს. 14 წლიანი გამოცდილებით, მისი შეფასებები გზამკვლევია — ოჯახებისთვის, სკოლებისთვის და მთელი სამკურნალო გუნდისთვის. NEPSY-II კომპლექსური შეფასება მისი სიძლიერეა.",
+    fullBio: "ანა ფოთელიძე არის ფსიქოლოგი, რომელიც ბავშვის ტვინის შესაძლებლობებს ავლენს. 14 წლიანი გამოცდილებით, მისი შეფასებები გზამკვლევია ოჯახებისთვის, სკოლებისთვის და მთელი სამკურნალო გუნდისთვის. NEPSY-II კომპლექსური შეფასება მისი სიძლიერეა.",
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#0D47A1",
     accentRgb: "13,71,161",
@@ -228,11 +210,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "მუშაობს პაციენტების ფსიქო-ემოციური მდგომარეობის გაუმჯობესებაზე.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ნინო კილასონია არის ფსიქოლოგი, რომელიც პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე - სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფსიქოლოგი",
     category: "ფსიქოლოგია",
   },
@@ -243,11 +225,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "ჩართულია თერაპიულ პროცესებში.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "რიტა სურმანიძე არის ფსიქოლოგი, რომელიც სპეციალიზირებულია ბავშვთა ფსიქოლოგიური მხარდაჭერის სფეროში. იგი მუშაობს თერაპიული პროცესების მართვაზე, ატარებს ინდივიდუალური და ჯგუფური თერაპიის სეანსებს.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფსიქოლოგი",
     category: "ფსიქოლოგია",
   },
@@ -258,11 +240,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "უზრუნველყოფს ფსიქოლოგიურ მხარდაჭერას.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "რუსუდან კაჭხმაძე არის ფსიქოლოგი, რომელიც უზრუნველყოფს ბავშვებისა და მოზარდების ფსიქოლოგიურ მხარდაჭერას. იგი მუშაობს ემოციური და ქცევითი სირთულეების მართვაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფსიქოლოგი",
     category: "ფსიქოლოგია",
   },
@@ -273,11 +255,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "მუშაობს პაციენტების ფსიქოლოგიურ შეფასებასა და მხარდაჭერაზე.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "გიორგი წილოსანი არის ფსიქოლოგი, რომელიც სპეციალიზირებულია ფსიქოლოგიური შეფასებისა და მხარდაჭერის მიმართულებით. იგი მუშაობს ბავშვებისა და მოზარდების ფსიქო-ემოციური მდგომარეობის გაუმჯობესებაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფსიქოლოგი",
     category: "ფსიქოლოგია",
   },
@@ -288,11 +270,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "მუშაობს მეტყველების განვითარებისა და თერაპიის მიმართულებით.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ირმა ბლადაძე არის ლოგოპედი, რომელიც მუშაობს მეტყველების განვითარებისა და თერაპიის მიმართულებით. იგი ეხმარება ბავშვებს კომუნიკაციის უნარების განვითარებაში.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ლოგოპედი",
     category: "ლოგოპედია",
   },
@@ -303,11 +285,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "უზრუნველყოფს მეტყველების თერაპიულ მომსახურებას.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "მარი ვასაძე არის ლოგოპედი, რომელიც უზრუნველყოფს მეტყველების თერაპიულ მომსახურებას. იგი მუშაობს მეტყველების დარღვევების კორექციაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ლოგოპედი",
     category: "ლოგოპედია",
   },
@@ -318,13 +300,13 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "მუშაობს კომუნიკაციური უნარების განვითარებაზე.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ლია მახაჭაძე არის ლოგოპედი, რომელიც მუშაობს კომუნიკაციური უნარების განვითარებაზე. იგი ატარებს ინდივიდუალურ თერაპიას ბავშვებთან.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ლოგოპედი",
-    category: "ლოგოპედი",
+    category: "ლოგოპედია",
   },
   {
     id: 17,
@@ -333,11 +315,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "ჩართულია მეტყველების თერაპიის პროცესში.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ინგა ჩხაიძე არის ლოგოპედი, რომელიც ჩართულია მეტყველების თერაპიის პროცესში. იგი მუშაობს მეტყველების განვითარების ხელშეწყობაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ლოგოპედი",
     category: "ლოგოპედია",
   },
@@ -348,11 +330,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "მუშაობს მეტყველების დარღვევების კორექციაზე.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ცურა ცხადაძე არის ლოგოპედი, რომელიც მუშაობს მეტყველების დარღვევების კორექციაზე. იგი იყენებს თანამედროვე მეთოდებს ბავშვების მეტყველების უნარების გასავითარებლად.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ლოგოპედი",
     category: "ლოგოპედია",
   },
@@ -363,11 +345,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "უზრუნველყოფს მეტყველების თერაპიას.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ლეილა ღოღობერიძე არის ფიზიკური თერაპევტი, რომელიც უზრუნველყოფს პაციენტების რეაბილიტაციას. იგი მუშაობს მოტორული ფუნქციების გაუმჯობესებაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ლოგოპედი",
     category: "ლოგოპედია",
   },
@@ -378,11 +360,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "ჩართულია მეტყველების თერაპიის პროცესში.",
-    fullBio: "აუტიზმის პროგრამის სუპერვიზორი ადრეული განვითარების პროგრამის წამყვანი სპეციალისტი",
+    fullBio: "სოფო გოგუაძე არის აუტიზმის პროგრამის სუპერვიზორი და ადრეული განვითარების პროგრამის წამყვანი სპეციალისტი. 8 წლიანი გამოცდილებით, იგი ეხმარება ბავშვებს მეტყველებისა და კომუნიკაციის უნარების განვითარებაში.",
     image: "/log7.webp",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "მეტყველების თერაპევტი",
     category: "ლოგოპედია",
   },
@@ -393,11 +375,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "მუშაობს მოძრაობითი ფუნქციების გაუმჯობესებაზე.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "აკაკი გოგელია არის ფიზიკური თერაპევტი, რომელიც მუშაობს მოძრაობითი ფუნქციების გაუმჯობესებაზე. იგი სპეციალიზირებულია ბავშვთა რეაბილიტაციის მიმართულებით.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფიზიკური თერაპევტი",
     category: "ფიზიკური თერაპია",
   },
@@ -408,11 +390,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "ჩართულია რეაბილიტაციის პროცესში.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ჭაბუკი მელქაძე არის ფიზიკური თერაპევტი, რომელიც ჩართულია რეაბილიტაციის პროცესში. იგი მუშაობს პაციენტების ფიზიკური მდგომარეობის გაუმჯობესებაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფიზიკური თერაპევტი",
     category: "ფიზიკური თერაპია",
   },
@@ -423,11 +405,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "უზრუნველყოფს ფიზიკურ თერაპიას.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "მთვარე ჩიტიძე არის ფიზიკური თერაპევტი, რომელიც უზრუნველყოფს ფიზიკურ თერაპიას. იგი მუშაობს პაციენტების მოტორული ფუნქციების გაუმჯობესებაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფიზიკური თერაპევტი",
     category: "ფიზიკური თერაპია",
   },
@@ -438,11 +420,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "მუშაობს მოტორული უნარების განვითარებაზე.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "იზა ჯინჭარაძე არის ფიზიკური თერაპევტი, რომელიც მუშაობს მოტორული უნარების განვითარებაზე. იგი სპეციალიზირებულია ბავშვთა ფიზიკურ რეაბილიტაციაში.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფიზიკური თერაპევტი",
     category: "ფიზიკური თერაპია",
   },
@@ -453,11 +435,11 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "უზრუნველყოფს ფიზიკურ თერაპიას.",
-    fullBio: "თამარი პირველ წლებს ყველაზე მნიშვნელოვნად თვლის. 8 წლიანი გამოცდილებით, ის ოჯახებს ეხმარება ადრეულ ეტაპზე — სწრაფად, სიყვარულით, ეფექტურად. ESDM და DIR/Floortime მეთოდები მისი სპეციალობაა.",
+    fullBio: "ეკა იაკობაძე არის ფიზიკური თერაპევტი, რომელიც უზრუნველყოფს პაციენტების რეაბილიტაციას. იგი მუშაობს სხვადასხვა ასაკის პაციენტების ფიზიკური მდგომარეობის გაუმჯობესებაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფიზიკური თერაპევტი",
     category: "ფიზიკური თერაპია",
   },
@@ -468,13 +450,85 @@ const teamData = [
     experience: "8 წელი",
     certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
     bio: "უზრუნველყოფს ფიზიკურ თერაპიას.",
-    fullBio: "ინგა ბაიდოშვილი არის ფიზიკური თერაპევტი, რომელსაც აქვს მრავალწლიანი პრაქტიკული გამოცდილება ბავშვებისა და ზრდასრულების რეაბილიტაციის მიმართულებით ის სპეციალიზებულია მასაჟსა და ფიზიკურ თერაპიაში და აქტიურად მუშაობს პაციენტების ფუნქციური აღდგენისა და მოძრაობითი უნარების გაუმჯობესებაზე.",
+    fullBio: "ინგა ბაიდოშვილი არის ფიზიკური თერაპევტი, რომელსაც აქვს მრავალწლიანი პრაქტიკული გამოცდილება ბავშვებისა და ზრდასრულების რეაბილიტაციის მიმართულებით. ის სპეციალიზებულია მასაჟსა და ფიზიკურ თერაპიაში და აქტიურად მუშაობს პაციენტების ფუნქციური აღდგენისა და მოძრაობითი უნარების გაუმჯობესებაზე.",
     image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
     accent: "#1A5FA8",
     accentRgb: "26,95,168",
-    rating: 4.9,
+    rating: 5.0,
     specialty: "ფიზიკური თერაპევტი / მასაჟისტი",
     category: "ფიზიკური თერაპია",
+  },
+];
+
+// ── Visiting Specialists Data ─────────────────────────────────────────────
+const visitingSpecialists = [
+  {
+    id: 'v1',
+    name: "გია მელიქიშვილი",
+    role: "ბავშვთა ნევროლოგი, ეპილეფტოლოგი",
+    specialty: "ნევროლოგია",
+    description: "გამოცდილი ბავშვთა ნევროლოგი და ეპილეფტოლოგი.",
+    services: [
+      "ბავშვთა ნევროლოგიური დაავადებების დიაგნოსტიკა",
+      "ეპილეფსიის დიაგნოსტიკა და მკურნალობა",
+      "განვითარების დარღვევების შეფასება",
+      "ინდივიდუალური კონსულტაციები",
+    ],
+    image: "team2.jpg",
+    accent: "#2B4A8A",
+    accentRgb: "43,74,138",
+    fullBio: "გია მელიქიშვილი არის გამოცდილი ბავშვთა ნევროლოგი და ეპილეფტოლოგი, რომელიც უზრუნველყოფს ბავშვებში ნევროლოგიური დარღვევების დიაგნოსტიკასა და მართვას. 10 წლიანი გამოცდილებით, ის მუშაობს ეპილეფსიის სხვადასხვა ფორმის დიაგნოსტიკასა და მკურნალობაზე. მისი მიმართულებები მოიცავს EEG კვლევების შეფასებას, კრუნჩხვითი ეპიზოდების მართვას და თანამედროვე თერაპიული მიდგომების გამოყენებას.",
+  },
+  {
+    id: 'v2',
+    name: "ნაზიბროლა ქაჯაია",
+    role: "ოკუპაციური თერაპევტი",
+    specialty: "ოკუპაციური თერაპია",
+    description: "გამოცდილი ოკუპაციური თერაპევტი.",
+    services: [
+      "ყოველდღიური აქტივობების უნარების განვითარება",
+      "მოტორული უნარების გაუმჯობესება",
+      "ადაპტაციური ტექნიკების დამუშავება",
+      "ინდივიდუალურად მორგებული თერაპია",
+    ],
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=700&fit=crop&crop=faces&auto=format",
+    accent: "#1D4ED8",
+    accentRgb: "29,78,216",
+    fullBio: "ნაზიბროლა ქაჯაია არის გამოცდილი ოკუპაციური თერაპევტი, რომელიც სპეციალიზირებულია ბავშვების ყოველდღიური აქტივობების უნარების განვითარებაში. ის მუშაობს ბავშვებთან, რომლებსაც აქვთ მოტორული, სენსორული ან კოგნიტური სირთულეები. მისი მიდგომა ეფუძნება ინდივიდუალურად მორგებულ თერაპიულ გეგმებს.",
+  },
+  {
+    id: 'v3',
+    name: "ხატია ცინცქილაძე",
+    role: "ბავშვთა ნეიროქირურგი",
+    specialty: "ნეიროქირურგია",
+    description: "სპეციალიზირებული ბავშვთა ნეიროქირურგი.",
+    services: [
+      "ნევროლოგიური და ნეიროქირურგიული მდგომარეობების დიაგნოსტიკა",
+      "თანამედროვე დიაგნოსტიკური მეთოდები",
+      "ქირურგიული მკურნალობა",
+      "პაციენტის უსაფრთხოების უზრუნველყოფა",
+    ],
+    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&h=700&fit=crop&crop=faces&auto=format",
+    accent: "#1565C0",
+    accentRgb: "21,101,192",
+    fullBio: "ხატია ცინცქილაძე არის სპეციალიზირებული ბავშვთა ნეიროქირურგი, რომელიც ფოკუსირებულია ბავშვების ნევროლოგიური და ნეიროქირურგიული მდგომარეობების დიაგნოსტიკასა და მკურნალობაზე. ის იყენებს თანამედროვე დიაგნოსტიკურ და ქირურგიულ მეთოდებს.",
+  },
+  {
+    id: 'v4',
+    name: "ლევან ჩიკვატია",
+    role: "ორთოპედ-ტრავმატოლოგი, ქირურგი, პროფესორი",
+    specialty: "ორთოპედია",
+    description: "წამყვანი ორთოპედ-ტრავმატოლოგი.",
+    services: [
+      "ორთოპედიული და ტრავმატოლოგიური პრობლემების კომპლექსური მკურნალობა",
+      "ქირურგიული ინტერვენციები",
+      "რეაბილიტაციის დაგეგმვა",
+      "კონსულტაციები",
+    ],
+    image: "team3.jpg",
+    accent: "#1E5FAF",
+    accentRgb: "30,95,175",
+    fullBio: "ლევან ჩიკვატია არის წამყვანი ორთოპედ-ტრავმატოლოგი, ქირურგი, მედიცინის დოქტორი და პროფესორი, რომელიც უზრუნველყოფს ბავშვებისა და მოზრდილების ორთოპედიული და ტრავმატოლოგიური პრობლემების კომპლექსურ მკურნალობას. 6 წლიანი გამოცდილებით, ის მუშაობს ტრავმების, ხერხემლისა და სახსრების პრობლემების შეფასებასა და მკურნალობაზე.",
   },
 ];
 
@@ -492,18 +546,29 @@ function RatingStars({ rating }) {
   );
 }
 
-// ── Profile Modal (სუპერ-რესპონსიული) ──────────────────────────────────
+// ── Profile Modal ──────────────────────────────────────────────────────────
 function ProfileModal({ person, onClose  }) {
   const [mounted, setMounted] = useState(false);
   const isMobile = useIsMobile(768);
 
   useEffect(() => {
-    setMounted(true);
+    const id = requestAnimationFrame(() => setMounted(true));
     document.body.style.overflow = "hidden";
     const esc = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", esc);
-    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", esc); };
+    return () => {
+      cancelAnimationFrame(id);
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", esc);
+    };
   }, [onClose]);
+
+  // Animated entry styles
+  const fadeStyle = (delay) => ({
+    opacity: mounted ? 1 : 0,
+    transform: mounted ? "translateY(0)" : "translateY(16px)",
+    transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
+  });
 
   return (
     <div
@@ -515,7 +580,7 @@ function ProfileModal({ person, onClose  }) {
         display:"flex", alignItems:"center", justifyContent:"center",
         padding: isMobile ? "1rem" : "24px",
         opacity: mounted ? 1 : 0,
-        transition:"opacity 0.35s ease",
+        transition:"opacity 0.4s ease",
       }}
     >
       <div
@@ -533,9 +598,11 @@ function ProfileModal({ person, onClose  }) {
           width:"100%",
           maxHeight: isMobile ? "88vh" : "90vh",
           boxShadow: `0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(${person.accentRgb},0.12)`,
+          opacity: mounted ? 1 : 0,
+          transform: mounted ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
+          transition: "opacity 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1)",
         }}
       >
-        {/* Close Button pinned absolute to modal top-right */}
         <button onClick={onClose} style={{
           position:"absolute",
           top: "1rem",
@@ -555,7 +622,6 @@ function ProfileModal({ person, onClose  }) {
         onMouseLeave={e => { e.currentTarget.style.background = "rgba(0,0,0,0.4)"; e.currentTarget.style.color = "rgba(255,255,255,0.8)"; }}
         ><CloseIcon /></button>
 
-        {/* ── Photo col ── */}
         <div style={{
           width: isMobile ? "100%" : 280,
           height: isMobile ? 320 : "auto",
@@ -575,8 +641,15 @@ function ProfileModal({ person, onClose  }) {
               objectPosition:"center 20%",
               filter:"brightness(0.7) saturate(0.85)",
               display:"block",
+              animation: mounted ? "modal-img-in 1.2s cubic-bezier(0.22,1,0.36,1) both" : "none",
             }}
           />
+          <style>{`
+            @keyframes modal-img-in {
+              from { transform: scale(1.12); }
+              to { transform: scale(1); }
+            }
+          `}</style>
           <div style={{
             position:"absolute", inset:0,
             background:`linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(3,13,26,0.95) 100%)`
@@ -603,6 +676,7 @@ function ProfileModal({ person, onClose  }) {
               border:"1px solid rgba(251,191,36,0.3)",
               padding: "0.3rem 0.75rem",
               borderRadius:40,
+              ...fadeStyle(0.14),
             }}>
               {person.specialty}
             </span>
@@ -610,8 +684,9 @@ function ProfileModal({ person, onClose  }) {
               display:"flex",
               alignItems:"center",
               gap: "1.2rem",
+              ...fadeStyle(0.24),
             }}>
-              {[{ n: person.experience, l: "გამოცდ." }, { n: person.rating.toFixed(1), l: "რეიტინგი" }].map((s, i) => (
+              {[{ n: person.experience || "50+", l: "გამოცდ." }, { n: (person.rating || 4.9).toFixed(1), l: "რეიტინგი" }].map((s, i) => (
                 <div key={i} style={{ display:"flex", flexDirection:"column" }}>
                   <span style={{
                     fontSize: "1.1rem",
@@ -633,7 +708,6 @@ function ProfileModal({ person, onClose  }) {
           </div>
         </div>
 
-        {/* ── Content ── */}
         <div style={{
           flex:1,
           padding: isMobile ? "1.5rem 1.25rem" : "2rem 1.8rem",
@@ -644,13 +718,13 @@ function ProfileModal({ person, onClose  }) {
           gap: isMobile ? "0.65rem" : "0.9rem",
           wordBreak: "break-word",
         }}>
-
           <div style={{
             fontSize: "0.6rem",
             fontWeight:800,
             letterSpacing:"0.14em",
             textTransform:"uppercase",
-            color: person.accent
+            color: person.accent,
+            ...fadeStyle(0.2),
           }}>{person.role}</div>
 
           <h2 style={{
@@ -659,55 +733,66 @@ function ProfileModal({ person, onClose  }) {
             color:"#fff",
             letterSpacing:"-0.022em",
             margin:0,
-            lineHeight:1.1
+            lineHeight:1.1,
+            ...fadeStyle(0.19),
           }}>{person.name}</h2>
 
-          <RatingStars rating={person.rating} />
+          {person.rating && (
+            <div style={fadeStyle(0.25)}>
+              <RatingStars rating={person.rating} />
+            </div>
+          )}
 
           <p style={{
             fontSize: "0.85rem",
             lineHeight: 1.6,
             color:"rgba(255,255,255,0.65)",
-            margin:"0.3rem 0"
-          }}>{person.fullBio}</p>
+            margin:"0.3rem 0",
+            ...fadeStyle(0.3),
+          }}>{person.fullBio || person.bio}</p>
 
-          <div style={{
-            fontSize: "0.58rem",
-            fontWeight:800,
-            letterSpacing:"0.14em",
-            textTransform:"uppercase",
-            color:"rgba(255,255,255,0.28)",
-            marginTop: "0.4rem"
-          }}>კვალიფიკაცია</div>
-
-          <div style={{
-            display:"flex",
-            flexDirection:"column",
-            gap: "0.35rem"
-          }}>
-            {person.certs.map((c, i) => (
-              <div key={i} style={{
-                display:"flex", alignItems:"center", gap:"0.6rem",
-                fontSize: "0.76rem",
-                color:"rgba(255,255,255,0.72)",
-                padding: "0.4rem 0.6rem",
-                background:`rgba(${person.accentRgb},0.08)`,
-                border:`1px solid rgba(${person.accentRgb},0.18)`,
-                borderRadius:10,
-                wordBreak:"break-word",
+          {person.services && (
+            <>
+              <div style={{
+                fontSize: "0.58rem",
+                fontWeight:800,
+                letterSpacing:"0.14em",
+                textTransform:"uppercase",
+                color:"rgba(255,255,255,0.28)",
+                marginTop: "0.4rem",
+                ...fadeStyle(0.35),
+              }}>სერვისები</div>
+              <div style={{
+                display:"flex",
+                flexDirection:"column",
+                gap: "0.35rem"
               }}>
-                <span style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius:6,
-                  background:`rgba(${person.accentRgb},0.25)`,
-                  color: person.accent,
-                  display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0
-                }}><CheckIcon /></span>
-                {c}
+                {person.services.map((c, i) => (
+                  <div key={i} style={{
+                    display:"flex", alignItems:"center", gap:"0.6rem",
+                    fontSize: "0.76rem",
+                    color:"rgba(255,255,255,0.72)",
+                    padding: "0.4rem 0.6rem",
+                    background:`rgba(${person.accentRgb},0.08)`,
+                    border:`1px solid rgba(${person.accentRgb},0.18)`,
+                    borderRadius:10,
+                    wordBreak:"break-word",
+                    ...fadeStyle(0.4 + i * 0.07),
+                  }}>
+                    <span style={{
+                      width: 18,
+                      height: 18,
+                      borderRadius:6,
+                      background:`rgba(${person.accentRgb},0.25)`,
+                      color: person.accent,
+                      display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0
+                    }}><CheckIcon /></span>
+                    {c}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
 
           <div style={{
             display:"flex",
@@ -715,6 +800,7 @@ function ProfileModal({ person, onClose  }) {
             gap: "0.5rem",
             marginTop:"auto",
             paddingTop: "0.8rem",
+            ...fadeStyle(0.62),
           }}>
             <button style={{
               flex: 1,
@@ -816,7 +902,6 @@ function TeamCard({ person, idx, onOpenModal  }) {
           transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         }}
       >
-        {/* Glow */}
         <div style={{
           position:"absolute", top:-60, left:-60, width:220, height:220, borderRadius:"50%",
           background:`radial-gradient(circle, rgba(${person.accentRgb},0.22) 0%, transparent 70%)`,
@@ -824,7 +909,6 @@ function TeamCard({ person, idx, onOpenModal  }) {
           opacity: hovered ? 1 : 0, transition:"opacity 0.4s ease"
         }} />
 
-        {/* Photo */}
         <div style={{ position:"relative", height:240, overflow:"hidden", zIndex:1 }}>
           <img src={person.image} alt={person.name} loading="lazy" style={{
             width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 10%", display:"block",
@@ -843,7 +927,6 @@ function TeamCard({ person, idx, onOpenModal  }) {
             zIndex:1, opacity: hovered ? 1 : 0, transition:"opacity 0.4s ease"
           }} />
 
-          {/* Role badge */}
           <div style={{
             position:"absolute", top:12, right:12, zIndex:3,
             display:"inline-flex", alignItems:"center", gap:5,
@@ -862,7 +945,6 @@ function TeamCard({ person, idx, onOpenModal  }) {
             {person.role}
           </div>
 
-          {/* Exp badge */}
           <div style={{
             position:"absolute", bottom:12, left:12, zIndex:3,
             background:`rgba(${person.accentRgb},0.28)`, backdropFilter:"blur(10px)",
@@ -875,7 +957,6 @@ function TeamCard({ person, idx, onOpenModal  }) {
           </div>
         </div>
 
-        {/* Content */}
         <div style={{ position:"relative", zIndex:2, padding:"1.1rem 1.3rem 1.35rem", display:"flex", flexDirection:"column", gap:"0.4rem" }}>
           <span style={{ fontSize:"0.55rem", fontWeight:800, letterSpacing:"0.15em", textTransform:"uppercase", color:"#FBBF24" }}>{person.specialty}</span>
           <h3 style={{ fontSize:"1.08rem", fontWeight:900, color:"#fff", letterSpacing:"-0.02em", lineHeight:1.2, margin:0 }}>{person.name}</h3>
@@ -886,9 +967,8 @@ function TeamCard({ person, idx, onOpenModal  }) {
             margin:0, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden"
           }}>{person.bio}</p>
 
-          {/* Certs */}
           <div style={{ display:"flex", flexWrap:"wrap", gap:"0.28rem", marginTop:"0.1rem" }}>
-            {person.certs.slice(0, 2).map((c, i) => (
+            {person.certs?.slice(0, 2).map((c, i) => (
               <span key={i} style={{
                 display:"inline-flex", alignItems:"center", gap:"0.28rem",
                 fontSize:"0.58rem", fontWeight:600,
@@ -901,7 +981,7 @@ function TeamCard({ person, idx, onOpenModal  }) {
                 <span style={{ color: person.accent }}><CheckIcon /></span>{c}
               </span>
             ))}
-            {person.certs.length > 2 && (
+            {person.certs?.length > 2 && (
               <span style={{
                 display:"inline-flex", alignItems:"center",
                 fontSize:"0.58rem", fontWeight:700,
@@ -912,7 +992,6 @@ function TeamCard({ person, idx, onOpenModal  }) {
             )}
           </div>
 
-          {/* Actions */}
           <div style={{ display:"flex", gap:"0.55rem", marginTop:"0.5rem" }}>
             <button
               onClick={() => onOpenModal(person)}
@@ -943,7 +1022,135 @@ function TeamCard({ person, idx, onOpenModal  }) {
           </div>
         </div>
 
-        {/* Bottom accent line */}
+        <div style={{
+          position:"absolute", bottom:0, left:0, right:0, height:2,
+          background:`linear-gradient(to right, transparent, ${person.accent}, transparent)`,
+          opacity: hovered ? 1 : 0, transition:"opacity 0.4s ease", zIndex:3
+        }} />
+      </div>
+    </div>
+  );
+}
+
+// ── Visiting Specialist Card ──────────────────────────────────────────────
+function VisitingSpecialistCard({ person, idx, onOpenModal }) {
+  const [ref, inView] = useInView(0.06);
+  const isMobile = useIsMobile(1024);
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0) scale(1)" : "translateY(40px) scale(0.95)",
+        transition: `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${idx * 0.07 + 0.3}s, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${idx * 0.07 + 0.3}s`,
+      }}
+    >
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          position:"relative",
+          background: hovered
+            ? `linear-gradient(145deg, rgba(${person.accentRgb},0.15) 0%, rgba(8,22,52,0.97) 100%)`
+            : "linear-gradient(145deg, rgba(10,25,55,0.95) 0%, rgba(4,12,30,0.98) 100%)",
+          border: hovered ? `1px solid rgba(${person.accentRgb},0.45)` : "1px solid rgba(251,191,36,0.15)",
+          borderRadius:22,
+          overflow:"hidden",
+          cursor:"default",
+          transition:"all 0.35s ease",
+          boxShadow: hovered
+            ? `0 24px 60px rgba(0,0,0,0.55), 0 0 50px rgba(${person.accentRgb},0.14)`
+            : "0 4px 24px rgba(0,0,0,0.4)",
+        }}
+      >
+        {/* Premium Badge */}
+        <div style={{
+          position:"absolute", top:12, left:12, zIndex:5,
+          display:"inline-flex", alignItems:"center", gap:5,
+          background:"rgba(251,191,36,0.15)", backdropFilter:"blur(10px)",
+          border:"1px solid rgba(251,191,36,0.35)",
+          borderRadius:40, padding:"4px 12px 4px 8px",
+          color:"#FBBF24", fontSize:"0.5rem", fontWeight:800,
+          letterSpacing:"0.08em", textTransform:"uppercase",
+          fontFamily:"'Noto Sans Georgian', sans-serif",
+        }}>
+          <UserPlusIcon />
+          მოწვეული
+        </div>
+
+        <div style={{ position:"relative", height:200, overflow:"hidden", zIndex:1 }}>
+          <img src={person.image} alt={person.name} loading="lazy" style={{
+            width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 10%", display:"block",
+            transition:"transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s ease",
+            filter: hovered ? "saturate(0.95) brightness(0.98)" : "saturate(0.6) brightness(0.65)",
+            transform: hovered ? "scale(1.07)" : "scale(1)",
+          }} />
+          <div style={{
+            position:"absolute", inset:0,
+            background:"linear-gradient(to bottom, rgba(2,10,30,0.08) 0%, rgba(2,10,30,0.88) 100%)",
+            zIndex:1
+          }} />
+        </div>
+
+        <div style={{ position:"relative", zIndex:2, padding:"1.1rem 1.3rem 1.35rem", display:"flex", flexDirection:"column", gap:"0.3rem" }}>
+          <div style={{
+            display:"flex", alignItems:"center", gap:"0.4rem",
+            fontSize:"0.5rem", fontWeight:700, color:"rgba(255,255,255,0.3)",
+            textTransform:"uppercase", letterSpacing:"0.08em"
+          }}>
+            <BriefcaseIcon />
+            {person.specialty}
+          </div>
+
+          <h3 style={{ fontSize:"1.05rem", fontWeight:900, color:"#fff", letterSpacing:"-0.02em", lineHeight:1.2, margin:0 }}>
+            {person.name}
+          </h3>
+
+          <span style={{ fontSize:"0.6rem", fontWeight:700, color: person.accent, letterSpacing:"0.03em" }}>
+            {person.role}
+          </span>
+
+          <p style={{
+            fontSize:"0.72rem", lineHeight:1.6, color:"rgba(255,255,255,0.45)",
+            margin:"0.2rem 0 0.1rem", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden"
+          }}>{person.description}</p>
+
+          <div style={{ display:"flex", gap:"0.4rem", marginTop:"0.3rem" }}>
+            <button
+              onClick={() => onOpenModal(person)}
+              style={{
+                flex:1, display:"inline-flex", alignItems:"center", justifyContent:"center", gap:"0.35rem",
+                background: person.accent, border:"none", color:"#fff",
+                padding:"0.5rem 0.8rem", borderRadius:10,
+                fontSize:"0.65rem", fontWeight:800, cursor:"pointer",
+                fontFamily:"'Noto Sans Georgian', sans-serif",
+                transition:"all 0.22s ease",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.filter = "brightness(1.15)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.filter = ""; e.currentTarget.style.transform = ""; }}
+            >
+              ინფორმაცია <ArrowRight size={11} />
+            </button>
+            <button
+              onClick={() => {
+                sessionStorage.setItem("selectedSpecialist", person.name);
+                window.location.href = "/contact";
+              }}
+              style={{
+                width:38, height:38, flexShrink:0,
+                display:"flex", alignItems:"center", justifyContent:"center",
+                background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)",
+                borderRadius:10, color:"rgba(255,255,255,0.5)", cursor:"pointer",
+                transition:"all 0.2s ease"
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(251,191,36,0.15)"; e.currentTarget.style.borderColor = "rgba(251,191,36,0.3)"; e.currentTarget.style.color = "#FBBF24"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "rgba(255,255,255,0.5)"; }}
+            ><PhoneIcon /></button>
+          </div>
+        </div>
+
         <div style={{
           position:"absolute", bottom:0, left:0, right:0, height:2,
           background:`linear-gradient(to right, transparent, ${person.accent}, transparent)`,
@@ -955,7 +1162,7 @@ function TeamCard({ person, idx, onOpenModal  }) {
 }
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
-export default function App() {
+export default function App() { 
   const [headerRef, headerIn] = useInView(0.08);
   const [activeModal, setActiveModal] = useState(null);
   const [filter, setFilter] = useState("ყველა");
@@ -982,7 +1189,6 @@ export default function App() {
       fontFamily:"'Noto Sans Georgian', sans-serif",
       overflowX:"hidden",
     }}>
-      {/* ── @import font ── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; }
@@ -1040,7 +1246,22 @@ export default function App() {
         }
         @media (max-width: 1200px) { .tp-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 900px)  { .tp-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 560px)  { .tp-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 560px)  {
+          .tp-grid { grid-template-columns: 1fr; justify-items: center; }
+          .tp-grid > div { max-width: 340px; width: 100%; }
+        }
+
+        .visiting-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.3rem;
+        }
+        @media (max-width: 1200px) { .visiting-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 900px)  { .visiting-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 560px)  {
+          .visiting-grid { grid-template-columns: 1fr; justify-items: center; }
+          .visiting-grid > div { max-width: 340px; width: 100%; }
+        }
 
         @media (max-width: 768px) {
           .tp-stats-wrap { flex-wrap: wrap; gap: 0.6rem !important; padding: 0.8rem 1rem !important; }
@@ -1048,6 +1269,7 @@ export default function App() {
           .tp-filters-wrap { justify-content: flex-start !important; overflow-x: auto; padding-bottom: 4px; }
           .cta-inner-wrap { flex-direction: column !important; align-items: flex-start !important; }
           .cta-main-btn { width: 100%; justify-content: center; }
+          .visiting-header { flex-direction: column !important; align-items: flex-start !important; gap: 0.8rem !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1083,12 +1305,22 @@ export default function App() {
 
         {/* ── Header ── */}
         <div ref={headerRef} style={{ textAlign:"center", marginBottom:"3.5rem" }}>
-          {/* Badge */}
-          <div className={`tp-anim ${mounted ? "vis" : ""}`} style={{ transitionDelay:"0.05s", display:"inline-flex", alignItems:"center", gap:"0.55rem",
-            fontSize:"0.63rem", fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase",
-            color:"#FBBF24", background:"rgba(251,191,36,0.08)", border:"1px solid rgba(251,191,36,0.25)",
-            padding:"0.38rem 1.1rem 0.38rem 0.85rem", borderRadius:40, marginBottom:"1.2rem",
-            backdropFilter:"blur(10px)"
+          <div className={`tp-anim ${mounted ? "vis" : ""}`} style={{
+            transitionDelay: "0.05s",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.55rem",
+            fontSize: "0.63rem",
+            fontWeight: 800,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "#FBBF24",
+            background: "rgba(251,191,36,0.08)",
+            border: "1px solid rgba(251,191,36,0.25)",
+            padding: "0.38rem 1.1rem 0.38rem 0.85rem",
+            borderRadius: 40,
+            marginBottom: "1.2rem",
+            backdropFilter: "blur(10px)"
           }}>
             <SparklesIcon />
             <div className="badge-pulse" />
@@ -1096,36 +1328,85 @@ export default function App() {
           </div>
 
           <h1 className={`tp-anim ${mounted ? "vis" : ""}`} style={{
-            transitionDelay:"0.2s",
-            fontSize:"clamp(2.1rem, 5vw, 3.7rem)", fontWeight:900, color:"#fff",
-            lineHeight:1.14, letterSpacing:"-0.028em", margin:"0 0 0.9rem",
-            textShadow:"0 3px 24px rgba(0,0,0,0.4)"
+            transitionDelay: "0.2s",
+            fontSize: "clamp(2.1rem, 5vw, 3.7rem)",
+            fontWeight: 900,
+            color: "#fff",
+            lineHeight: 1.2,
+            letterSpacing: "-0.028em",
+            margin: "0 0 0.9rem",
+            textShadow: "0 3px 24px rgba(0,0,0,0.4)",
           }}>
-            გუნდი, რომელსაც<br />
             <span style={{
-              background:"linear-gradient(135deg, #FBBF24 20%, #F59E0B 80%)",
-              WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text"
-            }}>ენდობიან ოჯახები</span>
+              display: "inline-block",
+              background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>
+              მულტიდისციპლინარული
+            </span>
+            <br />
+            <span style={{
+              display: "inline-block",
+              background: "linear-gradient(135deg, #FBBF24 20%, #F59E0B 60%, #FBBF24 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              position: "relative",
+              padding: "0 0.1em",
+            }}>
+              გუნდი
+            </span>
+            <span style={{
+              display: "inline-block",
+              background: "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              margin: "0 0.15em",
+            }}>
+              {" "}რომელსაც
+            </span>
+            <br />
+            <span style={{
+              display: "inline-block",
+              background: "linear-gradient(135deg, #FBBF24 20%, #F59E0B 80%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              position: "relative",
+            }}>
+              ენდობიან ოჯახები
+            </span>
           </h1>
 
           <p className={`tp-anim ${mounted ? "vis" : ""}`} style={{
-            transitionDelay:"0.32s",
-            fontSize:"clamp(0.87rem, 1.8vw, 1.02rem)", color:"rgba(255,255,255,0.5)",
-            maxWidth:560, margin:"0 auto 2rem", lineHeight:1.72
+            transitionDelay: "0.32s",
+            fontSize: "clamp(0.87rem, 1.8vw, 1.02rem)",
+            color: "rgba(255,255,255,0.5)",
+            maxWidth: 560,
+            margin: "0 auto 2rem",
+            lineHeight: 1.72
           }}>
             გამოცდილი, სერტიფიცირებული და გულწრფელი — ჩვენი სპეციალისტები ყოველ ბავშვს პირადად იცნობენ.
           </p>
 
           <div className={`tp-anim tp-stats-wrap ${mounted ? "vis" : ""}`} style={{
-            transitionDelay:"0.44s",
-            display:"inline-flex", alignItems:"center", gap:"1.4rem",
-            background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)",
-            padding:"0.85rem 2rem", borderRadius:16, marginBottom:"1.6rem",
-            backdropFilter:"blur(10px)"
+            transitionDelay: "0.44s",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "1.4rem",
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            padding: "0.85rem 2rem",
+            borderRadius: 16,
+            marginBottom: "1.6rem",
+            backdropFilter: "blur(10px)"
           }}>
             {[
-              { v:"10+", l:"სპეციალისტი" },
-              { v:"500+", l:"ოჯახი" },
+              { v:"50+", l:"სპეციალისტი" },
+              { v:"15,000+", l:"მომხმარებელი" },
               { v:"16,000+", l:"სეანსი" },
               { v:"100%", l:"სერტიფ." },
             ].map((s, i) => (
@@ -1138,8 +1419,11 @@ export default function App() {
           </div>
 
           <div className={`tp-anim tp-filters-wrap ${mounted ? "vis" : ""}`} style={{
-            transitionDelay:"0.54s",
-            display:"flex", justifyContent:"center", flexWrap:"wrap", gap:"0.45rem"
+            transitionDelay: "0.54s",
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: "0.45rem"
           }}>
             {filters.map(f => (
               <button key={f} className={`filter-btn ${filter === f ? "active" : ""}`} onClick={() => setFilter(f)}>{f}</button>
@@ -1147,21 +1431,111 @@ export default function App() {
           </div>
         </div>
 
-        {/* ── Grid ── */}
-        <div className="tp-grid" style={{ marginBottom:"3rem" }}>
+        {/* ── Main Team Grid ── */}
+        <div className="tp-grid" style={{ marginBottom:"4rem" }}>
           {displayed.map((person, idx) => (
             <TeamCard key={person.id} person={person} idx={idx} onOpenModal={setActiveModal} />
           ))}
         </div>
 
+        {/* ── Visiting Specialists Section ── */}
+        <div style={{ marginBottom:"4rem" }}>
+          <div className="visiting-header" style={{
+            display:"flex",
+            alignItems:"center",
+            justifyContent:"space-between",
+            marginBottom:"1.8rem",
+            gap:"1rem"
+          }}>
+            <div>
+              <div style={{
+                display:"inline-flex",
+                alignItems:"center",
+                gap:"0.5rem",
+                fontSize:"0.6rem",
+                fontWeight:800,
+                letterSpacing:"0.14em",
+                textTransform:"uppercase",
+                color:"#FBBF24",
+                background:"rgba(251,191,36,0.08)",
+                border:"1px solid rgba(251,191,36,0.2)",
+                padding:"0.3rem 0.9rem",
+                borderRadius:40,
+                marginBottom:"0.6rem"
+              }}>
+                <UserPlusIcon />
+                მოწვეული სპეციალისტები
+              </div>
+              <h2 style={{
+                fontSize:"clamp(1.4rem, 3vw, 2.2rem)",
+                fontWeight:900,
+                color:"#fff",
+                letterSpacing:"-0.025em",
+                margin:0,
+                lineHeight:1.1
+              }}>
+                წამყვანი ექსპერტები <span style={{ color:"#FBBF24" }}>თბილისიდან</span>
+              </h2>
+            </div>
+            <div style={{
+              display:"flex",
+              alignItems:"center",
+              gap:"0.75rem",
+              padding:"0.5rem 1.2rem",
+              background:"rgba(255,255,255,0.04)",
+              border:"1px solid rgba(255,255,255,0.08)",
+              borderRadius:12,
+              flexShrink:0
+            }}>
+              <CalendarIcon />
+              <span style={{
+                fontSize:"0.7rem",
+                color:"rgba(255,255,255,0.5)",
+                fontWeight:600,
+                whiteSpace:"nowrap"
+              }}>რეგულარული ვიზიტები</span>
+            </div>
+          </div>
+
+          <p style={{
+            fontSize:"0.85rem",
+            color:"rgba(255,255,255,0.45)",
+            maxWidth:700,
+            margin:"0 0 1.8rem",
+            lineHeight:1.7
+          }}>
+            რეგულარულად ვმასპინძლობთ თბილისიდან მოწვეულ წამყვან სპეციალისტებს. 
+            მათი ვიზიტები უზრუნველყოფს ჩვენი პაციენტებისთვის უახლესი დიაგნოსტიკური 
+            და თერაპიული მიდგომების ხელმისაწვდომობას, რაც ხელს უწყობს მაღალი 
+            ხარისხის სერვისების მიწოდებას.
+          </p>
+
+          <div className="visiting-grid">
+            {visitingSpecialists.map((person, idx) => (
+              <VisitingSpecialistCard
+                key={person.id}
+                person={person}
+                idx={idx}
+                onOpenModal={setActiveModal}
+              />
+            ))}
+          </div>
+        </div>
+
         {/* ── CTA Banner ── */}
         <div className={`tp-anim ${mounted ? "vis" : ""}`} style={{ transitionDelay:"0.8s" }}>
           <div className="cta-inner-wrap" style={{
-            display:"flex", alignItems:"center", justifyContent:"space-between",
+            display:"flex",
+            alignItems:"center",
+            justifyContent:"space-between",
             background:"linear-gradient(135deg, rgba(27,111,212,0.2) 0%, rgba(43,74,138,0.14) 100%)",
             border:"1px solid rgba(251,191,36,0.2)",
-            borderRadius:22, padding:"1.8rem 2.4rem",
-            backdropFilter:"blur(14px)", position:"relative", overflow:"hidden", gap:"1.2rem"
+            borderRadius:22,
+            padding:"1.8rem 2.4rem",
+            backdropFilter:"blur(14px)",
+            position:"relative",
+            overflow:"hidden",
+            gap:"1.2rem"
           }}>
             <div style={{
               position:"absolute", inset:0,
@@ -1173,7 +1547,7 @@ export default function App() {
                 მზად ხარ დაიწყო?
               </h3>
               <p style={{ fontSize:"0.82rem", color:"rgba(255,255,255,0.48)", margin:0 }}>
-                ჩაეწერე  კონსულტაციაზე დღესვე — ჩვენი გუნდი გელოდება.
+                ჩაეწერე კონსულტაციაზე დღესვე — ჩვენი გუნდი გელოდება.
               </p>
             </div>
             <a href="/contact" className="cta-main-btn" style={{

@@ -44,6 +44,7 @@ const IconLogout  = ({ size = 16 }) => <svg width={size} height={size} viewBox="
 const IconRefresh = ({ size = 14 }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M23 4v6h-6M1 20v-6h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 const IconTrash   = ({ size = 14 }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M19 6l-1 14H6L5 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M10 11v6M14 11v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M9 6V4h6v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>;
 const IconEdit    = ({ size = 14 }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>;
+const IconTag     = ({ size = 13 }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41L13.42 20.58a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>;
 
 /* ─────────────────────────────────────────────── */
 /* Global Styles */
@@ -254,7 +255,7 @@ function RejectModal({ submission, onConfirm, onCancel }) {
 /* ─────────────────────────────────────────────── */
 function EditModal({ submission, onConfirm, onCancel }) {
   const [status, setStatus] = useState(submission?.status || "pending");
-  const [reason, setReason] = useState(submission?.rejectReason || "");
+  const [reason, setReason] = useState(submission?.reject_reason || ""); // ← FIXED: reject_reason
   const [vis, setVis] = useState(false);
   useEffect(() => { setTimeout(() => setVis(true), 30); }, []);
 
@@ -457,6 +458,7 @@ function DetailDrawer({ submission, onClose, onConfirm, onReject, onEdit, onDele
               { icon:<IconPhone size={13}/>, label:"ტელეფონი", value:submission.phone, href:`tel:${submission.phone}`, accent:"#10B981" },
               { icon:<IconClock size={13}/>, label:"თარიღი",   value:`${formatDate(submission.date||submission.created_at)} ${formatTime(submission.date||submission.created_at)}`, accent:"#3A7BD5" },
               submission.specialist && { icon:<IconUser size={13}/>, label:"სპეციალისტი", value:submission.specialist, accent:"#F5A623" },
+              submission.service && { icon:<IconTag size={13}/>, label:"სერვისი", value:submission.service, accent:"#8B5CF6" },
             ].filter(Boolean).map((info, i) => (
               <div key={i} style={{ padding:"12px 14px", background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.07)", borderRadius:12 }}>
                 <div style={{ display:"flex", alignItems:"center", gap:5, color:info.accent, marginBottom:5 }}>
@@ -479,10 +481,11 @@ function DetailDrawer({ submission, onClose, onConfirm, onReject, onEdit, onDele
             <p style={{ fontSize:13, lineHeight:1.7, color:"rgba(255,255,255,0.75)" }}>{submission.message}</p>
           </div>
 
-          {submission.rejectReason && (
+          {/* ← FIXED: reject_reason */}
+          {submission.reject_reason && (
             <div style={{ padding:"14px 16px", background:"rgba(239,68,68,0.07)", border:"1px solid rgba(239,68,68,0.2)", borderRadius:12 }}>
               <span style={{ fontSize:8, fontWeight:800, letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(239,68,68,0.7)", display:"block", marginBottom:6 }}>უარყოფის მიზეზი</span>
-              <p style={{ fontSize:12.5, color:"rgba(239,68,68,0.8)", lineHeight:1.6 }}>{submission.rejectReason}</p>
+              <p style={{ fontSize:12.5, color:"rgba(239,68,68,0.8)", lineHeight:1.6 }}>{submission.reject_reason}</p>
             </div>
           )}
         </div>
@@ -553,10 +556,17 @@ function SubmissionRow({ sub, onView, onConfirm, onReject, onEdit, onDelete, idx
       {/* Phone */}
       <span className="ap-col-phone" style={{ fontSize:12, color:"rgba(255,255,255,0.55)", fontVariantNumeric:"tabular-nums" }}>{sub.phone}</span>
 
-      {/* Specialist */}
-      <span className="ap-col-specialist" style={{ fontSize:12, color: sub.specialist ? "rgba(245,166,35,0.8)" : "rgba(255,255,255,0.2)", fontStyle: sub.specialist ? "normal":"italic", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-        {sub.specialist || "გაუნაწილებელი"}
-      </span>
+      {/* Specialist / Service */}
+      <div className="ap-col-specialist" style={{ display:"flex", flexDirection:"column", gap:2, minWidth:0 }}>
+        <span style={{ fontSize:12, color: sub.specialist ? "rgba(245,166,35,0.8)" : "rgba(255,255,255,0.2)", fontStyle: sub.specialist ? "normal":"italic", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+          {sub.specialist || "გაუნაწილებელი"}
+        </span>
+        {sub.service && (
+          <span style={{ fontSize:10.5, color:"rgba(139,92,246,0.85)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+            {sub.service}
+          </span>
+        )}
+      </div>
 
       {/* Date */}
       <div className="ap-col-time" style={{ display:"flex", flexDirection:"column", gap:2 }}>
@@ -638,88 +648,129 @@ function AdminPanel({ onLogout }) {
 
   const fetchSubmissions = useCallback(async (silent = false) => {
     if (!silent) setLoading(true); else setRefreshing(true);
-    
     try {
       const [{ data, error }, { data: delData }] = await Promise.all([
         supabase.from("submissions").select("*").order("created_at", { ascending: false }),
         supabase.from("deleted_count").select("count").single(),
       ]);
-      
       if (!error && data) setSubmissions(data);
       if (delData) setDeletedCount(delData.count);
     } catch (error) {
       console.error("Error fetching submissions:", error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
     }
-    
-    setLoading(false);
-    setRefreshing(false);
   }, []);
 
   useEffect(() => {
     fetchSubmissions();
-    setTimeout(() => setMounted(true), 60);
+    const timer = setTimeout(() => setMounted(true), 60);
+
+    // REAL-TIME SUBSCRIPTION
     const channel = supabase
-      .channel("submissions-changes")
-      .on("postgres_changes", { event: "*", schema: "public", table: "submissions" }, () => {
-        fetchSubmissions(true);
-      })
-      .subscribe();
-    return () => supabase.removeChannel(channel);
+      .channel("submissions-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "submissions" },
+        (payload) => {
+          console.log("Real-time change detected:", payload);
+          if (payload.eventType === "INSERT") {
+            setSubmissions(prev => {
+              if (prev.some(s => s.id === payload.new.id)) return prev;
+              return [payload.new, ...prev];
+            });
+          } else if (payload.eventType === "UPDATE") {
+            setSubmissions(prev => prev.map(s => s.id === payload.new.id ? payload.new : s));
+          } else if (payload.eventType === "DELETE") {
+            setSubmissions(prev => prev.filter(s => s.id !== payload.old.id));
+          }
+          supabase.from("deleted_count").select("count").single().then(({ data }) => {
+            if (data) setDeletedCount(data.count);
+          });
+        }
+      )
+      .subscribe((status) => {
+        console.log("Realtime channel status:", status);
+      });
+
+    return () => {
+      clearTimeout(timer);
+      supabase.removeChannel(channel);
+    };
   }, [fetchSubmissions]);
 
-  /* ── Handlers ── */
+  /* ── Handlers with Optimistic Updates ── */
   const handleConfirm = useCallback(async (id) => {
+    setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status: "confirmed" } : s));
+
     try {
-      await supabase.from("submissions").update({ status: "confirmed" }).eq("id", id);
-      fetchSubmissions(true);
-      setSelected(null);
+      const { error } = await supabase.from("submissions").update({ status: "confirmed" }).eq("id", id);
+      if (error) throw error;
       showToast("განაცხადი წარმატებით დადასტურდა ✓");
     } catch (error) {
+      fetchSubmissions(true);
       showToast("შეცდომა დადასტურებისას", "error");
     }
-  }, [fetchSubmissions, showToast]);
+  }, [showToast, fetchSubmissions]);
 
-  const handleRejectFinal = useCallback(async (reason) => {
+  // ← FIXED: use reject_reason instead of rejectReason
+  const handleRejectFinal = useCallback(async (id, reason) => {
+    setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status: "rejected", reject_reason: reason } : s));
+
     try {
-      await supabase.from("submissions").update({ status: "rejected", rejectReason: reason || null }).eq("id", rejectTarget.id);
+      const { error } = await supabase.from("submissions").update({ 
+        status: "rejected", 
+        reject_reason: reason || null 
+      }).eq("id", id);
+      if (error) throw error;
       setRejectTarget(null);
       setSelected(null);
-      fetchSubmissions(true);
       showToast("განაცხადი უარყოფილია", "error");
     } catch (error) {
+      console.error("Reject error:", error);
+      fetchSubmissions(true);
       showToast("შეცდომა უარყოფისას", "error");
     }
-  }, [rejectTarget, fetchSubmissions, showToast]);
+  }, [showToast, fetchSubmissions]);
 
+  // ← FIXED: use reject_reason instead of rejectReason
   const handleEditFinal = useCallback(async (status, reason) => {
+    const id = editTarget.id;
+    setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status, reject_reason: reason } : s));
+
     try {
-      await supabase.from("submissions").update({
+      const { error } = await supabase.from("submissions").update({
         status,
-        rejectReason: reason || null,
-      }).eq("id", editTarget.id);
+        reject_reason: reason || null,
+      }).eq("id", id);
+      if (error) throw error;
       setEditTarget(null);
       setSelected(null);
-      fetchSubmissions(true);
       showToast("სტატუსი წარმატებით განახლდა ✓");
     } catch (error) {
+      fetchSubmissions(true);
       showToast("შეცდომა სტატუსის განახლებისას", "error");
     }
-  }, [editTarget, fetchSubmissions, showToast]);
+  }, [editTarget, showToast, fetchSubmissions]);
 
   const handleDeleteFinal = useCallback(async () => {
+    const id = deleteTarget.id;
+    setSubmissions(prev => prev.filter(s => s.id !== id));
+    setDeletedCount(prev => prev + 1);
+
     try {
-      await supabase.from("submissions").delete().eq("id", deleteTarget.id);
-      // counter გაზარდე ბაზაში
+      const { error } = await supabase.from("submissions").delete().eq("id", id);
+      if (error) throw error;
       await supabase.rpc("increment_deleted_count");
-      setDeletedCount(prev => prev + 1);
       setDeleteTarget(null);
       setSelected(null);
-      fetchSubmissions(true);
       showToast("განაცხადი წაშლილია", "error");
     } catch (error) {
+      fetchSubmissions(true);
       showToast("შეცდომა წაშლისას", "error");
     }
-  }, [deleteTarget, fetchSubmissions, showToast]);
+  }, [deleteTarget, showToast, fetchSubmissions]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -729,7 +780,7 @@ function AdminPanel({ onLogout }) {
   const filtered = submissions.filter(s => {
     const matchF = filter === "all" || s.status === filter;
     const q = search.toLowerCase();
-    const matchS = !q || (s.name||"").toLowerCase().includes(q) || (s.phone||"").includes(q) || (s.specialist||"").toLowerCase().includes(q);
+    const matchS = !q || (s.name||"").toLowerCase().includes(q) || (s.phone||"").includes(q) || (s.specialist||"").toLowerCase().includes(q) || (s.service||"").toLowerCase().includes(q);
     return matchF && matchS;
   });
 
@@ -738,7 +789,7 @@ function AdminPanel({ onLogout }) {
     pending:   submissions.filter(s => s.status === "pending").length,
     confirmed: submissions.filter(s => s.status === "confirmed").length,
     rejected:  submissions.filter(s => s.status === "rejected").length,
-    deleted:   deletedCount, 
+    deleted:   deletedCount,
   };
 
   const STAT_CARDS = [
@@ -870,7 +921,7 @@ function AdminPanel({ onLogout }) {
 
           {/* Table head */}
           <div className="ap-table-header" style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1.4fr 0.9fr 0.8fr 1fr", gap:12, padding:"10px 20px", background:"rgba(0,0,0,0.2)", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
-            {["სახელი / შეტყობინება","ტელეფონი","სპეციალისტი","თარიღი","სტატუსი","მოქმედება"].map((h,i)=>(
+            {["სახელი / შეტყობინება","ტელეფონი","სპეც. / სერვისი","თარიღი","სტატუსი","მოქმედება"].map((h,i)=>(
               <span key={i} className={i===2?"ap-col-specialist":i===3?"ap-col-time":i===1?"ap-col-phone":""} style={{ fontSize:9, fontWeight:800, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.3)", textAlign:i===5?"right":"left" }}>{h}</span>
             ))}
           </div>
@@ -941,7 +992,7 @@ function AdminPanel({ onLogout }) {
       {/* Reject Modal */}
       {rejectTarget && (
         <RejectModal submission={rejectTarget}
-          onConfirm={handleRejectFinal}
+          onConfirm={(reason) => handleRejectFinal(rejectTarget.id, reason)}
           onCancel={() => setRejectTarget(null)}
         />
       )}
