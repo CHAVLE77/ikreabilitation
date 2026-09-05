@@ -1327,7 +1327,7 @@ export default function ServicesPage() {
       <style >
         {`
           *,
-          *::before,
+          *::before, 
           *::after {
             box-sizing: border-box;
             margin: 0;

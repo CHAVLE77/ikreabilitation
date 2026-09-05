@@ -15,10 +15,10 @@ const publicDir = "./public";
 // ფაილი (public-ში უკვე არსებული) -> დამატებითი პატარა სიგანეები
 // (არსებული ფაილი თავად დარჩება, როგორც ყველაზე დიდი ვერსია srcset-ში)
 const SMALLER_VARIANTS = {
-  "bg1.webp": [480, 960],
-  "bg2.webp": [480, 960],
-  "bg3.webp": [480, 960],
-  "bg4.webp": [480, 960],
+  "bg1.webp": [480, 960, 1440],
+  "bg2.webp": [480, 960, 1440],
+  "bg3.webp": [480, 960, 1440],
+  "bg4.webp": [480, 960, 1440],
   "serv1.webp": [410],
   "serv2.webp": [410],
   "serv3.webp": [410],
@@ -27,6 +27,8 @@ const SMALLER_VARIANTS = {
   "team3.webp": [470],
   "logo.webp": [50],
 };
+
+
 
 const WEBP_QUALITY = 82; // ოდნავ მაღალი, რადგან უკვე ერთხელ შეკუმშულია
 

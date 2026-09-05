@@ -15,8 +15,8 @@ const servicesData = [
     steps: ["შეფასება", "გეგმა", "თერაპია", "კონტროლი"],
     image: serv1,
     color: "#2885ef",
-  },
-  {
+  }, 
+  { 
     id: 2,
     title: "ფსიქოლოგი",
     subtitle: "ემოციური მხარდაჭერა",
@@ -51,7 +51,7 @@ const ArrowIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-  </svg>
+  </svg> 
 );
 
 const UsersIcon = () => (
@@ -241,7 +241,16 @@ function ServiceCard({
       >
         <span className="svc-halo" aria-hidden />
         <div className="card-img-wrap">
-          <img className="card-img" src={service.image} alt={service.title} loading="lazy" />
+  <img
+    className="card-img"
+    src={service.image}
+    srcSet={`${service.image.replace('.webp', '')}-410.webp 410w, ${service.image} 820w`}
+    sizes="(max-width: 768px) 100vw, 409px"
+    alt={service.title}
+    loading="lazy"
+    width="820"
+    height="432"
+  />
           <span className="card-overlay" />
           <span className="card-wash" />
           <span className="card-sheen" />
@@ -343,7 +352,7 @@ const Services = ({ preview = false }) => {
               cardRef={(el) => {
                 cardRefs.current[idx] = el;
               }}
-            />
+            /> 
           ))}
         </div>
 
@@ -758,7 +767,7 @@ const Services = ({ preview = false }) => {
         @media (prefers-reduced-motion: reduce) {
           .svc-section *, .svm-backdrop * {
             animation: none !important;
-            transition-duration: 0.001s !important;
+            transition-duration: 0.001s !important; 
           }
           .svc-card-shell, .svc-header, .svc-cta-wrap, .stg, .svm-box, .svm-step {
             opacity: 1 !important; transform: none !important;

@@ -29,7 +29,7 @@ const CloseIcon = () => (
     <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
-const PhoneIcon = () => (
+const PhoneIcon = () => ( 
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
     <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.28 5.18 2 2 0 015.27 3h3.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 11.09a16 16 0 006.83 6.83l1.61-1.61a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg> 
@@ -270,7 +270,16 @@ function TeamCard({
         <div className="card-face front">
           <span className="card-glow" aria-hidden />
           <div className="photo-area">
-            <img src={person.image} alt={person.name} loading="lazy" className="photo-img" />
+  <img
+    src={person.image}
+    srcSet={`${person.image.replace('.webp', '')}-470.webp 470w, ${person.image} 720w`}
+    sizes="(max-width: 640px) 100vw, 470px"
+    alt={person.name}
+    loading="lazy"
+    className="photo-img"
+    width="720"
+    height="1120"
+  />
             <span className="photo-tint" aria-hidden />
             <div className="overlay-gradient" />
             <span className="photo-sheen" aria-hidden />
