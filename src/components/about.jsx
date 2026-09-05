@@ -432,7 +432,7 @@ export default function About() {
             <span className="about-label">ჩვენს შესახებ</span>
 
             <h2 className="about-title">
-              ვინ ვართ <em>ჩვენ?</em>
+              ვინ ვართ <em>ჩვენ?</em> 
             </h2>
 
             <p className="about-description">

@@ -23,12 +23,12 @@ export default function Banner() {
           padding: 0 28px 96px;
           font-family: 'Noto Sans Georgian', sans-serif;
           display: flex;
-          justify-content: center;
+          justify-content: center; 
         }
 
         /* ── CARD ── */
         .cta-card {
-          max-width: 1100px;
+          max-width: 1100px; 
           width: 100%;
           border-radius: 28px;
           background:
