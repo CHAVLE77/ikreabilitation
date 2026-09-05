@@ -421,20 +421,25 @@ export default function About() {
             </div>
             <div className="img-main-wrapper">
 <img
-  alt="თერაპევტი ბავშვთან"
+  alt="თერაპევტთა გუნდი"
   className="img-main"
   src="/bg2.webp"
   srcSet="/bg2-960.webp 960w, /bg2-1440.webp 1440w, /bg2.webp 1920w"
-  sizes="(max-width: 768px) 100vw, 1115px" 
-/>            </div>
+  sizes="(max-width: 768px) 100vw, 1115px"
+  width="1115"
+  height="744"
+/>
+          </div>
             <div className="img-thumb-wrapper">
 <img
-  alt="სარეაბილიტაციო სავარჯიშო"
+  alt="რეაბილიტაციათა გუნდი"
   className="img-thumb"
   src="/bg3.webp"
   srcSet="/bg3-480.webp 480w, /bg3-960.webp 960w, /bg3.webp 1920w"
   sizes="(max-width: 768px) 50vw, 373px"
-/>            </div>
+  width="373"
+  height="249"
+/>        </div>
           </div>
  
           {/* RIGHT — content */}

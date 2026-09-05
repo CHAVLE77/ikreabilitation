@@ -239,7 +239,7 @@ function ServiceCard({
           }
         }}
       >
-        <span className="svc-halo" aria-hidden />
+        <span className="svc-halo" aria-hidden /> 
         <div className="card-img-wrap">
   <img
     className="card-img"
