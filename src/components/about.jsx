@@ -447,7 +447,7 @@ export default function About() {
                 <li key={i}>
                   <span className="check-icon">✓</span>
                   {item}
-                </li>
+                </li> 
               ))}
             </ul>
 

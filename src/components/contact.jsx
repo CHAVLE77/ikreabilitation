@@ -25,7 +25,7 @@ const BRANCHES = [
     hours: "09:00 – 19:00",
     isOpen: true,
     image: "/branch-batumi.webp",
-    mapLink:
+    mapLink: 
       "https://www.google.com/maps/place/%E1%83%98%E1%83%A0%E1%83%9B%E1%83%90+%E1%83%AE%E1%83%95%E1%83%98%E1%83%A9%E1%83%98%E1%83%90%E1%83%A1+%E1%83%A0%E1%83%94%E1%83%90%E1%83%91%E1%83%98%E1%83%9A%E1%83%98%E1%83%A2%E1%83%90%E1%83%AA%E1%83%98%E1%83%98%E1%83%A1+%E1%83%AA%E1%83%94%E1%83%9C%E1%83%A2%E1%83%A0%E1%83%98",
   },
   {
@@ -319,7 +319,6 @@ export default function Contact() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap');
 
         html, body { margin: 0; padding: 0; }
 
@@ -1862,7 +1861,7 @@ export default function Contact() {
                         </svg>
                       </>
                     )}
-                  </button>
+                  </button> 
                 </form>
               </div>
 

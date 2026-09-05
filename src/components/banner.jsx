@@ -18,8 +18,6 @@ export default function Banner() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;600;700;900&display=swap');
-
         .cta-wrap {
           background: #F5F0E8;
           padding: 0 28px 96px;
@@ -583,7 +581,7 @@ export default function Banner() {
                   {c}
                 </div>
               ))}
-            </div>
+            </div> 
 
           </div>
         </div>

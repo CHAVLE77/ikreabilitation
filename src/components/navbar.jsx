@@ -201,8 +201,6 @@ export default function Navbar() {
       </div>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800;900&display=swap');
-
         :root {
           --nb-font:   'Noto Sans Georgian', system-ui, sans-serif;
           --nb-blue:   #213989;
@@ -673,4 +671,4 @@ export default function Navbar() {
       `}</style>
     </>
   );
-}
+} 

@@ -766,7 +766,7 @@ const Services = ({ preview = false }) => {
         }
       `}</style>
     </section>
-  );
+  ); 
 };
 
 export default Services;

@@ -351,7 +351,6 @@ export default function FizioPage() {
 
       {/* ── Styles ── */}
       <style>{`
-        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap");
         *,
         *::before,
         *::after {
@@ -819,7 +818,7 @@ export default function FizioPage() {
             transform: none;
           }
         }
-      `}</style>
+      `}</style> 
     </div>
   );
 }

@@ -56,7 +56,7 @@ const PHOTOS = [
     src: "gal1.webp",
     thumb: "gal1.webp",
     alt: "ფიზიკური თერაპია",
-    cols: 2, rows: 1,
+    cols: 2, rows: 1, 
   },
   {
     id: 9,
@@ -310,7 +310,6 @@ export default function GalleryPage() {
           width: 100%;
           min-height: 100vh;
         }
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;900&display=swap');
         :root {
           --navy:       #0A152C;
           --navy-mid:   #0F1E3A;

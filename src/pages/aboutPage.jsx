@@ -57,7 +57,7 @@ function useCounter(target, duration = 1800, active = false) {
       const eased = 1 - Math.pow(1 - progress, 3)
       setCount(Math.floor(eased * target))
       if (progress < 1) requestAnimationFrame(step)
-    }
+    } 
     requestAnimationFrame(step)
   }, [target, duration, active])
   return count
@@ -467,7 +467,6 @@ export default function App() {
 }
 
 const css = `
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap');
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body, #root { width: 100%; overflow-x: hidden; scroll-behavior: smooth; }

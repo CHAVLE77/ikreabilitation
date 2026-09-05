@@ -654,7 +654,7 @@ function ProfileModal({ person, onClose  }) {
             position:"absolute", inset:0,
             background:`linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(3,13,26,0.95) 100%)`
           }} />
-          <div style={{
+          <div style={{ 
             position:"absolute", bottom:0, left:0, right:0,
             padding: "1.2rem",
             zIndex:2,
@@ -1190,7 +1190,6 @@ export default function App() {
       overflowX:"hidden",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; }
         body { margin: 0; background: #051428; }
 
