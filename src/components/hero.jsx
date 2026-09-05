@@ -337,17 +337,17 @@ function getSlideSrcSet(src) {
 
         /* ─── ANIMATIONS ─── */
         .anim-item {
-          opacity: 0;
-          transition: opacity 0.9s cubic-bezier(.22,1,.36,1),
-                      transform 0.9s cubic-bezier(.22,1,.36,1),
-                      filter 0.9s ease;
-        }
-        .is-mounted .anim-item { opacity: 1; transform: none; filter: none; }
-        .anim-1 { transform: translateX(-24px); filter: blur(4px); }
-        .anim-3 { transform: translateY(24px); transition-delay: .55s; }
-        .anim-4 { transform: translateY(28px); transition-delay: .7s; }
-        .anim-7 { transform: translateY(20px); transition-delay: .85s; }
-        .anim-8 { transform: translateY(28px); transition-delay: 1s; }
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.9s cubic-bezier(.22,1,.36,1),
+              transform 0.9s cubic-bezier(.22,1,.36,1);
+}
+.is-mounted .anim-item { opacity: 1; transform: none; }
+.anim-1 { transform: translateX(-8px); }
+.anim-3 { transform: translateY(8px); transition-delay: .55s; }
+.anim-4 { transform: translateY(8px); transition-delay: .7s; }
+.anim-7 { transform: translateY(8px); transition-delay: .85s; }
+.anim-8 { transform: translateY(8px); transition-delay: 1s; }
 
         /* ─── BADGE ─── */
         .badge {
@@ -477,7 +477,7 @@ function getSlideSrcSet(src) {
           color: rgba(255, 255, 255, 0.96);
           line-height: 1.6; margin: 0;
           text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-          min-height: 1.6em; word-break: break-word;
+          min-height: 1.6em; word-break: break-word; 
         }
         .quote-highlight { color: #FBBF24; font-weight: 700; font-style: normal; }
         .typing-cursor {
