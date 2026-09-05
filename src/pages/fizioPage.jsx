@@ -347,7 +347,7 @@ export default function FizioPage() {
   />
 </svg>
         </Link>
-      </div>
+      </div> 
 
       {/* ── Styles ── */}
       <style>{`

@@ -299,7 +299,7 @@ export default function GalleryPage() {
 
   return (
     <>
-      <style>{`
+      <style>{` 
         * {
           margin: 0;
           padding: 0;

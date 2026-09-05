@@ -30,7 +30,7 @@ export default function Banner() {
         .cta-card {
           max-width: 1100px; 
           width: 100%;
-          border-radius: 28px;
+          border-radius: 28px; 
           background:
             radial-gradient(ellipse at 20% 50%, rgba(40,133,239,0.22) 0%, transparent 55%),
             radial-gradient(ellipse at 80% 20%, rgba(251,191,36,0.1) 0%, transparent 50%),

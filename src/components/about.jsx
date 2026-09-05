@@ -425,7 +425,7 @@ export default function About() {
   className="img-main"
   src="/bg2.webp"
   srcSet="/bg2-960.webp 960w, /bg2-1440.webp 1440w, /bg2.webp 1920w"
-  sizes="(max-width: 768px) 100vw, 1115px"
+  sizes="(max-width: 768px) 100vw, 1115px" 
 />            </div>
             <div className="img-thumb-wrapper">
 <img

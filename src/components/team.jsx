@@ -279,7 +279,7 @@ function TeamCard({
     className="photo-img"
     width="720"
     height="1120"
-  />
+  /> 
             <span className="photo-tint" aria-hidden />
             <div className="overlay-gradient" />
             <span className="photo-sheen" aria-hidden />
@@ -332,7 +332,7 @@ function TeamCard({
         {/* ── BACK ── */}
         <div className="card-face back">
           <div className="back-photo-bg">
-            <img src={person.image} alt="" aria-hidden className="back-bg-img" />
+            <img src={person.image} alt={person.name} aria-hidden className="back-bg-img" />
             <div className="back-bg-mask" />
           </div>
 

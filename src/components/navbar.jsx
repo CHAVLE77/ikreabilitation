@@ -198,7 +198,7 @@ export default function Navbar() {
             <p className="nb-mobile-note">გამოცდილი სპეციალისტები · ინდივიდუალური მიდგომა</p>
           </div>
         </nav>
-      </div>
+      </div> 
 
       <style>{`
         :root {

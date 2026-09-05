@@ -305,7 +305,7 @@ export default function Contact() {
       setLoading(false);
       setFormData({ name: "", phone: "", specialist: "", service: "", message: "", eegDuration: "" });
 
-      setTimeout(() => {
+      setTimeout(() => { 
         setSent(false);
       }, 4000);
 

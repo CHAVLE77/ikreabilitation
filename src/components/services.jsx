@@ -248,7 +248,7 @@ function ServiceCard({
     sizes="(max-width: 768px) 100vw, 409px"
     alt={service.title}
     loading="lazy"
-    width="820"
+    width="820" 
     height="432"
   />
           <span className="card-overlay" />

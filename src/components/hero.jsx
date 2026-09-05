@@ -89,7 +89,7 @@ export default function Hero() {
       behavior: "smooth",
     });
   };
-
+ 
   // კომპონენტის თავში ან ცალკე utils ფაილში
 function getSlideSrcSet(src) {
   // "/bg2.webp" -> "bg2"
