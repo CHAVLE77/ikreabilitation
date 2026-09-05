@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import serv1 from "/serv1.jpg";
-import serv2 from "/serv2.jpg";
-import serv3 from "/serv3.jpg";
+import serv1 from "/serv1.webp";
+import serv2 from "/serv2.webp";
+import serv3 from "/serv3.webp";
 
 const servicesData = [
   {

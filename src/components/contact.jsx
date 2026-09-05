@@ -14,8 +14,35 @@ const HOURS = [
   { day: "კვირა",                time: "დახურულია",      open: false },
 ];
 
-const CONTACT_ITEMS = [
+/* ფილიალები — თითოეულს დაუმატე შენი რეალური სახელი, მისამართი, ტელეფონი, ფოტო და რუკის ლინკი */
+const BRANCHES = [
   {
+    id: "batumi-main",
+    city: "ბათუმი",
+    name: "მთავარი ფილიალი",
+    address: "ექვთიმე თაყაიშვილის 58",
+    phone: "+995 32 2 423 864",
+    hours: "09:00 – 19:00",
+    isOpen: true,
+    image: "/branch-batumi.webp",
+    mapLink:
+      "https://www.google.com/maps/place/%E1%83%98%E1%83%A0%E1%83%9B%E1%83%90+%E1%83%AE%E1%83%95%E1%83%98%E1%83%A9%E1%83%98%E1%83%90%E1%83%A1+%E1%83%A0%E1%83%94%E1%83%90%E1%83%91%E1%83%98%E1%83%9A%E1%83%98%E1%83%A2%E1%83%90%E1%83%AA%E1%83%98%E1%83%98%E1%83%A1+%E1%83%AA%E1%83%94%E1%83%9C%E1%83%A2%E1%83%A0%E1%83%98",
+  },
+  {
+    id: "batumi-second",
+    city: "ბათუმი",
+    name: "ფილიალი #2",
+    address: "შეავსე მისამართი",
+    phone: "შეავსე ნომერი",
+    hours: "შეავსე საათები",
+    isOpen: true,
+    image: "/branch-2.webp",
+    mapLink: "https://www.google.com/maps",
+  },
+];
+
+const CONTACT_ITEMS = [
+  { 
     id: "address",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -83,6 +110,93 @@ function ContactItem({ item, visible, delay }) {
         <span className="ct-info-sub">{item.sub}</span>
       </div>
     </a>
+  );
+}
+
+/* ─────────────── BRANCH EXPLORER ───────────────
+   ფილიალების ინტერაქტიული სია: მარცხნივ ირჩევ ფილიალს,
+   მარჯვნივ ჩნდება მისი დეტალები და ფოტო/რუკის ბმული. */
+function BranchExplorer({ branches, visible }) {
+  const [selected, setSelected] = useState(branches[0]);
+
+  return (
+    <div className={`bx-root ${visible ? "bx-root--in" : ""}`}>
+      <div className="bx-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M14 9h1M14 13h1"/>
+        </svg>
+        ჩვენი ფილიალები
+      </div>
+
+      <div className="bx-grid">
+        <div className="bx-list">
+          {branches.map((b) => {
+            const isActive = selected.id === b.id;
+            return (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => setSelected(b)}
+                className={`bx-card ${isActive ? "bx-card--active" : ""}`}
+              >
+                <div className="bx-card-top">
+                  <div>
+                    <span className="bx-card-city">{b.city}</span>
+                    <h4 className="bx-card-name">{b.name}</h4>
+                  </div>
+                  <span className={`bx-badge ${b.isOpen ? "bx-badge--open" : "bx-badge--closed"}`}>
+                    {b.isOpen ? "ღიაა" : "დაკეტილია"}
+                  </span>
+                </div>
+                <div className="bx-card-rows">
+                  <div className="bx-card-row">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <span>{b.address}</span>
+                  </div>
+                  <div className="bx-card-row">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span>{b.hours}</span>
+                  </div>
+                  <div className="bx-card-row">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                    </svg>
+                    <span>{b.phone}</span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="bx-detail">
+          <div className="bx-detail-eyebrow">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+            </svg>
+            არჩეული ლოკაცია
+          </div>
+          <h3 className="bx-detail-title">{selected.name} — {selected.city}</h3>
+          <p className="bx-detail-address">{selected.address}</p>
+
+          <div className="bx-detail-preview">
+            <img src={selected.image} alt={selected.name} loading="lazy" />
+            <div className="bx-detail-preview-overlay">
+              <a href={selected.mapLink} target="_blank" rel="noopener noreferrer" className="bx-detail-link">
+                Google Maps-ზე გახსნა
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -471,6 +585,204 @@ export default function Contact() {
         .ct-hours-badge--open { background: rgba(16,185,129,0.18); color: #6EE7B7; border: 1px solid rgba(16,185,129,0.35); }
         .ct-hours-badge--closed { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.08); }
 
+        /* ─── ფილიალების ინტერაქტიული სექცია ─── */
+        .bx-section {
+          margin-top: 44px;
+          opacity: 0;
+          transform: translateY(28px);
+          transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .bx-section--in { opacity: 1; transform: translateY(0); }
+
+        .bx-root {
+          background: var(--card);
+          border: 1px solid var(--card-border);
+          border-radius: 24px;
+          padding: 28px 26px;
+        }
+
+        .bx-head {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--gold);
+          margin-bottom: 22px;
+          padding-bottom: 16px;
+          border-bottom: 1px solid rgba(245,166,35,0.2);
+        }
+
+        .bx-grid {
+          display: grid;
+          grid-template-columns: 1fr 1.15fr;
+          gap: 22px;
+          align-items: stretch;
+        }
+
+        .bx-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .bx-card {
+          text-align: left;
+          cursor: pointer;
+          padding: 18px 20px;
+          border-radius: 16px;
+          border: 1px solid var(--card-border);
+          background: rgba(255,255,255,0.03);
+          font-family: 'Noto Sans Georgian', sans-serif;
+          color: inherit;
+          transition: background 0.22s ease, border-color 0.22s ease;
+        }
+        .bx-card:hover {
+          border-color: rgba(255,255,255,0.18);
+          background: rgba(255,255,255,0.05);
+        }
+        .bx-card--active {
+          background: rgba(245,166,35,0.08);
+          border-color: rgba(245,166,35,0.5);
+        }
+
+        .bx-card-top {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 10px;
+          margin-bottom: 12px;
+        }
+        .bx-card-city {
+          display: block;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--gold);
+          margin-bottom: 3px;
+        }
+        .bx-card-name {
+          margin: 0;
+          font-size: 16px;
+          font-weight: 800;
+          color: #fff;
+        }
+
+        .bx-badge {
+          font-size: 9px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          padding: 4px 10px;
+          border-radius: 40px;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+        .bx-badge--open { background: rgba(16,185,129,0.15); color: #6EE7B7; border: 1px solid rgba(16,185,129,0.3); }
+        .bx-badge--closed { background: rgba(239,68,68,0.12); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.28); }
+
+        .bx-card-rows {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .bx-card-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 12.5px;
+          color: var(--text-muted);
+        }
+        .bx-card-row svg { flex-shrink: 0; color: rgba(255,255,255,0.35); }
+
+        .bx-detail {
+          position: relative;
+          background: rgba(255,255,255,0.035);
+          border: 1px solid var(--card-border);
+          border-radius: 18px;
+          padding: 26px;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        .bx-detail-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          align-self: flex-start;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--gold);
+          background: var(--gold-dim);
+          border: 1px solid var(--gold-border);
+          padding: 5px 12px;
+          border-radius: 40px;
+          margin-bottom: 16px;
+        }
+
+        .bx-detail-title {
+          font-size: 20px;
+          font-weight: 900;
+          color: #fff;
+          margin: 0 0 8px;
+          letter-spacing: -0.02em;
+        }
+
+        .bx-detail-address {
+          font-size: 13px;
+          color: var(--text-muted);
+          margin: 0 0 18px;
+        }
+
+        .bx-detail-preview {
+          position: relative;
+          flex: 1;
+          min-height: 180px;
+          border-radius: 14px;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: var(--navy-2);
+        }
+        .bx-detail-preview img {
+          width: 100%;
+          height: 100%;
+          min-height: 180px;
+          object-fit: cover;
+          display: block;
+        }
+        .bx-detail-preview-overlay {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          padding: 16px;
+          background: linear-gradient(to top, rgba(11,22,40,0.9) 0%, transparent 100%);
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .bx-detail-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 9px 16px;
+          background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+          color: var(--navy);
+          border-radius: 40px;
+          font-size: 12px;
+          font-weight: 800;
+          text-decoration: none;
+          transition: transform 0.22s ease, filter 0.22s ease;
+        }
+        .bx-detail-link:hover {
+          transform: translateY(-2px);
+          filter: brightness(1.06);
+        }
+
         .ct-right {
           display: flex;
           flex-direction: column;
@@ -669,6 +981,7 @@ export default function Contact() {
         @media (max-width: 960px) {
           .ct-grid { grid-template-columns: 1fr; }
           .ct-wrap { padding: 72px 20px 64px; }
+          .bx-grid { grid-template-columns: 1fr; }
         }
 
         /* ─── CONTACT SECTION RESPONSIVE (565px-ზე ქვემოთ) ─── */
@@ -790,6 +1103,32 @@ export default function Contact() {
             font-size: 6.5px;
             padding: 2px 6px;
           }
+
+          /* ფილიალების სექცია — მობილურზე უფრო კომპაქტური */
+          .bx-section { margin-top: 24px; }
+          .bx-root {
+            padding: 16px 14px;
+            border-radius: 16px;
+          }
+          .bx-head {
+            font-size: 9px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+          }
+          .bx-head svg { width: 12px; height: 12px; }
+          .bx-grid { gap: 12px; }
+          .bx-card { padding: 13px 14px; border-radius: 12px; }
+          .bx-card-city { font-size: 8.5px; }
+          .bx-card-name { font-size: 13px; }
+          .bx-badge { font-size: 7.5px; padding: 3px 8px; }
+          .bx-card-row { font-size: 10.5px; gap: 6px; }
+          .bx-detail { padding: 16px; border-radius: 14px; }
+          .bx-detail-eyebrow { font-size: 8.5px; padding: 4px 10px; margin-bottom: 12px; }
+          .bx-detail-title { font-size: 15px; }
+          .bx-detail-address { font-size: 11px; margin-bottom: 12px; }
+          .bx-detail-preview { min-height: 130px; }
+          .bx-detail-preview img { min-height: 130px; }
+          .bx-detail-link { font-size: 10.5px; padding: 7px 12px; }
           
           .ct-right {
             gap: 14px;
@@ -997,6 +1336,22 @@ export default function Contact() {
             font-size: 5.5px;
             padding: 1px 5px;
           }
+
+          .bx-root { padding: 12px 10px; border-radius: 14px; }
+          .bx-head { font-size: 8px; margin-bottom: 10px; padding-bottom: 8px; }
+          .bx-head svg { width: 10px; height: 10px; }
+          .bx-card { padding: 10px 11px; border-radius: 10px; }
+          .bx-card-city { font-size: 7.5px; }
+          .bx-card-name { font-size: 11.5px; }
+          .bx-badge { font-size: 6.5px; padding: 2px 6px; }
+          .bx-card-row { font-size: 9px; gap: 5px; }
+          .bx-detail { padding: 12px; border-radius: 12px; }
+          .bx-detail-eyebrow { font-size: 7.5px; padding: 3px 8px; margin-bottom: 8px; }
+          .bx-detail-title { font-size: 13px; }
+          .bx-detail-address { font-size: 9.5px; margin-bottom: 8px; }
+          .bx-detail-preview { min-height: 100px; }
+          .bx-detail-preview img { min-height: 100px; }
+          .bx-detail-link { font-size: 9px; padding: 6px 10px; }
           
           .ct-right {
             gap: 10px;
@@ -1179,6 +1534,12 @@ export default function Contact() {
             font-size: 5px;
             padding: 1px 4px;
           }
+
+          .bx-root { padding: 8px 8px; }
+          .bx-card { padding: 8px 9px; }
+          .bx-detail { padding: 10px; }
+          .bx-detail-preview { min-height: 80px; }
+          .bx-detail-preview img { min-height: 80px; }
           
           .ct-form-card {
             padding: 10px 8px;
@@ -1291,6 +1652,7 @@ export default function Contact() {
           }
         }
       `}</style>
+      
 
       <section className="ct-root" id="contact" ref={rootRef}>
         <div className="ct-bg">
@@ -1364,7 +1726,7 @@ export default function Contact() {
               <div className="ct-form-card" ref={formRef}>
                 <div className="ct-form-head">
                   <h3 className="ct-form-title">დაჯავშნეთ ვიზიტი</h3>
-                  <p className="ct-form-sub">დაგვიკავშირდებით მოკლე ხანში</p>
+                  <p className="ct-form-sub">დაგიკავშირდებით მოკლე ხანში</p>
                 </div>
                 <form className="ct-form" onSubmit={handleSubmit}>
                   <div className="ct-field-row">
@@ -1530,6 +1892,10 @@ export default function Contact() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className={`bx-section ${visible ? "bx-section--in" : ""}`}>
+            <BranchExplorer branches={BRANCHES} visible={visible} />
           </div>
         </div>
 

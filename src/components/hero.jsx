@@ -90,6 +90,13 @@ export default function Hero() {
     });
   };
 
+  // კომპონენტის თავში ან ცალკე utils ფაილში
+function getSlideSrcSet(src) {
+  // "/bg2.webp" -> "bg2"
+  const base = src.replace(/\.webp$/, "").replace(/^\//, "");
+  return `/${base}-480.webp 480w, /${base}-960.webp 960w, ${src} 1920w`;
+}
+
   const renderTypedQuote = () => {
     let remaining = typedCount;
     return QUOTE_TOKENS.map((tok, idx) => {
@@ -112,26 +119,28 @@ export default function Hero() {
       {/* ─── SLIDESHOW ─── */}
       <div className="slides-bg">
         {SLIDES.map((s, i) => (
-          <div
-            key={s.src}
-            className={
-              "slide" +
-              (i === current ? " slide--active" : "") +
-              (i === prev ? " slide--prev" : "")
-            }
-            aria-hidden={i !== current}
-          >
-            <img
-              src={s.src}
-              alt=""
-              className="slide-img"
-              loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "auto"}
-              width={1920}
-              height={1280}
-            />
-          </div>
-        ))}
+  <div
+    key={s.src}
+    className={
+      "slide" +
+      (i === current ? " slide--active" : "") +
+      (i === prev ? " slide--prev" : "")
+    }
+    aria-hidden={i !== current}
+  >
+    <img
+      src={s.src}
+      alt="background images"
+      srcSet={getSlideSrcSet(s.src)}
+      sizes="100vw"
+      className="slide-img"
+      loading={i === 0 ? "eager" : "lazy"}
+      fetchPriority={i === 0 ? "high" : "auto"}
+      width={1920}
+      height={1280}
+    />
+  </div>
+))}
         <div className="slide-overlay" />
         <div className="slide-vignette" />
         <div className="slide-grain" />

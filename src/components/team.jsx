@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import team1 from "/team1.webp";
-import team2 from "/team2.jpg";
-import team3 from "/team3.jpg";
+import team2 from "/team2.webp";
+import team3 from "/team3.webp";
 
 /* ─────────────────────────── ICONS ─────────────────────────── */
 const ArrowRight = () => (
