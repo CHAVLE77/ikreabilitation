@@ -417,16 +417,26 @@ export default function About() {
           <div className="about-images">
             <div className="badge-experience">
               <span className="badge-num">15+</span>
-              <span className="badge-text">წლიანი გამოცდილება</span>
+              <span className="badge-text">წლიანი გამოცდილება</span> 
             </div>
             <div className="img-main-wrapper">
-              <img src="/bg2.webp" alt="თერაპევტი ბავშვთან" className="img-main" />
-            </div>
+<img
+  alt="თერაპევტი ბავშვთან"
+  className="img-main"
+  src="/bg2.webp"
+  srcSet="/bg2-960.webp 960w, /bg2-1440.webp 1440w, /bg2.webp 1920w"
+  sizes="(max-width: 768px) 100vw, 1115px"
+/>            </div>
             <div className="img-thumb-wrapper">
-              <img src="/bg3.webp" alt="სარეაბილიტაციო სავარჯიშო" className="img-thumb" />
-            </div>
+<img
+  alt="სარეაბილიტაციო სავარჯიშო"
+  className="img-thumb"
+  src="/bg3.webp"
+  srcSet="/bg3-480.webp 480w, /bg3-960.webp 960w, /bg3.webp 1920w"
+  sizes="(max-width: 768px) 50vw, 373px"
+/>            </div>
           </div>
-
+ 
           {/* RIGHT — content */}
           <div className="about-content">
             <span className="about-label">ჩვენს შესახებ</span>
