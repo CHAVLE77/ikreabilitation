@@ -69,7 +69,7 @@ export default function Hero() {
     return () => clearTimeout(startDelay);
   }, [mounted]);
 
-  useEffect(() => {
+  useEffect(() => { 
     timerRef.current = setInterval(() => {
       setCurrent((c) => {
         setPrev(c);
@@ -94,8 +94,9 @@ export default function Hero() {
 function getSlideSrcSet(src) {
   // "/bg2.webp" -> "bg2"
   const base = src.replace(/\.webp$/, "").replace(/^\//, "");
-  return `/${base}-480.webp 480w, /${base}-960.webp 960w, /${base}-1440.webp 1440w, ${src} 1920w`;
+  return `/${base}-480.webp 480w, /${base}-960.webp 960w, ${src} 1920w`;
 }
+
   const renderTypedQuote = () => {
     let remaining = typedCount;
     return QUOTE_TOKENS.map((tok, idx) => {
