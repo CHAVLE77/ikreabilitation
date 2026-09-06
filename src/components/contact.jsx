@@ -69,7 +69,7 @@ const CONTACT_ITEMS = [
     value: "+995 32 2 423 864",
     sub: "ორშ–პარ, 09:00–19:00",
     link: "tel:+995 32 2 423 864",
-    color: "#10B981",
+    color: "#10B981", 
     colorRgb: "16,185,129",
   },
   {
@@ -118,85 +118,85 @@ function ContactItem({ item, visible, delay }) {
 function BranchExplorer({ branches, visible }) {
   const [selected, setSelected] = useState(branches[0]);
 
-  return (
-    <div className={`bx-root ${visible ? "bx-root--in" : ""}`}>
-      <div className="bx-head">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M14 9h1M14 13h1"/>
-        </svg>
-        ჩვენი ფილიალები
-      </div>
+  // return (
+  //   <div className={`bx-root ${visible ? "bx-root--in" : ""}`}>
+  //     <div className="bx-head">
+  //       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  //         <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M14 9h1M14 13h1"/>
+  //       </svg>
+  //       ჩვენი ფილიალები
+  //     </div>
 
-      <div className="bx-grid">
-        <div className="bx-list">
-          {branches.map((b) => {
-            const isActive = selected.id === b.id;
-            return (
-              <button
-                key={b.id}
-                type="button"
-                onClick={() => setSelected(b)}
-                className={`bx-card ${isActive ? "bx-card--active" : ""}`}
-              >
-                <div className="bx-card-top">
-                  <div>
-                    <span className="bx-card-city">{b.city}</span>
-                    <h4 className="bx-card-name">{b.name}</h4>
-                  </div>
-                  <span className={`bx-badge ${b.isOpen ? "bx-badge--open" : "bx-badge--closed"}`}>
-                    {b.isOpen ? "ღიაა" : "დაკეტილია"}
-                  </span>
-                </div>
-                <div className="bx-card-rows">
-                  <div className="bx-card-row">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-                    </svg>
-                    <span>{b.address}</span>
-                  </div>
-                  <div className="bx-card-row">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                    <span>{b.hours}</span>
-                  </div>
-                  <div className="bx-card-row">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-                    </svg>
-                    <span>{b.phone}</span>
-                  </div>
-                </div>
-              </button>
-            );
-          })}
-        </div>
+  //     <div className="bx-grid">
+  //       <div className="bx-list">
+  //         {branches.map((b) => {
+  //           const isActive = selected.id === b.id;
+  //           return (
+  //             <button
+  //               key={b.id}
+  //               type="button"
+  //               onClick={() => setSelected(b)}
+  //               className={`bx-card ${isActive ? "bx-card--active" : ""}`}
+  //             >
+  //               <div className="bx-card-top">
+  //                 <div>
+  //                   <span className="bx-card-city">{b.city}</span>
+  //                   <h4 className="bx-card-name">{b.name}</h4>
+  //                 </div>
+  //                 <span className={`bx-badge ${b.isOpen ? "bx-badge--open" : "bx-badge--closed"}`}>
+  //                   {b.isOpen ? "ღიაა" : "დაკეტილია"}
+  //                 </span>
+  //               </div>
+  //               <div className="bx-card-rows">
+  //                 <div className="bx-card-row">
+  //                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  //                     <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+  //                   </svg>
+  //                   <span>{b.address}</span>
+  //                 </div>
+  //                 <div className="bx-card-row">
+  //                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  //                     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  //                   </svg>
+  //                   <span>{b.hours}</span>
+  //                 </div>
+  //                 <div className="bx-card-row">
+  //                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  //                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+  //                   </svg>
+  //                   <span>{b.phone}</span>
+  //                 </div>
+  //               </div>
+  //             </button>
+  //           );
+  //         })}
+  //       </div>
 
-        <div className="bx-detail">
-          <div className="bx-detail-eyebrow">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polygon points="3 11 22 2 13 21 11 13 3 11"/>
-            </svg>
-            არჩეული ლოკაცია
-          </div>
-          <h3 className="bx-detail-title">{selected.name} — {selected.city}</h3>
-          <p className="bx-detail-address">{selected.address}</p>
+  //       <div className="bx-detail">
+  //         <div className="bx-detail-eyebrow">
+  //           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  //             <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+  //           </svg>
+  //           არჩეული ლოკაცია
+  //         </div>
+  //         <h3 className="bx-detail-title">{selected.name} — {selected.city}</h3>
+  //         <p className="bx-detail-address">{selected.address}</p>
 
-          <div className="bx-detail-preview">
-            <img src={selected.image} alt={selected.name} loading="lazy" />
-            <div className="bx-detail-preview-overlay">
-              <a href={selected.mapLink} target="_blank" rel="noopener noreferrer" className="bx-detail-link">
-                Google Maps-ზე გახსნა
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  //         <div className="bx-detail-preview">
+  //           <img src={selected.image} alt={selected.name} loading="lazy" />
+  //           <div className="bx-detail-preview-overlay">
+  //             <a href={selected.mapLink} target="_blank" rel="noopener noreferrer" className="bx-detail-link">
+  //               Google Maps-ზე გახსნა
+  //               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+  //                 <path d="M5 12h14M12 5l7 7-7 7"/>
+  //               </svg>
+  //             </a>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 }
 
 /* ─────────────── MAIN COMPONENT ─────────────── */
@@ -207,7 +207,7 @@ export default function Contact() {
     phone: "",
     specialist: "",
     service: "",
-    message: "",
+    message: "", 
     eegDuration: "",
   });
   const [sent, setSent] = useState(false);
@@ -580,15 +580,44 @@ export default function Contact() {
                 </div>
               </div>
               <p style={{ fontSize:13, color:'rgba(255,255,255,0.45)', maxWidth:250, lineHeight:1.7, marginBottom:24 }}>ჩვენ ვქმნით სივრცეს, სადაც ყოველი ბავშვი პოულობს საკუთარ ბილიკს.</p>
-              <div style={{ display:'flex', gap:8 }}>
-                {[
-                  { href:"https://www.facebook.com/profile.php?id=100063818393741", label: "Facebook", icon: <svg>...</svg> },
-                  { href:"https://instagram.com", label: "Instagram", icon: <svg>...</svg> },].map((s, i) => (
-                  <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} style={{ width:36, height:36, borderRadius:9, background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.08)', display:'flex', alignItems:'center', justifyContent:'center', color:'rgba(255,255,255,0.5)', textDecoration:'none' }}>
-                    {s.icon}
-                    </a>
-                  ))}
-              </div>
+             <div style={{ display:'flex', gap:8 }}>
+  {[
+    { 
+      href:"https://www.facebook.com/profile.php?id=100063818393741", 
+      label: "Facebook", 
+      variant: "fb",
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      )
+    },
+    { 
+      href:"https://instagram.com", 
+      label: "Instagram", 
+      variant: "ig",
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      )
+    },
+  ].map((s, i) => (
+    <a
+      key={i}
+      href={s.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={s.label}
+      className={`ft-social-hover ft-social-hover--${s.variant}`}
+      style={{ width:36, height:36, borderRadius:9, background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.08)', display:'flex', alignItems:'center', justifyContent:'center', color:'rgba(255,255,255,0.5)', textDecoration:'none' }}
+    >
+      {s.icon}
+    </a>
+  ))}
+</div>
             </div>
 
             <div>
