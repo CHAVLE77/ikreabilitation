@@ -332,8 +332,16 @@ function TeamCard({
         {/* ── BACK ── */}
         <div className="card-face back">
           <div className="back-photo-bg">
-            <img src={person.image} alt={person.name} aria-hidden className="back-bg-img" />
-            <div className="back-bg-mask" />
+{/* back-photo-bg */}
+<img
+  src={person.image}
+  srcSet={`${person.image.replace('.webp', '')}-470.webp 470w, ${person.image} 720w`}
+  sizes="(max-width: 640px) 100vw, 470px"
+  alt={person.name}
+  aria-hidden
+  className="back-bg-img"
+  loading="lazy"
+/>            <div className="back-bg-mask" />
           </div>
 
           {/* ყოველთვის ხელმისაწვდომი "უკან" ღილაკი */}
@@ -350,8 +358,15 @@ function TeamCard({
 
           <div className="back-body">
             <div className="back-ring">
-              <img src={person.image} alt={person.name} className="back-avatar-img" />
-              <span className="ring-border" />
+{/* back-ring avatar */}
+<img
+  src={person.image}
+  srcSet={`${person.image.replace('.webp', '')}-470.webp 470w, ${person.image} 720w`}
+  sizes="120px"
+  alt={person.name}
+  className="back-avatar-img"
+  loading="lazy"
+/>              <span className="ring-border" />
             </div>
             <h3 className="back-name">{person.name}</h3>
             <span className="back-role-tag">{person.role}</span>

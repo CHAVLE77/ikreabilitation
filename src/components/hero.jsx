@@ -77,7 +77,7 @@ export default function Hero() {
       });
     }, INTERVAL);
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) clearInterval(timerRef.current); 
     };
   }, []);
 
@@ -92,9 +92,8 @@ export default function Hero() {
  
   // კომპონენტის თავში ან ცალკე utils ფაილში
 function getSlideSrcSet(src) {
-  // "/bg2.webp" -> "bg2"
   const base = src.replace(/\.webp$/, "").replace(/^\//, "");
-  return `/${base}-480.webp 480w, /${base}-960.webp 960w, ${src} 1920w`;
+  return `/${base}-480.webp 480w, /${base}-960.webp 960w, /${base}-1440.webp 1440w, ${src} 1920w`;
 }
 
   const renderTypedQuote = () => {
@@ -132,8 +131,7 @@ function getSlideSrcSet(src) {
       src={s.src}
       alt="background images"
       srcSet={getSlideSrcSet(s.src)}
-      sizes="100vw"
-      className="slide-img"
+      sizes="(max-width: 1410px) 100vw, 1410px"      className="slide-img"
       loading={i === 0 ? "eager" : "lazy"}
       fetchPriority={i === 0 ? "high" : "auto"}
       width={1920}
