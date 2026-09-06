@@ -8,13 +8,16 @@ import '../team.css'
    person.image არის სტრიქონი მაგ. "/team2.webp" (Vite public dir import).
    ვიღებთ საბაზისო სახელს ("team2") და ვაწყობთ სწორ srcSet-ს
    იმ ზომებით, რაც resize-images.js სკრიპტმა უნდა დააგენერიროს
-   (team1-468.webp, team1-936.webp, team2-468.webp, ... და ა.შ.)
+   (team1-468.webp, team1-720.webp, team2-468.webp, ... და ა.შ.)
+   შენიშვნა: 936w აღარ გამოიყენება — ორიგინალი წყარო სურათები
+   მხოლოდ ~717-720px განიერია, ამიტომ 936w-ის გენერირება მხოლოდ
+   ხელოვნურ upscale-ს ან ორიგინალის ულუფა ასლს იძლეოდა.
 */
 function getResponsiveImage(imagePath) {
   const base = imagePath.replace(/^\//, "").replace(/\.webp$/, "");
   return {
     src: `/${base}-468.webp`,
-    srcSet: `/${base}-468.webp 468w, /${base}-936.webp 936w`,
+    srcSet: `/${base}-468.webp 468w, /${base}-720.webp 720w`,
   };
 }
 
