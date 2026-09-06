@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { supabase } from "../../lib/supabase";
 import { SERVICES } from "../pages/servicesPage";
 
 const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
@@ -17,7 +16,7 @@ const HOURS = [
 /* ფილიალები — თითოეულს დაუმატე შენი რეალური სახელი, მისამართი, ტელეფონი, ფოტო და რუკის ლინკი */
 const BRANCHES = [
   {
-    id: "batumi-main",
+    id: "batumi-main", 
     city: "ბათუმი",
     name: "მთავარი ფილიალი",
     address: "ექვთიმე თაყაიშვილის 58",
@@ -246,75 +245,73 @@ export default function Contact() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    // Validate required fields
-    if (!formData.name.trim()) {
-      setError("გთხოვთ შეიყვანოთ სახელი");
+  // Validate required fields
+  if (!formData.name.trim()) {
+    setError("გთხოვთ შეიყვანოთ სახელი");
+    setLoading(false);
+    return;
+  }
+  if (!formData.phone.trim()) {
+    setError("გთხოვთ შეიყვანოთ ტელეფონის ნომერი");
+    setLoading(false);
+    return;
+  }
+  if (isEEG && !formData.eegDuration) {
+    setError("გთხოვთ აირჩიოთ ეეგ-ის ხანგრძლივობა");
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const serviceValue = formData.service?.trim()
+      ? isEEG && formData.eegDuration
+        ? `${formData.service.trim()} (${formData.eegDuration})`
+        : formData.service.trim()
+      : null;
+
+    const submissionData = {
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+      specialist: formData.specialist?.trim() || null,
+      service: serviceValue,
+      message: formData.message?.trim() || null,
+      status: "pending",
+    };
+
+    // Supabase-ს mარტო აქ ვტვირთავთ, submit-ის დროს
+    const { getSupabase } = await import( "../../lib/supabase");
+    const supabase = await getSupabase();
+
+    const { data, error } = await supabase
+      .from("submissions")
+      .insert([submissionData])
+      .select();
+
+    if (error) {
+      console.error("Supabase error:", error);
+      setError(`მონაცემების გაგზავნა ვერ მოხერხდა: ${error.message}`);
       setLoading(false);
       return;
     }
-    if (!formData.phone.trim()) {
-      setError("გთხოვთ შეიყვანოთ ტელეფონის ნომერი");
-      setLoading(false);
-      return;
-    }
-    if (isEEG && !formData.eegDuration) {
-      setError("გთხოვთ აირჩიოთ ეეგ-ის ხანგრძლივობა");
-      setLoading(false);
-      return;
-    }
 
-    try {
-      // თუ ეეგ-ია და ხანგრძლივობა არჩეულია, დავურთოთ service ველს
-      // (ცალკე სვეტის დამატება Supabase-ში არ სჭირდება)
-      const serviceValue = formData.service?.trim()
-        ? isEEG && formData.eegDuration
-          ? `${formData.service.trim()} (${formData.eegDuration})`
-          : formData.service.trim()
-        : null;
+    setSent(true);
+    setLoading(false);
+    setFormData({ name: "", phone: "", specialist: "", service: "", message: "", eegDuration: "" });
 
-      const submissionData = {
-        name: formData.name.trim(),
-        phone: formData.phone.trim(),
-        specialist: formData.specialist?.trim() || null,
-        service: serviceValue,
-        message: formData.message?.trim() || null,
-        status: "pending",
-      };
+    setTimeout(() => {
+      setSent(false);
+    }, 4000);
 
-      console.log("Submitting data:", submissionData);
-
-      const { data, error } = await supabase
-        .from("submissions")
-        .insert([submissionData])
-        .select();
-
-      if (error) {
-        console.error("Supabase error:", error);
-        console.error("Error details:", error.message, error.details, error.hint);
-        setError(`მონაცემების გაგზავნა ვერ მოხერხდა: ${error.message}`);
-        setLoading(false);
-        return;
-      }
-
-      console.log("Successfully submitted:", data);
-      setSent(true);
-      setLoading(false);
-      setFormData({ name: "", phone: "", specialist: "", service: "", message: "", eegDuration: "" });
-
-      setTimeout(() => { 
-        setSent(false);
-      }, 4000);
-
-    } catch (err) {
-      console.error("Error:", err);
-      setError("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    console.error("Error:", err);
+    setError("დაფიქსირდა შეცდომა. გთხოვთ სცადოთ თავიდან.");
+    setLoading(false);
+  }
+};
 
   return (
     <>
