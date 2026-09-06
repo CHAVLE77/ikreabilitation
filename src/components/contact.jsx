@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { SERVICES } from "../pages/servicesPage";
+import { SERVICES } from "../../data/services";
 
 const SERVICE_OPTIONS = SERVICES.map((s) => s.title);
 
@@ -15,7 +15,7 @@ const HOURS = [
 
 /* ფილიალები — თითოეულს დაუმატე შენი რეალური სახელი, მისამართი, ტელეფონი, ფოტო და რუკის ლინკი */
 const BRANCHES = [
-  {
+  { 
     id: "batumi-main", 
     city: "ბათუმი",
     name: "მთავარი ფილიალი",
