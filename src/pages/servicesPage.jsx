@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SERVICES } from "../../data/services";
+import { STATS } from "../../data/services";
+import { FUNDING_PROGRAMS } from "../../data/services";
+import { INDIVIDUAL_PROGRAM } from "../../data/services";
 // ── Data ────────────────────────────────────────────────────────────────────
 // NOTE: exported so other pages (e.g. Contact.jsx) can reuse the exact same
 // list of services for the booking dropdown, instead of duplicating it.
