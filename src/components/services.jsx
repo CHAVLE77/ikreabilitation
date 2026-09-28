@@ -244,7 +244,6 @@ function ServiceCard({
   <img
     className="card-img"
     src={service.image}
-    srcSet={`${service.image.replace('.webp', '')}-410.webp 410w, ${service.image} 820w`}
     sizes="(max-width: 768px) 100vw, 409px"
     alt={service.title}
     loading="lazy"
