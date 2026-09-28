@@ -9,8 +9,7 @@ const EEG_DURATIONS = ["1 საათიანი", "1-3 საათიან�
 /* ─────────────── DATA ─────────────── */
 const HOURS = [
   { day: "ორშაბათი – პარასკევი", time: "09:00 – 19:00", open: true },
-  { day: "შაბათი",               time: "დახურულია",      open: false },
-  { day: "კვირა",                time: "დახურულია",      open: false },
+  { day: "შაბათი - კვირა",               time: "დახურულია",      open: false },
 ];
 
 /* ფილიალები — თითოეულს დაუმატე შენი რეალური სახელი, მისამართი, ტელეფონი, ფოტო და რუკის ლინკი */
@@ -23,21 +22,36 @@ const BRANCHES = [
     phone: "+995 32 2 423 864",
     hours: "09:00 – 19:00",
     isOpen: true,
-    image: "/branch-batumi.webp",
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000.0!2d41.6282323!3d41.6410399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406787123775ff67%3A0x87dba33f22dd4919!2sIrma%20Khvichia%20Rehabilitation%20Center!5e0!3m2!1sen!2sge!4v1740000000000",
     mapLink: 
       "https://www.google.com/maps/place/%E1%83%98%E1%83%A0%E1%83%9B%E1%83%90+%E1%83%AE%E1%83%95%E1%83%98%E1%83%A9%E1%83%98%E1%83%90%E1%83%A1+%E1%83%A0%E1%83%94%E1%83%90%E1%83%91%E1%83%98%E1%83%9A%E1%83%98%E1%83%A2%E1%83%90%E1%83%AA%E1%83%98%E1%83%98%E1%83%A1+%E1%83%AA%E1%83%94%E1%83%9C%E1%83%A2%E1%83%A0%E1%83%98",
   },
   {
-    id: "batumi-second",
-    city: "ბათუმი",
-    name: "ფილიალი #2",
-    address: "შეავსე მისამართი",
-    phone: "შეავსე ნომერი",
-    hours: "შეავსე საათები",
-    isOpen: true,
-    image: "/branch-2.webp",
-    mapLink: "https://www.google.com/maps",
-  },
+  id: "qeda",
+  city: "ქედა",
+  name: "ფილიალი #2",
+  address: "შოთა რუსთაველის 7",
+  phone: "+995 32 2 555 321",
+  hours: "09:00 – 18:00",
+  isOpen: true,
+
+  mapEmbed: "https://www.google.com/maps?q=41.596931,41.937229&output=embed",
+
+ mapLink: "https://www.google.com/maps?q=41.596931,41.937229"
+},
+{
+  id: "xulo",
+  city: "ხულო",
+  name: "ფილიალი #2",
+  address: "მ. აბაშიძის პირველი შესახვევი 3",
+  phone: "+995 32 2 555 321",
+  hours: "09:00 – 18:00",
+  isOpen: true,
+
+mapEmbed: "https://www.google.com/maps?q=41.643280,42.312358&output=embed",
+mapLink: "https://www.google.com/maps?q=41.643280,42.312358",
+},
+  
 ];
 
 const CONTACT_ITEMS = [
@@ -94,7 +108,7 @@ const CONTACT_ITEMS = [
 function ContactItem({ item, visible, delay }) {
   return (
     <a
-      href={item.link}
+      href={item.link} 
       target={item.id === "address" ? "_blank" : undefined}
       rel="noopener noreferrer"
       className={`ct-info-item ${visible ? "ct-info-item--in" : ""}`}
@@ -118,86 +132,91 @@ function ContactItem({ item, visible, delay }) {
 function BranchExplorer({ branches, visible }) {
   const [selected, setSelected] = useState(branches[0]);
 
-  // return (
-  //   <div className={`bx-root ${visible ? "bx-root--in" : ""}`}>
-  //     <div className="bx-head">
-  //       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-  //         <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M14 9h1M14 13h1"/>
-  //       </svg>
-  //       ჩვენი ფილიალები
-  //     </div>
+  return (
+    <div className={`bx-root ${visible ? "bx-root--in" : ""}`}>
+      <div className="bx-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M14 9h1M14 13h1"/>
+        </svg>
+        ჩვენი ფილიალები
+      </div>
 
-  //     <div className="bx-grid">
-  //       <div className="bx-list">
-  //         {branches.map((b) => {
-  //           const isActive = selected.id === b.id;
-  //           return (
-  //             <button
-  //               key={b.id}
-  //               type="button"
-  //               onClick={() => setSelected(b)}
-  //               className={`bx-card ${isActive ? "bx-card--active" : ""}`}
-  //             >
-  //               <div className="bx-card-top">
-  //                 <div>
-  //                   <span className="bx-card-city">{b.city}</span>
-  //                   <h4 className="bx-card-name">{b.name}</h4>
-  //                 </div>
-  //                 <span className={`bx-badge ${b.isOpen ? "bx-badge--open" : "bx-badge--closed"}`}>
-  //                   {b.isOpen ? "ღიაა" : "დაკეტილია"}
-  //                 </span>
-  //               </div>
-  //               <div className="bx-card-rows">
-  //                 <div className="bx-card-row">
-  //                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-  //                     <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-  //                   </svg>
-  //                   <span>{b.address}</span>
-  //                 </div>
-  //                 <div className="bx-card-row">
-  //                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-  //                     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-  //                   </svg>
-  //                   <span>{b.hours}</span>
-  //                 </div>
-  //                 <div className="bx-card-row">
-  //                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-  //                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-  //                   </svg>
-  //                   <span>{b.phone}</span>
-  //                 </div>
-  //               </div>
-  //             </button>
-  //           );
-  //         })}
-  //       </div>
+      <div className="bx-grid">
+        <div className="bx-list">
+          {branches.map((b) => {
+            const isActive = selected.id === b.id;
+            return (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => setSelected(b)}
+                className={`bx-card ${isActive ? "bx-card--active" : ""}`}
+              >
+                <div className="bx-card-top">
+                  <div>
+                    <span className="bx-card-city">{b.city}</span>
+                    <h4 className="bx-card-name">{b.name}</h4>
+                  </div>
+                  <span className={`bx-badge ${b.isOpen ? "bx-badge--open" : "bx-badge--closed"}`}>
+                    {b.isOpen ? "ღიაა" : "დაკეტილია"}
+                  </span>
+                </div>
+                <div className="bx-card-rows">
+                  <div className="bx-card-row">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <span>{b.address}</span>
+                  </div>
+                  <div className="bx-card-row">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span>{b.hours}</span>
+                  </div>
+                  <div className="bx-card-row">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.12 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                    </svg>
+                    <span>{b.phone}</span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
 
-  //       <div className="bx-detail">
-  //         <div className="bx-detail-eyebrow">
-  //           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-  //             <polygon points="3 11 22 2 13 21 11 13 3 11"/>
-  //           </svg>
-  //           არჩეული ლოკაცია
-  //         </div>
-  //         <h3 className="bx-detail-title">{selected.name} — {selected.city}</h3>
-  //         <p className="bx-detail-address">{selected.address}</p>
-
-  //         <div className="bx-detail-preview">
-  //           <img src={selected.image} alt={selected.name} loading="lazy" />
-  //           <div className="bx-detail-preview-overlay">
-  //             <a href={selected.mapLink} target="_blank" rel="noopener noreferrer" className="bx-detail-link">
-  //               Google Maps-ზე გახსნა
-  //               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-  //                 <path d="M5 12h14M12 5l7 7-7 7"/>
-  //               </svg>
-  //             </a>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-}
+        <div className="bx-detail">
+          <div className="bx-detail-eyebrow">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+            </svg>
+            არჩეული ლოკაცია
+          </div>
+          <h3 className="bx-detail-title">{selected.name} — {selected.city}</h3>
+          <p className="bx-detail-address">{selected.address}</p>
+ 
+          <div className="bx-detail-preview"> 
+  <iframe
+    src={selected.mapEmbed}
+    loading="lazy"
+    title={`${selected.name} — რუკა`}
+    style={{ width: "100%", height: "100%", border: 0 }}
+  />
+  <div className="bx-detail-preview-overlay">
+    <a href={selected.mapLink} target="_blank" rel="noopener noreferrer" className="bx-detail-link">
+      Google Maps-ზე გახსნა
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  );
+} 
 
 /* ─────────────── MAIN COMPONENT ─────────────── */
 export default function Contact() {
@@ -532,32 +551,6 @@ export default function Contact() {
                   </button> 
                 </form>
               </div>
-
-              <div className="ct-map-card">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000.0!2d41.6282323!3d41.6410399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406787123775ff67%3A0x87dba33f22dd4919!2sIrma%20Khvichia%20Rehabilitation%20Center!5e0!3m2!1sen!2sge!4v1740000000000"
-                  allowFullScreen=""
-                  loading="lazy"
-                  title="ირმა ხვიჩიას რეაბილიტაციის ცენტრი"
-                />
-                <div className="ct-map-overlay">
-                  <div className="ct-map-loc">
-                    <div className="ct-map-loc-dot" />
-                    <span className="ct-map-loc-text">ექვთიმე თაყაიშვილის 58, ბათუმი</span>
-                  </div>
-                  <a
-                    href="https://www.google.com/maps/place/Irma+Khvichia+Rehabilitation+Center"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ct-map-link"
-                  >
-                    გზამკვლევი
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -579,7 +572,7 @@ export default function Contact() {
                   <div style={{ fontSize:10, color:'rgba(255,255,255,0.35)', marginTop:2 }}>განვითარება · მხარდაჭერა</div>
                 </div>
               </div>
-              <p style={{ fontSize:13, color:'rgba(255,255,255,0.45)', maxWidth:250, lineHeight:1.7, marginBottom:24 }}>ჩვენ ვქმნით სივრცეს, სადაც ყოველი ბავშვი პოულობს საკუთარ ბილიკს.</p>
+              <p style={{ fontSize:13, color:'rgba(255,255,255,0.45)', maxWidth:250, lineHeight:1.7, marginBottom:24 }}>ჩვენ ვქმნით სივრცეს, სადაც ყოველი მომხმარებელი კმაყოფილი რჩება.</p>
              <div style={{ display:'flex', gap:8 }}>
   {[
     { 

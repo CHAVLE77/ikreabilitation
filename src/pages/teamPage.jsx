@@ -276,7 +276,7 @@ const teamData = [
     accentRgb: "26,95,168",
     rating: 5.0,
     specialty: "ლოგოპედი",
-    category: "ლოგოპედია",
+    category: "მეტყველება",
   },
   {
     id: 15,
@@ -291,7 +291,7 @@ const teamData = [
     accentRgb: "26,95,168",
     rating: 5.0,
     specialty: "ლოგოპედი",
-    category: "ლოგოპედია",
+    category: "მეტყველება",
   },
   {
     id: 16,
@@ -306,7 +306,7 @@ const teamData = [
     accentRgb: "26,95,168",
     rating: 5.0,
     specialty: "ლოგოპედი",
-    category: "ლოგოპედია",
+    category: "მეტყველება",
   },
   {
     id: 17,
@@ -321,7 +321,7 @@ const teamData = [
     accentRgb: "26,95,168",
     rating: 5.0,
     specialty: "ლოგოპედი",
-    category: "ლოგოპედია",
+    category: "მეტყველება",
   },
   {
     id: 18,
@@ -336,7 +336,7 @@ const teamData = [
     accentRgb: "26,95,168",
     rating: 5.0,
     specialty: "ლოგოპედი",
-    category: "ლოგოპედია",
+    category: "მეტყველება",
   },
   {
     id: 19,
@@ -351,7 +351,7 @@ const teamData = [
     accentRgb: "26,95,168",
     rating: 5.0,
     specialty: "ლოგოპედი",
-    category: "ლოგოპედია",
+    category: "მეტყველება",
   },
   {
     id: 20,
@@ -366,22 +366,7 @@ const teamData = [
     accentRgb: "26,95,168",
     rating: 5.0,
     specialty: "მეტყველების თერაპევტი",
-    category: "ლოგოპედია",
-  },
-  {
-    id: 21,
-    name: "აკაკი გოგელია",
-    role: "ფიზიკური თერაპევტი",
-    experience: "8 წელი",
-    certs: ["ESDM სერტიფიკატი", "DIR/Floortime", "0-3 სპეციალიზაცია"],
-    bio: "მუშაობს მოძრაობითი ფუნქციების გაუმჯობესებაზე.",
-    fullBio: "აკაკი გოგელია არის ფიზიკური თერაპევტი, რომელიც მუშაობს მოძრაობითი ფუნქციების გაუმჯობესებაზე. იგი სპეციალიზირებულია ბავშვთა რეაბილიტაციის მიმართულებით.",
-    image: "https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&h=700&fit=crop&crop=faces&auto=format",
-    accent: "#1A5FA8",
-    accentRgb: "26,95,168",
-    rating: 5.0,
-    specialty: "ფიზიკური თერაპევტი",
-    category: "ფიზიკური თერაპია",
+    category: "მეტყველება",
   },
   {
     id: 22,
@@ -859,8 +844,9 @@ function ProfileModal({ person, onClose  }) {
 }
 
 // ── Team Card ─────────────────────────────────────────────────────────────────
+// NOTE: scroll-in entrance animation removed — cards render immediately in
+// their final position (no IntersectionObserver / opacity-transform delay).
 function TeamCard({ person, idx, onOpenModal  }) {
-  const [ref, inView] = useInView(0.06);
   const isMobile = useIsMobile(1024);
   const [hoveredState, setHoveredState] = useState(false);
   const hovered = isMobile || hoveredState;
@@ -874,14 +860,7 @@ function TeamCard({ person, idx, onOpenModal  }) {
   }, []);
 
   return (
-    <div
-      ref={ref}
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0) scale(1)" : "translateY(40px) scale(0.95)",
-        transition: `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${idx * 0.07}s, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${idx * 0.07}s`,
-      }}
-    >
+    <div>
       <div
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setHoveredState(true)}
@@ -1033,20 +1012,14 @@ function TeamCard({ person, idx, onOpenModal  }) {
 }
 
 // ── Visiting Specialist Card ──────────────────────────────────────────────
+// NOTE: scroll-in entrance animation removed — cards render immediately in
+// their final position (no IntersectionObserver / opacity-transform delay).
 function VisitingSpecialistCard({ person, idx, onOpenModal }) {
-  const [ref, inView] = useInView(0.06);
   const isMobile = useIsMobile(1024);
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
-      ref={ref}
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0) scale(1)" : "translateY(40px) scale(0.95)",
-        transition: `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${idx * 0.07 + 0.3}s, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${idx * 0.07 + 0.3}s`,
-      }}
-    >
+    <div>
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -1168,7 +1141,7 @@ export default function App() {
   const [filter, setFilter] = useState("ყველა");
   const [mounted, setMounted] = useState(false);
 
-  const filters = ["ყველა", "ნევროლოგია", "ABA", "ფიზიოთერაპია", "მეტყველება", "ფსიქოლოგია", "პედაგოგიკა", "ოკუპაც."];
+  const filters = ["ყველა", "ნევროლოგია", "ფიზიკური თერაპია", "მეტყველება", "ფსიქოლოგია"];
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);

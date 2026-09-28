@@ -20,20 +20,40 @@ function deferCss() {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), deferCss()],
+
+  server: {
+    allowedHosts: [
+      'locks-back-symantec-advocate.trycloudflare.com'
+    ]
+  },
+
+ preview: {
+  allowedHosts: ['.trycloudflare.com']
+},
+
+server: {
+  allowedHosts: ['.trycloudflare.com']
+},
+
   resolve: {
     alias: {
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
     }
   },
+
   build: {
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+          if (
+            id.includes('node_modules/react') ||
+            id.includes('node_modules/react-dom')
+          ) {
             return 'vendor'
           }
+
           if (id.includes('@supabase')) {
             return 'supabase'
           }

@@ -10,7 +10,7 @@ html, body, #root { width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
   --gold:  #F7B731;
   --gold2: #F5961A;
   --cream: #F4EFE6;
-  --cream2:#EDE8DF;
+  --cream2:#EDE8DF; 
   --ink:   #111827;
   --ink2:  #1f2a3c;
   --muted: #556070;

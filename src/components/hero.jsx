@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Heart, Award, ArrowRight, ChevronDown, Sparkles, Quote } from "lucide-react";
 const SLIDES = [
-  { src: "/bg1.webp", alt: "ბავშვი თერაპიის დროს" },
-  { src: "/bg2.webp", alt: "თერაპევტი ბავშვთან" },
-  { src: "/bg3.webp", alt: "სარეაბილიტაციო სავარჯიშო" },
-  { src: "/bg4.webp", alt: "ბავშვი და სპეციალისტი" },
+  { src: "/bg1.webp", alt: "კლინიკის გუნდი" },
+  { src: "/bg2.webp", alt: "კლინიკის გუნდი" },
+  { src: "/bg3.webp", alt: "კლინიკის გუნდი" },
 ];
 
 const INTERVAL = 6000;
@@ -93,7 +92,7 @@ export default function Hero() {
   // კომპონენტის თავში ან ცალკე utils ფაილში
 function getSlideSrcSet(src) {
   const base = src.replace(/\.webp$/, "").replace(/^\//, "");
-  return `/${base}-480.webp 480w, /${base}-960.webp 960w, /${base}-1440.webp 1440w, ${src} 1920w`;
+  return `/${base}-960.webp 480w, /${base}-960.webp 960w, /${base}-1440.webp 1440w, ${src} 1920w`;
 }
 
   const renderTypedQuote = () => {
@@ -194,13 +193,6 @@ function getSlideSrcSet(src) {
               onClick={() => smoothScroll("#services")}
             >
               ჩვენი სერვისები
-            </button>
-            <button
-              type="button"
-              className="btn btn-glass"
-              onClick={() => smoothScroll("#contact")}
-            >
-              დაგვიკავშირდით
             </button>
           </div>
 

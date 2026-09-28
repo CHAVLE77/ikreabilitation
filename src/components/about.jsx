@@ -31,7 +31,7 @@ export default function About() {
       <section
         ref={sectionRef}
         className={`about-section ${inView ? "in-view" : ""}`}
-        id="about"
+        id="about" 
       >
         <div className="about-container">
           {/* LEFT — images */}
@@ -55,8 +55,8 @@ export default function About() {
 <img
   alt="რეაბილიტაციათა გუნდი"
   className="img-thumb"
-  src="/bg3.webp"
-  srcSet="/bg3-480.webp 480w, /bg3-960.webp 960w, /bg3.webp 1920w"
+  src="/bg4.webp"
+  srcSet="/bg4-480.webp 480w, /bg4-960.webp 960w, /bg4.webp 1920w"
   sizes="(max-width: 768px) 50vw, 373px"
   width="373"
   height="249"

@@ -211,7 +211,7 @@ export default function App() {
 
   const stats = [
     { num: "12+", label: "წლიანი გამოცდილება" },
-    { num: "5000+", label: "გამოჯანმრთელებული პაციენტი" },
+    { num: "5000+", label: "გამოჯანმრთელებული პაციენტი" }, 
     { num: "25+", label: "ექსპერტი სპეციალისტი" },
     { num: "98%", label: "კმაყოფილების მაჩვენებელი" }
   ]
@@ -250,10 +250,10 @@ export default function App() {
           <div className="hero-grid" aria-hidden />
           <div className="hero-inner">
             <div className="hero-badge">
-              <span className="hero-badge-dot" />
+              <span className="hero-badge-dot" /> 
               ჩვენს შესახებ
               <span className="hero-badge-sep" />
-              2013 — დღემდე
+              2021 — დღემდე
             </div>
             <h1 className="hero-h1">
               <span className="hero-line hero-line-1">ვართ <em className="gold">ერთგული</em></span>
@@ -281,14 +281,6 @@ export default function App() {
             </div>
           </div>
           <a href="#story" className="scroll-cue" aria-hidden><ChevronDown size={20} /></a>
-          <div className="chip chip-1" aria-hidden>
-            <div className="chip-num">98<span>%</span></div>
-            <div className="chip-lbl">კმაყოფილება</div>
-          </div>
-          <div className="chip chip-2" aria-hidden>
-            <Heart size={16} fill="currentColor" />
-            <div className="chip-lbl">5000+ გამოჯ.</div>
-          </div>
         </section>
 
         {/* STORY */}
@@ -308,10 +300,10 @@ export default function App() {
               </p>
               <div className="story-milestones">
                 {[
-                  { year: "2013", text: "ცენტრის დაარსება" },
-                  { year: "2017", text: "ISO სერტიფიკაციის მოპოვება" },
-                  { year: "2020", text: "ახალი კლინიკის გახსნა" },
-                  { year: "2024", text: "5000+ წარმატებული შემთხვევა" }
+                  { year: "2021", text: "ცენტრის დაარსება" },
+                  { year: "2022", text: "ქედის ფილიალის გახსნა" },
+                  { year: "2024", text: "5000+ კმაყოფილი მომხმარებელი" },
+                  { year: "2026", text: "ხულოს ფილიალის გახსნა" }
                 ].map((m, i) => (
                   <div key={m.year} className="milestone" style={{ "--d": `${i * 80}ms` }}>
                     <div className="milestone-year">{m.year}</div>
@@ -323,11 +315,11 @@ export default function App() {
               <blockquote className="quote-block">
                 <div className="quote-bar" />
                 <Quote size={18} className="quote-icon" />
-                <p className="quote-text">"ჩვენი მისია არ მთავრდება მკურნალობით — ის იწყება მაშინ, როცა პაციენტი იღიმება."</p>
+                <p className="quote-text">"ვკურნავ ცოდნით,ვზრუნავ გულით,ვცხოვრობ სიყვარულით"</p>
                 <cite className="quote-cite">— ირმა ხვიჩია, დამფუძნებელი</cite>
               </blockquote>
             </div>
-            <div className="story-visual" aria-hidden>
+            <div className="story-visual" aria-hidden> 
               <div className="sv-img-wrap">
                 <img src="https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg?auto=compress&cs=tinysrgb&w=800" alt="clinic" className="sv-img" />
                 <div className="sv-img-overlay" />

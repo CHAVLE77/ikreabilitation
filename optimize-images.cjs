@@ -1,55 +1,81 @@
-// resize-images.js
-// გაშვება: node resize-images.js
+// optimize-images.cjs
+// გაშვება: node optimize-images.cjs
 // წინაპირობა: npm install sharp --save-dev
 //
-// რატომ შეიცვალა: ორიგინალი team1/2/3 სურათები მხოლოდ ~717-720px განიერია.
-// წინა ვერსია ცდილობდა 936w ვარიანტის გენერირებას, რაც სინამდვილეში
-// ან ვერ ასქეილდა, ან უბრალოდ ორიგინალის ასლი დარჩა — ორივე შემთხვევაში
-// Lighthouse-მა სწორად დაიჭირა, რომ ფაილი "717x1116"-ზეა, არა 936-ზე.
+// წყარო (ორიგინალები):  ./src/assets/raw
+// შედეგი (გამოსაყენებელი ფაილები): ./public
+//   - ორიგინალის ასლი (bg1.webp, bg2.webp, ...)  <- საჭიროა <img src="/bg1.webp">-სთვის
+//   - -480 / -960 / -1440 ვარიანტები              <- საჭიროა srcSet-ისთვის
 //
-// ახლა ვაგენერირებთ მხოლოდ ორ რეალურ ვარიანტს:
-//   468w  -> პატარა ეკრანი/ჩვეულებრივი density
-//   720w  -> native ზომასთან ახლოს (withoutEnlargement: true იცავს
-//            ხელოვნური ზემოთ-დასქეილებისგან), მაგრამ დაკომპრესირებული
-//            ხარისხობრივად უფრო მაღალი webp compression-ით
+// რატომ public და არა src/assets:
+// Hero.jsx-ში სურათები მოხმობილია აბსოლუტური root-გზით (მაგ. "/bg1.webp"),
+// არა import-ით. Vite ასეთ სტრიქონებს src/assets-ში ვერ პოულობს — მხოლოდ
+// public/-ში მდებარე ფაილები ემსახურება ზუსტად ისეთი გზით, როგორც კოდშია.
 
 const sharp = require('sharp');
+const fs = require('fs');
 const path = require('path');
 
-const SOURCE_DIR = './public'; // <-- შეცვალე შენი ორიგინალი სურათების გზაზე
-const OUTPUT_DIR = './public'; // <-- სად უნდა შენახოს გენერირებული ვერსიები
+const SOURCE_DIR = './src/assets/raw'; // ორიგინალი სურათები
+const OUTPUT_DIR = './public';          // საბოლოო, გამოსაქვეყნებელი ფაილები
 
-const images = [
-  { name: 'team1', displayWidth: 468, displayHeight: 558 },
-  { name: 'team2', displayWidth: 468, displayHeight: 558 },
-  { name: 'team3', displayWidth: 468, displayHeight: 558 },
-];
-
-const widths = [468, 720]; // აღარ ვცდილობთ 936w-ს (source-ზე მეტს)
+const WIDTHS = [480, 960, 1440];
+const SUPPORTED_EXT = ['.webp', '.jpg', '.jpeg', '.png'];
 
 async function run() {
-  for (const img of images) {
-    const inputPath = path.join(SOURCE_DIR, `${img.name}.webp`);
-    const meta = await sharp(inputPath).metadata();
-    console.log(`\n${img.name}.webp ორიგინალი ზომაა: ${meta.width}x${meta.height}`);
+  if (!fs.existsSync(SOURCE_DIR)) {
+    console.error(`შეცდომა: წყარო საქაღალდე ვერ მოიძებნა: ${SOURCE_DIR}`);
+    process.exit(1);
+  }
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  }
 
-    for (const w of widths) {
-      const h = Math.round((img.displayHeight / img.displayWidth) * w);
-      const outputPath = path.join(OUTPUT_DIR, `${img.name}-${w}.webp`);
+  const files = fs
+    .readdirSync(SOURCE_DIR)
+    .filter((f) => SUPPORTED_EXT.includes(path.extname(f).toLowerCase()));
+
+  if (files.length === 0) {
+    console.log(`ვერცერთი მხარდაჭერილი სურათი ვერ მოიძებნა საქაღალდეში: ${SOURCE_DIR}`);
+    return;
+  }
+
+  for (const file of files) {
+    const ext = path.extname(file);
+    const baseName = path.basename(file, ext);
+
+    // გამოვტოვოთ ისეთი ფაილები, რომლებიც უკვე გენერირებულს ჰგავს
+    // (მაგ. თუ ვინმემ შეცდომით raw-ში ჩააგდო bg1-1440.webp)
+    if (WIDTHS.some((w) => baseName.endsWith(`-${w}`))) continue;
+
+    const inputPath = path.join(SOURCE_DIR, file);
+    const meta = await sharp(inputPath).metadata();
+    console.log(`\n${file} ორიგინალი ზომაა: ${meta.width}x${meta.height}`);
+
+    // 1) ორიგინალის ასლი public/-ში (bg1.webp და ა.შ.) — ეს გამოიყენება
+    //    როგორც <img src>-ის საბაზისო მნიშვნელობა და 1920w fallback srcSet-ში.
+    const originalOutPath = path.join(OUTPUT_DIR, `${baseName}.webp`);
+    await sharp(inputPath).webp({ quality: 82 }).toFile(originalOutPath);
+    console.log(`✔ copied original -> ${originalOutPath}`);
+
+    // 2) რეზაისებული ვარიანტები
+    for (const w of WIDTHS) {
+      const h = Math.round((meta.height / meta.width) * w);
+      const outputPath = path.join(OUTPUT_DIR, `${baseName}-${w}.webp`);
 
       await sharp(inputPath)
         .resize(w, h, {
           fit: 'cover',
-          withoutEnlargement: true, // არასდროს გაზარდოს ორიგინალზე მეტად
+          withoutEnlargement: true,
         })
-        .webp({ quality: w <= 468 ? 82 : 78 })
+        .webp({ quality: w <= 480 ? 82 : w <= 960 ? 80 : 78 })
         .toFile(outputPath);
 
       console.log(`✔ generated ${outputPath} (მოთხოვნილი ${w}x${h})`);
     }
   }
-  console.log('\nდასრულდა! შეამოწმე ტერმინალის ლოგში ნამდვილად რა ზომა გამოვიდა -720 ვარიანტებზე —');
-  console.log('თუ ორიგინალი წყარო 717-720px-ზე ნაკლებია, withoutEnlargement დატოვებს ორიგინალ სიგანეს, ეს ნორმალურია.');
+
+  console.log('\nდასრულდა! ყველა ფაილი public/-შია და მზადაა Hero.jsx-ის /bgN.webp მისამართებისთვის.');
 }
 
 run().catch((err) => {

@@ -8,7 +8,6 @@ const navLinks = [
   { label: 'სერვისები', href: '/services' },
   { label: 'სპეციალისტები', href: '/team' },
   { label: 'გალერეა', href: '/gallery' },
-  { label: 'კონტაქტი', href: '/contact' },
 ];
 
 export default function Navbar() {

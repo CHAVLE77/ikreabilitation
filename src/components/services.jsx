@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import serv1 from "/serv1.webp";
+import serv1 from "/gal6.webp";
 import serv2 from "/serv2.webp";
 import serv3 from "/serv3.webp";
 import '../services.css'
@@ -16,7 +16,7 @@ const servicesData = [
     image: serv1,
     color: "#2885ef",
   }, 
-  { 
+  {  
     id: 2,
     title: "ფსიქოლოგი",
     subtitle: "ემოციური მხარდაჭერა",
@@ -178,7 +178,7 @@ function ServiceModal({ service, onClose }) {
               if (contactEl) contactEl.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            კონსულტაციის ჩაწერა
+            კონსულტაცია
             <ArrowIcon />
           </button>
         </div>
@@ -366,7 +366,7 @@ const Services = ({ preview = false }) => {
             </a>
           ) : (
             <a href="#contact" className="svc-btn filled">
-              კონსულტაციის ჩაწერა
+              კონსულტაცია
               <span className="btn-arr">
                 <ArrowIcon />
               </span>

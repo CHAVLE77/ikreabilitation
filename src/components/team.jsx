@@ -2,17 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import team1 from "/team1.webp";
 import team2 from "/team2.webp";
 import team3 from "/team3.webp";
-import '../team.css'
+import "../team.css";
 
-/* ─────────────── RESPONSIVE IMAGE HELPER ───────────────
-   person.image არის სტრიქონი მაგ. "/team2.webp" (Vite public dir import).
-   ვიღებთ საბაზისო სახელს ("team2") და ვაწყობთ სწორ srcSet-ს
-   იმ ზომებით, რაც resize-images.js სკრიპტმა უნდა დააგენერიროს
-   (team1-468.webp, team1-720.webp, team2-468.webp, ... და ა.შ.)
-   შენიშვნა: 936w აღარ გამოიყენება — ორიგინალი წყარო სურათები
-   მხოლოდ ~717-720px განიერია, ამიტომ 936w-ის გენერირება მხოლოდ
-   ხელოვნურ upscale-ს ან ორიგინალის ულუფა ასლს იძლეოდა.
-*/
+/* ─────────────── RESPONSIVE IMAGE HELPER ─────────────── */
 function getResponsiveImage(imagePath) {
   const base = imagePath.replace(/^\//, "").replace(/\.webp$/, "");
   return {
@@ -24,17 +16,35 @@ function getResponsiveImage(imagePath) {
 /* ─────────────────────────── ICONS ─────────────────────────── */
 const ArrowRight = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M5 12H19M19 12L12 5M19 12L12 19"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 const ArrowLeft = ({ size = 14 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M19 12H5M5 12L12 5M5 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M19 12H5M5 12L12 5M5 12L12 19"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 const CheckIcon = () => (
   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M20 6L9 17l-5-5"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 const StarIcon = () => (
@@ -44,12 +54,23 @@ const StarIcon = () => (
 );
 const CloseIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <path
+      d="M18 6L6 18M6 6l12 12"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </svg>
 );
 const PhoneIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-    <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.28 5.18 2 2 0 015.27 3h3.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 11.09a16 16 0 006.83 6.83l1.61-1.61a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.28 5.18 2 2 0 015.27 3h3.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.09 11.09a16 16 0 006.83 6.83l1.61-1.61a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
@@ -63,7 +84,11 @@ const teamData = [
     sessions: "1,200+",
     rating: 5.0,
     specialty: "ბავშვთა ნევროლოგია",
-    certs: ["ნევროლოგიის სერტიფიკატი", "ბავშვთა ნევროლოგიის ტრენინგი", "EEG დიაგნოსტიკა"],
+    certs: [
+      "ნევროლოგიის სერტიფიკატი",
+      "ბავშვთა ნევროლოგიის ტრენინგი",
+      "EEG დიაგნოსტიკა",
+    ],
     bio: "ირმა ხვიჩია არის ბავშვთა ნევროლოგი, რომელიც ეხმარება პაციენტებს ნერვული სისტემის დარღვევების დიაგნოსტიკასა და მართვაში.",
     fullBio:
       "26 წლიანი გამოცდილებით, ირმა ხვიჩია მუშაობს ბავშვთა ნევროლოგიური მდგომარეობების შეფასებაზე, დიაგნოსტიკასა და ინდივიდუალური მკურნალობის დაგეგმვაზე.",
@@ -79,7 +104,11 @@ const teamData = [
     sessions: "2,000+",
     rating: 5.0,
     specialty: "ეპილეფსიური და კრუნჩხვითი დარღვევების დიაგნოსტიკა და მკურნალობა",
-    certs: ["ნევროლოგიის სერტიფიკატი", "EEG დიაგნოსტიკის ტრენინგი", "ეპილეფტოლოგიის სპეციალიზაცია"],
+    certs: [
+      "ნევროლოგიის სერტიფიკატი",
+      "EEG დიაგნოსტიკის ტრენინგი",
+      "ეპილეფტოლოგიის სპეციალიზაცია",
+    ],
     bio: "გია მელიქიშვილი სპეციალიზდება ეპილეფსიისა და კრუნჩხვითი დარღვევების მართვაში. პაციენტებს ეხმარება ზუსტი დიაგნოსტიკისა და ინდივიდუალური მკურნალობის დაგეგმვაში.",
     fullBio:
       "10 წლიანი გამოცდილებით, გია მელიქიშვილი მუშაობს ეპილეფსიის სხვადასხვა ფორმის დიაგნოსტიკასა და მკურნალობაზე. მისი მიმართულებები მოიცავს EEG კვლევების შეფასებას, კრუნჩხვითი ეპიზოდების მართვას და თანამედროვე თერაპიული მიდგომების გამოყენებას.",
@@ -95,7 +124,11 @@ const teamData = [
     sessions: "900+",
     rating: 5.0,
     specialty: "ძვალ-სახსროვანი სისტემის დიაგნოსტიკა და მკურნალობა",
-    certs: ["ორთოპედია-ტრავმატოლოგიის სერტიფიკატი", "სახსრების ქირურგიის ტრენინგი", "ბავშვთა ორთოპედიის კურსი"],
+    certs: [
+      "ორთოპედია-ტრავმატოლოგიის სერტიფიკატი",
+      "სახსრების ქირურგიის ტრენინგი",
+      "ბავშვთა ორთოპედიის კურსი",
+    ],
     bio: "ლევან ჩიკვატია არის ორთოპედ-ტრავმატოლოგი, რომელიც ეხმარება პაციენტებს ძვალ-სახსროვანი პრობლემების დიაგნოსტიკასა და მკურნალობაში.",
     fullBio:
       "6 წლიანი გამოცდილებით, ლევან ჩიკვატია მუშაობს ტრავმების, ხერხემლისა და სახსრების პრობლემების შეფასებასა და მკურნალობაზე. მისი მიზანია პაციენტებისთვის უსაფრთხო და ეფექტური მკურნალობის გზების შერჩევა.",
@@ -113,7 +146,10 @@ function RatingStars({ rating, tone = "dark" }) {
         <span
           key={i}
           className="tm-star"
-          style={{ "--sd": `${i * 0.07}s`, opacity: i < Math.floor(rating) ? 1 : 0.22 }}
+          style={{
+            "--sd": `${i * 0.07}s`,
+            opacity: i < Math.floor(rating) ? 1 : 0.22,
+          }}
         >
           <StarIcon />
         </span>
@@ -147,7 +183,13 @@ function ProfileModal({ person, onClose }) {
       onClick={onClose}
       style={{ "--pc": person.color, "--pcr": person.colorRgb }}
     >
-      <div className="pm-box" role="dialog" aria-modal="true" aria-label={person.name} onClick={(e) => e.stopPropagation()}>
+      <div
+        className="pm-box"
+        role="dialog"
+        aria-modal="true"
+        aria-label={person.name}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="pm-photo">
           <img src={person.image} alt={person.name} className="pm-photo-img" />
           <div className="pm-photo-grad" />
@@ -170,7 +212,12 @@ function ProfileModal({ person, onClose }) {
               </div>
             </div>
           </div>
-          <button onClick={onClose} className="pm-close" aria-label="დახურვა">
+          <button
+            type="button"
+            onClick={onClose}
+            className="pm-close"
+            aria-label="დახურვა"
+          >
             <CloseIcon />
           </button>
         </div>
@@ -191,7 +238,11 @@ function ProfileModal({ person, onClose }) {
           </div>
           <div className="pm-certs">
             {person.certs.map((c, i) => (
-              <div key={c} className="pm-cert pm-stg" style={{ "--d": `${0.4 + i * 0.07}s` }}>
+              <div
+                key={c}
+                className="pm-cert pm-stg"
+                style={{ "--d": `${0.4 + i * 0.07}s` }}
+              >
                 <span className="pm-cert-icon">
                   <CheckIcon />
                 </span>
@@ -202,6 +253,7 @@ function ProfileModal({ person, onClose }) {
 
           <div className="pm-actions pm-stg" style={{ "--d": "0.62s" }}>
             <button
+              type="button"
               className="pm-primary"
               onClick={() => {
                 sessionStorage.setItem("selectedSpecialist", person.name);
@@ -212,7 +264,7 @@ function ProfileModal({ person, onClose }) {
             >
               <PhoneIcon /> კონსულტაციის ჩაწერა
             </button>
-            <button onClick={onClose} className="pm-secondary">
+            <button type="button" onClick={onClose} className="pm-secondary">
               <ArrowLeft size={13} /> უკან
             </button>
           </div>
@@ -223,59 +275,37 @@ function ProfileModal({ person, onClose }) {
 }
 
 /* ─────────────────── TEAM CARD ─────────────────── */
-function TeamCard({
-  person,
-  idx,
-  isVisible,
-  flipped,
-  setFlipped,
-  onOpenModal,
-}) {
+function TeamCard({ person, idx, isVisible, flipped, setFlipped, onOpenModal }) {
   const shellRef = useRef(null);
+  const cardRef = useRef(null);
   const isFlipped = flipped === idx;
-  const overActionsRef = useRef(false);
   const responsiveImg = getResponsiveImage(person.image);
 
-  const resetTilt = useCallback(() => {
-    const el = shellRef.current;
+  // ბარათი აღარ ირხევა (tilt მოხსნილია) — ღილაკები სტაბილურია და click მუშაობს.
+  // მხოლოდ სინათლის (glow) წერტილი მიჰყვება მაუსს.
+  const onMove = useCallback((e) => {
+    const el = cardRef.current;
     if (!el) return;
-    el.style.setProperty("--rx", "0deg");
-    el.style.setProperty("--ry", "0deg");
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    el.style.setProperty("--mx", `${px * 100}%`);
+    el.style.setProperty("--my", `${py * 100}%`);
   }, []);
 
-  const onMove = useCallback(
-    (e) => {
-      if (isFlipped || overActionsRef.current) return;
-      const el = shellRef.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width;
-      const py = (e.clientY - r.top) / r.height;
-      el.style.setProperty("--rx", `${(0.5 - py) * 8}deg`);
-      el.style.setProperty("--ry", `${(px - 0.5) * 10}deg`);
-      el.style.setProperty("--mx", `${px * 100}%`);
-      el.style.setProperty("--my", `${py * 100}%`);
-    },
-    [isFlipped],
-  );
-
   const onLeave = useCallback(() => {
-    overActionsRef.current = false;
-    resetTilt();
-  }, [resetTilt]);
-
-  const onActionsEnter = useCallback(() => {
-    overActionsRef.current = true;
-    resetTilt();
-  }, [resetTilt]);
-
-  const onActionsLeave = useCallback(() => {
-    overActionsRef.current = false;
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty("--mx", "50%");
+    el.style.setProperty("--my", "50%");
   }, []);
 
   return (
     <div
-      className={`tm-card ${isVisible ? "card-in" : ""} ${isFlipped ? "is-flipped" : ""}`}
+      ref={cardRef}
+      className={`tm-card ${isVisible ? "card-in" : ""} ${
+        isFlipped ? "is-flipped" : ""
+      }`}
       style={{
         "--pc": person.color,
         "--pcr": person.colorRgb,
@@ -320,7 +350,11 @@ function TeamCard({
 
             <div className="certs-list">
               {person.certs.slice(0, 2).map((c, i) => (
-                <div key={c} className="cert-row" style={{ "--cd": `${0.06 + i * 0.06}s` }}>
+                <div
+                  key={c}
+                  className="cert-row"
+                  style={{ "--cd": `${0.06 + i * 0.06}s` }}
+                >
                   <span className="cert-icon">
                     <CheckIcon />
                   </span>
@@ -329,16 +363,26 @@ function TeamCard({
               ))}
             </div>
 
-            <div
-              className="front-actions"
-              onMouseEnter={onActionsEnter}
-              onMouseLeave={onActionsLeave}
-            >
-              <button type="button" className="act-btn act-ghost" onClick={() => setFlipped(isFlipped ? null : idx)}>
+            <div className="front-actions">
+              <button
+                type="button"
+                className="act-btn act-ghost"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFlipped(isFlipped ? null : idx);
+                }}
+              >
                 <span>გამოცდილება</span>
                 <ArrowRight />
               </button>
-              <button type="button" className="act-btn act-solid" onClick={() => onOpenModal(person)}>
+              <button
+                type="button"
+                className="act-btn act-solid"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenModal(person);
+                }}
+              >
                 <span>სრული პროფილი</span>
                 <ArrowRight />
               </button>
@@ -364,7 +408,6 @@ function TeamCard({
             />
           </div>
 
-          {/* ყოველთვის ხელმისაწვდომი "უკან" ღილაკი */}
           <button
             type="button"
             className="back-nav"
@@ -436,6 +479,8 @@ const Team = ({ preview = false }) => {
 
   const displayed = preview ? teamData.slice(0, 3) : teamData;
 
+  const closeModal = useCallback(() => setActiveModal(null), []);
+
   useEffect(() => {
     const hObs = new IntersectionObserver(
       ([e]) => {
@@ -450,7 +495,8 @@ const Team = ({ preview = false }) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const idx = cardRefs.current.findIndex((r) => r === entry.target);
-            if (idx !== -1) setVisibleCards((prev) => new Set([...prev, idx]));
+            if (idx !== -1)
+              setVisibleCards((prev) => new Set([...prev, idx]));
           }
         });
       },
@@ -481,7 +527,8 @@ const Team = ({ preview = false }) => {
             <span className="title-em">ენდობიან ოჯახები</span>
           </h2>
           <p className="tm-subtitle">
-            გამოცდილი, სერტიფიცირებული და გულწრფელი — ჩვენი სპეციალისტები ყოველ ბავშვს პირადად იცნობენ.
+            გამოცდილი, სერტიფიცირებული და გულწრფელი — ჩვენი სპეციალისტები ყოველ
+            ბავშვს პირადად იცნობენ.
           </p>
         </div>
 
@@ -516,7 +563,9 @@ const Team = ({ preview = false }) => {
         </div>
       </div>
 
-      {activeModal && <ProfileModal person={activeModal} onClose={() => setActiveModal(null)} />}
+      {activeModal && (
+        <ProfileModal person={activeModal} onClose={closeModal} />
+      )}
     </section>
   );
 };

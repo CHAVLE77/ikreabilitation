@@ -81,7 +81,7 @@ export default function Banner() {
             {/* trust chips */}
             <div className={`cta-chips ${visible ? "cta-chips--in" : ""}`}>
               {[
-                "პასუხობთ 24 საათში",
+                "ვპასუხობთ 24 საათში",
                 "გამოცდილი სპეციალისტები",
                 "ინდივიდუალური მიდგომა",
               ].map((c) => (
