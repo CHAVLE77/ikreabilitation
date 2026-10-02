@@ -325,13 +325,10 @@ export default function App() {
                 <div className="sv-img-overlay" />
               </div>
               <div className="sv-card sv-card-year">
-                <div className="sv-big">2013</div>
+                <div className="sv-big">2021</div>
                 <div className="sv-small">დაარსების წელი</div>
               </div>
-              <div className="sv-card sv-card-award">
-                <Award size={22} className="sv-icon" />
-                <div className="sv-small">ISO სერტ.</div>
-              </div>
+              
               <div className="sv-decoration" />
             </div>
           </div>
