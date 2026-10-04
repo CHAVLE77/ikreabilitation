@@ -514,6 +514,8 @@ const Team = ({ preview = false }) => {
       <span className="tm-noise" aria-hidden />
       <span className="tm-aura tm-aura-1" aria-hidden />
       <span className="tm-aura tm-aura-2" aria-hidden />
+      <span className="tm-orb-warm" aria-hidden />
+      <div className="tm-deco-circles" aria-hidden="true" />
 
       <div className="tm-container">
         <div className={`tm-header ${headerIn ? "hdr-in" : ""}`}>

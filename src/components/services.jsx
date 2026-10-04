@@ -325,6 +325,9 @@ const Services = ({ preview = false }) => {
       <span className="bg-blob blob-1" aria-hidden />
       <span className="bg-blob blob-2" aria-hidden />
       <span className="svc-grid-lines" aria-hidden />
+      <span className="svc-noise" aria-hidden />
+      <span className="svc-orb-warm" aria-hidden />
+      <div className="svc-deco-circles" aria-hidden="true" />
 
       <div className="svc-container">
         <div className={`svc-header ${headerVisible ? "hdr-in" : ""}`}>

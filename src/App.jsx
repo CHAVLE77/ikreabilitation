@@ -8,7 +8,7 @@ import Services from "./components/services";
 import Team from "./components/team";
 import Contact from "./components/contact";
 import Banner from "./components/banner";
-
+import PageLoader from "./components/pageLoader";
 // lazy-loaded routes — არ ჩაიტვირთება საწყის ბანდლში
 const ServicesPage = lazy(() => import("./pages/servicesPage"));
 const AboutPage = lazy(() => import("./pages/aboutPage"));
@@ -22,7 +22,31 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    // გვერდის ჩატვირთვისას/დარეფრეშებისას თავში დაბრუნება
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+    // თუ ბრაუზერმა რენდერის შემდეგ სცადა წინა პოზიციაზე გადახტომა
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 50);
+
+    const onBeforeUnload = () => {
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("beforeunload", onBeforeUnload);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("beforeunload", onBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 
   return null;
@@ -70,6 +94,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <PageLoader /> {/* ← ეს დაამატე */}
 
       {!isAdmin && <Navbar />}
 
@@ -95,5 +120,4 @@ function App() {
     </>
   );
 }
-
 export default App;

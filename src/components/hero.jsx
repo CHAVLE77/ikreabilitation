@@ -303,9 +303,7 @@ function getSlideSrcSet(src) {
             linear-gradient(180deg, transparent 55%, rgba(0, 5, 18, 0.75) 100%);
         }
         .slide-grain {
-          position: absolute; inset: 0; z-index: 12;
-          opacity: 0.22; mix-blend-mode: overlay; pointer-events: none;
-          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+          display: none;
         }
 
         /* ─── LAYOUT ─── */
@@ -520,7 +518,8 @@ function getSlideSrcSet(src) {
         .btn:hover { transform: translateY(-2px); }
         .btn:active { transform: translateY(0); }
         .btn-primary {
-          background: linear-gradient(105deg, #3B82F6 0%, #2563EB 45%, #1E3A8A 100%);
+          background:
+            linear-gradient(135deg, #2E86F5 0%, #0B5CC6 52%, #083E8C 100%);
           color: #fff;
           box-shadow: 0 10px 32px rgba(59, 130, 246, 0.35),
                       inset 0 1px 0 rgba(255,255,255,0.2);
@@ -589,35 +588,42 @@ function getSlideSrcSet(src) {
   border-radius: clamp(14px, 1.2vw, 20px);
   position: relative;
   background:
-    radial-gradient(120% 140% at 20% 0%, rgba(34, 211, 238, 0.08) 0%, transparent 55%),
-    linear-gradient(160deg, #0F1B2E 0%, #0A1420 55%, #060B14 100%);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            radial-gradient(120% 140% at 20% 0%, rgba(46, 134, 245, 0.18) 0%, transparent 55%),
+            linear-gradient(160deg, #0C2250 0%, #081A3E 55%, #050F26 100%);
+          backdrop-filter: blur(20px) saturate(150%);
+          -webkit-backdrop-filter: blur(20px) saturate(150%);
+          box-shadow:
+            0 12px 32px rgba(0, 6, 24, 0.5),
+            0 0 28px rgba(11, 92, 198, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.07);
   width: fit-content;
   max-width: 100%;
   isolation: isolate;
 }
 
 .stat-card::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: conic-gradient(
-    from var(--angle),
-    #22D3EE, #67E8F9, #0EA5E9, #22D3EE
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: -1;
-  animation: rotate-border 3s linear infinite;
-}
+          content: "";
+          position: absolute;
+          inset: -2px;
+          border-radius: inherit;
+          padding: 2px;
+          background: conic-gradient(
+            from var(--angle),
+            #0B5CC6 0%,
+            #2E86F5 22%,
+            #FFC629 42%,
+            #FFE08A 50%,
+            #FFC629 58%,
+            #2E86F5 78%,
+            #0B5CC6 100%
+          );
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+          z-index: -1;
+          animation: rotate-border 4s linear infinite;
+        }
 
 @property --angle {
   syntax: '<angle>';
